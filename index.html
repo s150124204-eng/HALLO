@@ -428,6 +428,7 @@
             font-size: 1.02rem;
             color: var(--muted);
             margin: 0;
+            text-align: center;
         }
 
         .click-tray {
@@ -478,6 +479,7 @@
             color: var(--muted);
             font-weight: 700;
             font-size: .95rem;
+            text-align: center;
         }
 
         .controls {
@@ -693,6 +695,7 @@
         .stat-row span:last-child {
             color: #ffe78c;
             font-weight: 900;
+            text-align: right;
         }
 
         .category-box {
@@ -806,24 +809,17 @@
         <section id="cover" class="hero">
             <div class="top-zigzag"></div>
             <div class="hero-content">
-                <div class="backdrop-fish bf1 fish small-fish dir-left"><span class="fin"></span><span
-                        class="stripe"></span><span class="mouth"></span></div>
-                <div class="backdrop-fish bf2 fish small-fish dir-up"><span class="fin"></span><span
-                        class="stripe"></span><span class="mouth"></span></div>
-                <div class="backdrop-fish bf3 fish small-fish dir-right"><span class="fin"></span><span
-                        class="stripe"></span><span class="mouth"></span></div>
-                <div class="backdrop-fish bf4 fish small-fish dir-down"><span class="fin"></span><span
-                        class="stripe"></span><span class="mouth"></span></div>
-                <div class="backdrop-fish bf5 fish small-fish dir-left"><span class="fin"></span><span
-                        class="stripe"></span><span class="mouth"></span></div>
-                <div class="backdrop-fish bf6 fish small-fish dir-right"><span class="fin"></span><span
-                        class="stripe"></span><span class="mouth"></span></div>
+                <div class="backdrop-fish bf1 fish small-fish dir-left"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
+                <div class="backdrop-fish bf2 fish small-fish dir-up"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
+                <div class="backdrop-fish bf3 fish small-fish dir-right"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
+                <div class="backdrop-fish bf4 fish small-fish dir-down"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
+                <div class="backdrop-fish bf5 fish small-fish dir-left"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
+                <div class="backdrop-fish bf6 fish small-fish dir-right"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
 
                 <h1 class="title">MATCH BY DIRECTION</h1>
                 <p class="subtitle">Welcome to the reaction time and cognitive performance test!</p>
                 <p class="desc">
-                    In this game, you need to choose the arrow direction that matches the fish's facing direction as
-                    quickly as you can.
+                    Pilih arah panah yang sesuai dengan arah hadap ikan secepat dan setepat mungkin.
                 </p>
 
                 <div class="instruction-grid">
@@ -833,7 +829,7 @@
                     </div>
                     <div class="instruction">
                         <b>2. Three levels</b>
-                        <span>Level 1: 10 soal, Level 2: 15 soal, Level 3: 20 soal.</span>
+                        <span>Level 1: 10 soal, Level 2: 12 soal, Level 3: 15 soal.</span>
                     </div>
                     <div class="instruction">
                         <b>3. Beat the timer</b>
@@ -848,14 +844,10 @@
             </div>
 
             <div class="cover-illustration" aria-hidden="true">
-                <div class="fish small-fish dir-right"><span class="fin"></span><span class="stripe"></span><span
-                        class="mouth"></span></div>
-                <div class="fish small-fish dir-up"><span class="fin"></span><span class="stripe"></span><span
-                        class="mouth"></span></div>
-                <div class="fish small-fish dir-left"><span class="fin"></span><span class="stripe"></span><span
-                        class="mouth"></span></div>
-                <div class="fish small-fish dir-down"><span class="fin"></span><span class="stripe"></span><span
-                        class="mouth"></span></div>
+                <div class="fish small-fish dir-right"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
+                <div class="fish small-fish dir-up"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
+                <div class="fish small-fish dir-left"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
+                <div class="fish small-fish dir-down"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
             </div>
         </section>
 
@@ -877,7 +869,7 @@
 
                 <div class="fish-stage">
                     <div>
-                        <p class="question-title">Arah ikan yang muncul harus diikuti sesuai urutan klik.</p>
+                        <p class="question-title">Ikuti urutan arah yang muncul dengan klik yang tepat.</p>
                         <div id="fishRow" class="fish-row"></div>
                         <div class="click-tray" id="clickTray"></div>
                     </div>
@@ -947,11 +939,13 @@
                     </div>
 
                     <div class="stats">
-                        <div class="stat-row"><span>Waktu Level 1</span><span id="time1">-</span></div>
-                        <div class="stat-row"><span>Waktu Level 2</span><span id="time2">-</span></div>
-                        <div class="stat-row"><span>Waktu Level 3</span><span id="time3">-</span></div>
-                        <div class="stat-row"><span>Total waktu</span><span id="totalTime">-</span></div>
+                        <div class="stat-row"><span>Level 1</span><span id="statL1">-</span></div>
+                        <div class="stat-row"><span>Level 2</span><span id="statL2">-</span></div>
+                        <div class="stat-row"><span>Level 3</span><span id="statL3">-</span></div>
+                        <div class="stat-row"><span>Total benar</span><span id="totalCorrectText">-</span></div>
+                        <div class="stat-row"><span>Total waktu</span><span id="totalTimeText">-</span></div>
                         <div class="stat-row"><span>Akurasi</span><span id="accuracyText">-</span></div>
+                        <div class="stat-row"><span>Kecepatan</span><span id="speedText">-</span></div>
                         <div class="stat-row"><span>Skor %</span><span id="scorePctText">-</span></div>
                     </div>
 
@@ -968,35 +962,28 @@
             </div>
 
             <div class="footer-note">
-                Leaderboard tersimpan di perangkat ini. Tombol Share bisa dipakai untuk mengirim ringkasan skor.
+                Leaderboard tersimpan di perangkat ini. Setiap hasil akan diberi nomor percobaan.
             </div>
         </section>
     </div>
 
     <script>
         const levelConfig = [
-            { questions: 15, time: 45, requiredClicks: 1, scorePerCorrect: 10, label: "Basic Recognition" },
-            { questions: 15, time: 70, requiredClicks: 2, scorePerCorrect: 25, label: "Speed and Mental Rotation" },
-            { questions: 15, time: 90, requiredClicks: 3, scorePerCorrect: 50, label: "Multi Stimuli Challenge" },
+            { questions: 10, time: 45, requiredClicks: 1, label: "Level 1" },
+            { questions: 12, time: 60, requiredClicks: 2, label: "Level 2" },
+            { questions: 15, time: 75, requiredClicks: 3, label: "Level 3" },
         ];
 
+        const levelWeights = [10, 15, 20]; // bobot per soal benar per level
         const keyToDirection = {
             PageUp: "up",
             PageDown: "down",
             Home: "right",
             End: "left",
-
             ArrowUp: "up",
             ArrowDown: "down",
             ArrowRight: "right",
             ArrowLeft: "left",
-        };
-
-        const directionIcons = {
-            left: "←",
-            up: "↑",
-            right: "→",
-            down: "↓",
         };
 
         const directionLabels = {
@@ -1010,14 +997,15 @@
         let questionIndex = 0;
         let timeLeft = 0;
         let timerId = null;
+        let levelStartMs = 0;
         let currentTargets = [];
         let currentClickIndex = 0;
+        let currentQuestionCorrect = true;
+        let isTransitioning = false;
 
-        let score = 0;
-        let correctClicks = 0;
-        let totalExpectedClicks = 0;
-        let levelTimes = [0, 0, 0];
-
+        let totalCorrectQuestions = [0, 0, 0];
+        let answeredQuestions = [0, 0, 0];
+        let levelTimeSpent = [0, 0, 0];
         let leaderboard = [];
 
         const fishRow = document.getElementById("fishRow");
@@ -1028,14 +1016,10 @@
         const clickCounter = document.getElementById("clickCounter");
 
         function startGame() {
-            const name = document.getElementById("playerName").value.trim();
             document.getElementById("cover").classList.add("hidden");
             document.getElementById("game").classList.remove("hidden");
             loadLeaderboard();
             startLevel(0);
-            if (!name) {
-                // tetap jalan, hanya akan disimpan sebagai Player
-            }
         }
 
         function startLevel(nextLevelIndex) {
@@ -1050,9 +1034,12 @@
             questionIndex = 0;
             currentClickIndex = 0;
             currentTargets = [];
+            currentQuestionCorrect = true;
+            isTransitioning = false;
 
             const cfg = levelConfig[level];
             timeLeft = cfg.time;
+            levelStartMs = Date.now();
 
             levelLabel.textContent = level + 1;
             questionCounter.textContent = `0 / ${cfg.questions}`;
@@ -1066,16 +1053,22 @@
                 timeLeftEl.textContent = timeLeft;
 
                 if (timeLeft <= 0) {
-                    levelTimes[level] = cfg.time;
-                    clearInterval(timerId);
-
-                    if (level < 2) {
-                        startLevel(level + 1);
-                    } else {
-                        endGame();
-                    }
+                    finishLevel();
                 }
             }, 1000);
+        }
+
+        function finishLevel() {
+            clearInterval(timerId);
+
+            const elapsed = Math.max(0, Math.ceil((Date.now() - levelStartMs) / 1000));
+            levelTimeSpent[level] = elapsed;
+
+            if (level < 2) {
+                startLevel(level + 1);
+            } else {
+                endGame();
+            }
         }
 
         function randomDirection() {
@@ -1085,20 +1078,16 @@
 
         function renderQuestion() {
             const cfg = levelConfig[level];
+
             if (questionIndex >= cfg.questions) {
-                levelTimes[level] = cfg.time - Math.max(timeLeft, 0);
-                if (level < 2) {
-                    clearInterval(timerId);
-                    startLevel(level + 1);
-                } else {
-                    clearInterval(timerId);
-                    endGame();
-                }
+                finishLevel();
                 return;
             }
 
             currentTargets = Array.from({ length: cfg.requiredClicks }, () => randomDirection());
             currentClickIndex = 0;
+            currentQuestionCorrect = true;
+            isTransitioning = false;
 
             fishRow.innerHTML = "";
             currentTargets.forEach((dir) => {
@@ -1118,7 +1107,6 @@
         function renderClickTray(lastState = null) {
             const cfg = levelConfig[level];
             const required = cfg.requiredClicks;
-
             clickTray.innerHTML = "";
 
             for (let i = 0; i < required; i++) {
@@ -1128,7 +1116,7 @@
                 if (i < currentClickIndex && lastState && lastState[i]) {
                     slot.classList.add(lastState[i].correct ? "correct" : "wrong");
                     slot.innerHTML = `${i + 1}. ${directionLabels[lastState[i].pressed]} ${lastState[i].correct ? "✓" : "✕"}`;
-                } else if (i < currentClickIndex && !lastState) {
+                } else if (i < currentClickIndex) {
                     slot.innerHTML = `${i + 1}. Sudah diklik`;
                 } else {
                     slot.innerHTML = `${i + 1}. Belum`;
@@ -1153,43 +1141,47 @@
 
         function pressDirection(direction) {
             const cfg = levelConfig[level];
-            if (!cfg || currentTargets.length === 0) return;
+            if (!cfg || currentTargets.length === 0 || isTransitioning) return;
 
             updateButtonStates(direction);
 
             const expected = currentTargets[currentClickIndex];
             const isCorrect = direction === expected;
 
-            if (isCorrect) {
-                score += cfg.scorePerCorrect;
-                correctClicks++;
-            }
-
             const progressState = new Array(cfg.requiredClicks).fill(null);
             for (let i = 0; i < currentClickIndex; i++) {
                 progressState[i] = { pressed: currentTargets[i], correct: true };
             }
+
             progressState[currentClickIndex] = { pressed: direction, correct: isCorrect };
+
+            if (!isCorrect) {
+                currentQuestionCorrect = false;
+            }
+
             currentClickIndex++;
-
             clickCounter.textContent = `${currentClickIndex} / ${cfg.requiredClicks}`;
-
             renderClickTray(progressState);
 
-            totalExpectedClicks++;
-
             if (currentClickIndex >= cfg.requiredClicks) {
-                renderClickTray(progressState);
+                isTransitioning = true;
+
+                answeredQuestions[level]++;
+                if (currentQuestionCorrect) {
+                    totalCorrectQuestions[level]++;
+                }
+
                 setTimeout(() => {
                     renderQuestion();
                 }, 140);
             }
         }
+
         document.addEventListener("keydown", (e) => {
             const dir = keyToDirection[e.key];
             if (!dir) return;
 
-            if (document.activeElement.tagName === "INPUT") return;
+            if (document.activeElement && document.activeElement.tagName === "INPUT") return;
 
             e.preventDefault();
             pressDirection(dir);
@@ -1201,111 +1193,162 @@
             document.getElementById("game").classList.add("hidden");
             document.getElementById("result").classList.remove("hidden");
 
-            const maxScore = (levelConfig[0].questions * levelConfig[0].scorePerCorrect) +
-                (levelConfig[1].questions * levelConfig[1].requiredClicks * levelConfig[1].scorePerCorrect) +
-                (levelConfig[2].questions * levelConfig[2].requiredClicks * levelConfig[2].scorePerCorrect);
+            const totalQuestions = levelConfig.reduce((sum, cfg) => sum + cfg.questions, 0);
+            const totalAllowedTime = levelConfig.reduce((sum, cfg) => sum + cfg.time, 0);
+            const totalCorrect = totalCorrectQuestions.reduce((a, b) => a + b, 0);
+            const totalAnswered = answeredQuestions.reduce((a, b) => a + b, 0);
+            const totalTimeUsed = levelTimeSpent.reduce((a, b) => a + b, 0);
 
-            const scorePct = Math.round((score / maxScore) * 100);
-            const accuracy = totalExpectedClicks > 0 ? Math.round((correctClicks / totalExpectedClicks) * 100) : 0;
-            const category = getCategory(scorePct, accuracy);
+            const accuracyPct = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+            const speedPct = totalAllowedTime > 0
+                ? Math.max(0, Math.min(100, Math.round((1 - (totalTimeUsed / totalAllowedTime)) * 100)))
+                : 0;
 
-            document.getElementById("finalScore").innerHTML = `Score: <span class="num">${score}</span> points`;
-            document.getElementById("finalSubtitle").textContent = `Akurasi ${accuracy}% · Skor ${scorePct}% · ${correctClicks}/${totalExpectedClicks} benar`;
+            const baseScore = totalCorrectQuestions[0] * levelWeights[0] +
+                totalCorrectQuestions[1] * levelWeights[1] +
+                totalCorrectQuestions[2] * levelWeights[2];
 
-            document.getElementById("time1").textContent = `${levelTimes[0]}s`;
-            document.getElementById("time2").textContent = `${levelTimes[1]}s`;
-            document.getElementById("time3").textContent = `${levelTimes[2]}s`;
-            document.getElementById("totalTime").textContent = `${levelTimes[0] + levelTimes[1] + levelTimes[2]}s`;
-            document.getElementById("accuracyText").textContent = `${accuracy}%`;
+            const speedBonus = Math.max(0, Math.round(((totalAllowedTime - totalTimeUsed) / totalAllowedTime) * 200));
+            const finalScore = baseScore + speedBonus;
+
+            const scorePct = Math.round((finalScore / ((10 * levelWeights[0]) + (12 * levelWeights[1]) + (15 * levelWeights[2]) + 200)) * 100);
+
+            const category = getCategory(accuracyPct, speedPct);
+
+            document.getElementById("finalScore").innerHTML = `Score: <span class="num">${finalScore}</span> points`;
+            document.getElementById("finalSubtitle").textContent =
+                `Benar ${totalCorrect}/${totalQuestions} · Akurasi ${accuracyPct}% · Kecepatan ${speedPct}%`;
+
+            document.getElementById("statL1").textContent =
+                `${totalCorrectQuestions[0]} / ${levelConfig[0].questions} benar · ${levelTimeSpent[0]} dtk`;
+
+            document.getElementById("statL2").textContent =
+                `${totalCorrectQuestions[1]} / ${levelConfig[1].questions} benar · ${levelTimeSpent[1]} dtk`;
+
+            document.getElementById("statL3").textContent =
+                `${totalCorrectQuestions[2]} / ${levelConfig[2].questions} benar · ${levelTimeSpent[2]} dtk`;
+
+            document.getElementById("totalCorrectText").textContent = `${totalCorrect}/${totalQuestions} benar`;
+            document.getElementById("totalTimeText").textContent = `${totalTimeUsed} dtk`;
+            document.getElementById("accuracyText").textContent = `${accuracyPct}%`;
+            document.getElementById("speedText").textContent = `${speedPct}%`;
             document.getElementById("scorePctText").textContent = `${scorePct}%`;
 
             document.getElementById("categoryTitle").textContent = category.title;
             document.getElementById("categoryDesc").textContent = category.desc;
             document.getElementById("categoryTitle").className = `category-title ${category.className}`;
 
-            saveLeaderboard(score, accuracy, scorePct);
+            saveLeaderboard(finalScore, accuracyPct, speedPct, totalCorrect, totalQuestions, totalTimeUsed, scorePct);
             loadLeaderboard();
             renderLeaderboard();
         }
 
-        function getCategory(scorePct, accuracy) {
-            if (accuracy >= 85 && scorePct >= 80) {
+        function getCategory(accuracyPct, speedPct) {
+            if (accuracyPct >= 85 && speedPct >= 70) {
                 return {
                     title: "🟢 SANGAT CEPAT & TEPAT",
-                    desc: "Kemampuan pemrosesan visual, kecepatan respon, dan ketepatan keputusan sangat baik.",
+                    desc: "Kinerja sangat baik. Ketepatan jawaban dan kecepatan respon sama-sama tinggi.",
                     className: "good"
                 };
             }
 
-            if (accuracy >= 70 && accuracy <= 84 && scorePct >= 60 && scorePct <= 79) {
+            if (accuracyPct >= 70 && speedPct >= 50) {
                 return {
                     title: "🟡 CUKUP CEPAT & TEPAT",
-                    desc: "Kemampuan cukup baik, namun masih terdapat keterlambatan respon atau kesalahan dalam kondisi kompleks.",
+                    desc: "Kemampuan cukup baik, namun masih bisa ditingkatkan pada bagian kecepatan atau ketelitian.",
                     className: "warn"
                 };
             }
 
             return {
                 title: "🔴 PERLU LATIHAN",
-                desc: "Kemampuan kecepatan dan ketepatan masih perlu ditingkatkan, terutama dalam kondisi multi-stimulus.",
+                desc: "Kecepatan dan ketepatan masih perlu ditingkatkan, terutama pada level dengan jumlah klik lebih banyak.",
                 className: "bad"
             };
         }
 
-        function saveLeaderboard(scoreValue, accuracy, scorePct) {
+        function getNextAttemptNumber() {
+            const current = Number(localStorage.getItem("mbd_attempt_counter_v1") || "0");
+            const next = current + 1;
+            localStorage.setItem("mbd_attempt_counter_v1", String(next));
+            return next;
+        }
+
+        function saveLeaderboard(finalScore, accuracyPct, speedPct, totalCorrect, totalQuestions, totalTimeUsed, scorePct) {
             const playerName = document.getElementById("playerName").value.trim() || "Player";
-            const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v2") || "[]");
+            const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v3") || "[]");
+            const attemptNo = getNextAttemptNumber();
 
             data.push({
                 name: playerName,
-                score: scoreValue,
-                accuracy,
+                attemptNo,
+                score: finalScore,
+                accuracyPct,
+                speedPct,
+                totalCorrect,
+                totalQuestions,
+                totalTimeUsed,
                 scorePct,
                 time: new Date().toLocaleString("id-ID")
             });
 
-            data.sort((a, b) => b.score - a.score || b.accuracy - a.accuracy);
-            localStorage.setItem("mbd_leaderboard_v2", JSON.stringify(data.slice(0, 5)));
+            data.sort((a, b) => b.score - a.score || b.accuracyPct - a.accuracyPct || a.totalTimeUsed - b.totalTimeUsed);
+            localStorage.setItem("mbd_leaderboard_v3", JSON.stringify(data.slice(0, 10)));
         }
 
         function loadLeaderboard() {
-            leaderboard = JSON.parse(localStorage.getItem("mbd_leaderboard_v2") || "[]");
+            leaderboard = JSON.parse(localStorage.getItem("mbd_leaderboard_v3") || "[]");
             renderLeaderboard();
         }
 
         function renderLeaderboard() {
             const box = document.getElementById("leaderboard");
+
             if (!leaderboard.length) {
-                box.innerHTML = `<div class="leader-item"><span class="rank-pill">-</span><span class="leader-name">Belum ada data</span><span class="leader-score">0</span></div>`;
+                box.innerHTML = `
+                    <div class="leader-item">
+                        <span class="rank-pill">-</span>
+                        <span class="leader-name">Belum ada data</span>
+                        <span class="leader-score">0</span>
+                    </div>`;
                 return;
             }
 
             box.innerHTML = leaderboard.map((row, idx) => `
-        <div class="leader-item">
-          <div class="rank-pill">${idx + 1}</div>
-          <div class="leader-name">${row.name}<div style="font-size:.86rem;color:rgba(255,255,255,.68);font-weight:600;margin-top:2px;">Accuracy ${row.accuracy}% · ${row.time}</div></div>
-          <div class="leader-score">${row.score}</div>
-        </div>
-      `).join("");
+                <div class="leader-item">
+                    <div class="rank-pill">${idx + 1}</div>
+                    <div class="leader-name">
+                        ${row.name}
+                        <div style="font-size:.86rem;color:rgba(255,255,255,.68);font-weight:600;margin-top:2px;">
+                            Percobaan #${row.attemptNo} · Benar ${row.totalCorrect}/${row.totalQuestions} · Akurasi ${row.accuracyPct}% · ${row.totalTimeUsed} dtk
+                        </div>
+                    </div>
+                    <div class="leader-score">${row.score}</div>
+                </div>
+            `).join("");
         }
 
         async function shareScore() {
-            const finalText = `Match by Direction - Score: ${score}. Cek leaderboard di perangkat ini.`;
+            const totalQuestions = levelConfig.reduce((sum, cfg) => sum + cfg.questions, 0);
+            const totalCorrect = totalCorrectQuestions.reduce((a, b) => a + b, 0);
+            const totalTimeUsed = levelTimeSpent.reduce((a, b) => a + b, 0);
+            const text = `Match by Direction - Benar ${totalCorrect}/${totalQuestions}, waktu ${totalTimeUsed} detik.`;
+
             if (navigator.share) {
                 try {
                     await navigator.share({
                         title: "Match by Direction",
-                        text: finalText
+                        text
                     });
                     return;
                 } catch (e) { }
             }
 
             try {
-                await navigator.clipboard.writeText(finalText);
+                await navigator.clipboard.writeText(text);
                 alert("Ringkasan skor berhasil disalin.");
             } catch (e) {
-                alert(finalText);
+                alert(text);
             }
         }
 
