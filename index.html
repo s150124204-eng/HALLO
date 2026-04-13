@@ -2,1377 +2,1359 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Match by Direction</title>
-    <style>
-        :root {
-            --bg1: #2b3e66;
-            --bg2: #1d2b49;
-            --panel: rgba(255, 255, 255, .08);
-            --panel2: rgba(255, 255, 255, .12);
-            --line: rgba(255, 255, 255, .12);
-            --text: #f5f7ff;
-            --muted: rgba(245, 247, 255, .78);
-            --accent: #6f95ff;
-            --accent2: #7dd0ff;
-            --good: #9be38c;
-            --warn: #ffd56f;
-            --bad: #ff8e8e;
-            --shadow: 0 20px 50px rgba(0, 0, 0, .22);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html,
-        body {
-            margin: 0;
-            min-height: 100%;
-            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-            color: var(--text);
-            background:
-                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, .06) 0 2px, transparent 3px),
-                radial-gradient(circle at 80% 10%, rgba(255, 255, 255, .05) 0 3px, transparent 4px),
-                radial-gradient(circle at 30% 75%, rgba(255, 255, 255, .04) 0 2px, transparent 3px),
-                radial-gradient(circle at 70% 78%, rgba(255, 255, 255, .05) 0 2px, transparent 3px),
-                linear-gradient(180deg, var(--bg1), var(--bg2));
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            background:
-                radial-gradient(circle at 10% 12%, rgba(255, 255, 255, .07) 0 3px, transparent 4px),
-                radial-gradient(circle at 18% 18%, rgba(255, 255, 255, .05) 0 2px, transparent 3px),
-                radial-gradient(circle at 82% 18%, rgba(255, 255, 255, .06) 0 2px, transparent 3px),
-                radial-gradient(circle at 86% 26%, rgba(255, 255, 255, .04) 0 3px, transparent 4px),
-                radial-gradient(circle at 8% 78%, rgba(255, 255, 255, .05) 0 2px, transparent 3px),
-                radial-gradient(circle at 90% 86%, rgba(255, 255, 255, .05) 0 2px, transparent 3px);
-            opacity: .7;
-        }
-
-        .wrap {
-            width: min(1240px, calc(100% - 28px));
-            margin: 0 auto;
-            padding: 18px 0 34px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .hero,
-        .game-shell,
-        .result-shell {
-            background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .05));
-            border: 1px solid rgba(255, 255, 255, .09);
-            border-radius: 28px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .top-zigzag {
-            height: 20px;
-            background:
-                linear-gradient(-45deg, transparent 12px, rgba(255, 255, 255, .08) 12px 24px, transparent 24px) bottom/24px 100% repeat-x;
-            opacity: .9;
-        }
-
-        .hero {
-            min-height: 100vh;
-            display: grid;
-            grid-template-rows: auto 1fr;
-            align-items: stretch;
-        }
-
-        .hero-content {
-            padding: 26px 28px 18px;
-            text-align: center;
-            display: grid;
-            place-items: center;
-            gap: 18px;
-        }
-
-        .title {
-            margin: 0;
-            font-size: clamp(2.3rem, 4vw, 4.2rem);
-            letter-spacing: 1px;
-            font-weight: 900;
-            line-height: 1.05;
-            text-transform: uppercase;
-            text-shadow: 0 8px 22px rgba(0, 0, 0, .25);
-        }
-
-        .subtitle {
-            margin: 0;
-            font-size: clamp(1.05rem, 1.6vw, 1.45rem);
-            font-weight: 800;
-            color: var(--text);
-        }
-
-        .desc {
-            margin: 0 auto;
-            max-width: 900px;
-            font-size: clamp(1rem, 1.2vw, 1.1rem);
-            line-height: 1.7;
-            color: var(--muted);
-        }
-
-        .instruction-grid {
-            width: min(960px, 100%);
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-            margin-top: 4px;
-        }
-
-        .instruction {
-            background: rgba(255, 255, 255, .06);
-            border: 1px solid rgba(255, 255, 255, .09);
-            border-radius: 20px;
-            padding: 16px 14px;
-            text-align: left;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
-        }
-
-        .instruction b {
-            display: block;
-            margin-bottom: 6px;
-            font-size: 1rem;
-        }
-
-        .instruction span {
-            color: var(--muted);
-            font-size: .96rem;
-            line-height: 1.5;
-        }
-
-        .name-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 4px;
-        }
-
-        .name-input {
-            width: min(420px, 100%);
-            height: 54px;
-            border: 1px solid rgba(255, 255, 255, .14);
-            border-radius: 16px;
-            background: rgba(255, 255, 255, .96);
-            color: #16213a;
-            padding: 0 16px;
-            font-size: 1rem;
-            outline: none;
-            box-shadow: inset 0 2px 12px rgba(0, 0, 0, .08);
-        }
-
-        .btn {
-            height: 54px;
-            min-width: 150px;
-            border: 0;
-            border-radius: 16px;
-            font-weight: 900;
-            letter-spacing: .6px;
-            cursor: pointer;
-            color: white;
-            background: linear-gradient(180deg, #5e83ff, #4160d4);
-            box-shadow: 0 10px 24px rgba(56, 86, 205, .34), inset 0 1px 0 rgba(255, 255, 255, .2);
-            transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-1px);
-            filter: brightness(1.03);
-        }
-
-        .btn:active {
-            transform: translateY(1px) scale(.99);
-        }
-
-        .cover-illustration {
-            padding: 10px 0 34px;
-            display: flex;
-            justify-content: center;
-            gap: clamp(12px, 3vw, 28px);
-            align-items: flex-end;
-            flex-wrap: wrap;
-            opacity: .97;
-        }
-
-        .fish {
-            width: var(--w, 92px);
-            height: calc(var(--w, 92px) * .78);
-            position: relative;
-            border-radius: 22px 32px 28px 28px;
-            background: linear-gradient(180deg, #d5e4ff, #afc7f4);
-            box-shadow:
-                inset 0 -8px 16px rgba(64, 91, 149, .18),
-                inset 0 2px 0 rgba(255, 255, 255, .45),
-                0 12px 18px rgba(0, 0, 0, .12);
-            transform-origin: center;
-        }
-
-        .fish::before {
-            content: "";
-            position: absolute;
-            width: 28%;
-            height: 50%;
-            right: -18%;
-            top: 24%;
-            background: linear-gradient(180deg, #d5e4ff, #afc7f4);
-            clip-path: polygon(0 50%, 100% 0, 100% 100%);
-            filter: drop-shadow(0 2px 1px rgba(0, 0, 0, .08));
-        }
-
-        .fish::after {
-            content: "";
-            position: absolute;
-            width: 16%;
-            height: 16%;
-            right: 18%;
-            top: 22%;
-            border-radius: 50%;
-            background: #10131d;
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, .18);
-        }
-
-        .fish .fin,
-        .fish .belly {
-            position: absolute;
-            left: 24%;
-            top: 35%;
-            width: 22%;
-            height: 18%;
-            background: linear-gradient(180deg, #ffd65a, #f3b63d);
-            clip-path: polygon(0 100%, 14% 0, 100% 50%, 14% 100%);
-            border-radius: 4px;
-            opacity: .96;
-        }
-
-        .fish .mouth {
-            position: absolute;
-            right: -2%;
-            top: 38%;
-            width: 12%;
-            height: 10%;
-            border-radius: 999px;
-            background: #ffb1af;
-        }
-
-        .fish .stripe {
-            position: absolute;
-            left: 9%;
-            top: 16%;
-            width: 20%;
-            height: 54%;
-            border-radius: 999px;
-            background: rgba(86, 108, 158, .22);
-            filter: blur(.2px);
-        }
-
-        .dir-left {
-            transform: rotate(180deg);
-        }
-
-        .dir-up {
-            transform: rotate(-90deg);
-        }
-
-        .dir-down {
-            transform: rotate(90deg);
-        }
-
-        .dir-right {
-            transform: rotate(0deg);
-        }
-
-        .small-fish {
-            --w: 120px;
-        }
-
-        .small-fish .fin {
-            width: 18%;
-            height: 20%;
-        }
-
-        .small-fish .mouth {
-            width: 14%;
-            height: 10%;
-        }
-
-        .small-fish .stripe {
-            width: 16%;
-        }
-
-        .backdrop-fish {
-            position: absolute;
-            opacity: .08;
-            filter: blur(.1px);
-            pointer-events: none;
-            transform: scale(.9);
-        }
-
-        .bf1 {
-            left: 2%;
-            top: 20%;
-        }
-
-        .bf2 {
-            right: 3%;
-            top: 18%;
-        }
-
-        .bf3 {
-            left: 7%;
-            bottom: 12%;
-        }
-
-        .bf4 {
-            right: 9%;
-            bottom: 10%;
-        }
-
-        .bf5 {
-            left: 48%;
-            top: 2%;
-            transform: scale(.5);
-            opacity: .06;
-        }
-
-        .bf6 {
-            right: 46%;
-            bottom: 5%;
-            transform: scale(.55);
-            opacity: .06;
-        }
-
-        .game-shell,
-        .result-shell {
-            margin-top: 18px;
-            padding-bottom: 18px;
-        }
-
-        .screen-title {
-            text-align: center;
-            font-size: clamp(1.8rem, 3vw, 3rem);
-            font-weight: 900;
-            margin: 16px 0 2px;
-            text-transform: uppercase;
-            letter-spacing: .8px;
-        }
-
-        .game-top {
-            padding: 16px 20px 0;
-            display: grid;
-            gap: 16px;
-        }
-
-        .progress-card {
-            background: rgba(255, 255, 255, .06);
-            border: 1px solid rgba(255, 255, 255, .08);
-            border-radius: 22px;
-            padding: 16px;
-            display: grid;
-            gap: 10px;
-            text-align: center;
-        }
-
-        .level-meta {
-            display: flex;
-            justify-content: center;
-            gap: 18px;
-            flex-wrap: wrap;
-            color: var(--muted);
-            font-weight: 700;
-            font-size: .98rem;
-        }
-
-        .level-meta strong {
-            color: var(--text);
-        }
-
-        .timer-line {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: #f3f6ff;
-        }
-
-        .fish-stage {
-            min-height: 260px;
-            display: grid;
-            place-items: center;
-            padding: 12px 14px 6px;
-        }
-
-        .fish-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 22px;
-            flex-wrap: wrap;
-            min-height: 170px;
-        }
-
-        .question-title {
-            font-size: 1.02rem;
-            color: var(--muted);
-            margin: 0;
-            text-align: center;
-        }
-
-        .click-tray {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 6px;
-        }
-
-        .click-slot {
-            min-width: 118px;
-            padding: 10px 14px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, .13);
-            background: rgba(255, 255, 255, .06);
-            color: rgba(255, 255, 255, .92);
-            font-weight: 800;
-            text-align: center;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
-            transition: all .16s ease;
-        }
-
-        .click-slot.empty {
-            opacity: .55;
-        }
-
-        .click-slot.correct {
-            background: rgba(155, 227, 140, .16);
-            border-color: rgba(155, 227, 140, .35);
-            box-shadow: 0 0 0 1px rgba(155, 227, 140, .06), inset 0 1px 0 rgba(255, 255, 255, .05);
-        }
-
-        .click-slot.wrong {
-            background: rgba(255, 142, 142, .15);
-            border-color: rgba(255, 142, 142, .35);
-        }
-
-        .controls-wrap {
-            margin-top: 8px;
-            padding: 6px 14px 22px;
-            display: grid;
-            gap: 12px;
-            justify-items: center;
-        }
-
-        .controls-note {
-            color: var(--muted);
-            font-weight: 700;
-            font-size: .95rem;
-            text-align: center;
-        }
-
-        .controls {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(126px, 1fr));
-            gap: 14px;
-            width: min(620px, 100%);
-        }
-
-        .dir-btn {
-            border: 0;
-            border-radius: 22px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .07));
-            color: white;
-            min-height: 118px;
-            cursor: pointer;
-            box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, .08);
-            position: relative;
-            overflow: hidden;
-            display: grid;
-            place-items: center;
-            transition: transform .12s ease, background .12s ease, box-shadow .12s ease, filter .12s ease;
-            border: 1px solid rgba(255, 255, 255, .10);
-        }
-
-        .dir-btn:hover {
-            transform: translateY(-1px);
-            filter: brightness(1.04);
-        }
-
-        .dir-btn:active {
-            transform: translateY(1px) scale(.99);
-        }
-
-        .dir-icon {
-            font-size: 3rem;
-            line-height: 1;
-            text-shadow: 0 8px 16px rgba(0, 0, 0, .22);
-        }
-
-        .dir-key {
-            margin-top: 6px;
-            font-size: .88rem;
-            font-weight: 800;
-            color: rgba(255, 255, 255, .83);
-            letter-spacing: .3px;
-        }
-
-        .dir-label {
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: .78rem;
-            color: rgba(255, 255, 255, .68);
-            font-weight: 700;
-        }
-
-        .dir-btn.active {
-            transform: translateY(-2px) scale(1.01);
-            box-shadow: 0 0 0 2px rgba(125, 208, 255, .4), 0 18px 36px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(255, 255, 255, .08);
-            background: linear-gradient(180deg, rgba(111, 149, 255, .45), rgba(65, 96, 212, .28));
-        }
-
-        .dir-btn.pressed {
-            animation: flash .22s ease;
-            box-shadow: 0 0 0 3px rgba(125, 208, 255, .5), 0 18px 34px rgba(0, 0, 0, .24);
-        }
-
-        @keyframes flash {
-            0% {
-                transform: scale(.98);
-            }
-
-            50% {
-                transform: scale(1.04);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .result-grid {
-            display: grid;
-            grid-template-columns: 1.05fr .95fr;
-            gap: 16px;
-            padding: 16px 18px 0;
-        }
-
-        .panel {
-            background: rgba(255, 255, 255, .06);
-            border: 1px solid rgba(255, 255, 255, .08);
-            border-radius: 22px;
-            padding: 16px;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
-            min-height: 100%;
-        }
-
-        .panel h3 {
-            margin: 0 0 14px;
-            font-size: 1.35rem;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .icon-badge {
-            width: 38px;
-            height: 38px;
-            display: inline-grid;
-            place-items: center;
-            border-radius: 50%;
-            background: linear-gradient(180deg, #ffd76b, #caa23e);
-            box-shadow: 0 10px 18px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .24);
-            color: #fff;
-            font-size: 1.05rem;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, .22);
-            flex: 0 0 auto;
-        }
-
-        .leader-list {
-            display: grid;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .leader-item {
-            display: grid;
-            grid-template-columns: 40px 1fr auto;
-            gap: 12px;
-            align-items: center;
-            padding: 10px 12px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, .06);
-            border: 1px solid rgba(255, 255, 255, .08);
-            font-weight: 700;
-        }
-
-        .rank-pill {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            color: #18223c;
-            background: #edf4ff;
-            font-weight: 900;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55);
-        }
-
-        .leader-name {
-            color: var(--text);
-            text-align: left;
-        }
-
-        .leader-score {
-            color: #ffeb9c;
-            font-weight: 900;
-        }
-
-        .score-card {
-            display: grid;
-            gap: 14px;
-        }
-
-        .score-big {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 16px 18px;
-            border-radius: 20px;
-            background: linear-gradient(180deg, rgba(111, 149, 255, .18), rgba(255, 255, 255, .05));
-            border: 1px solid rgba(255, 255, 255, .10);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
-        }
-
-        .score-main {
-            font-size: clamp(1.4rem, 2vw, 2rem);
-            font-weight: 900;
-            margin: 0;
-        }
-
-        .score-main .num {
-            color: #ffec99;
-        }
-
-        .score-sub {
-            color: var(--muted);
-            margin: 4px 0 0;
-            line-height: 1.5;
-        }
-
-        .stats {
-            display: grid;
-            gap: 10px;
-        }
-
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 12px 14px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, .06);
-            border: 1px solid rgba(255, 255, 255, .08);
-            font-weight: 700;
-        }
-
-        .stat-row span:last-child {
-            color: #ffe78c;
-            font-weight: 900;
-            text-align: right;
-        }
-
-        .category-box {
-            padding: 16px 16px 18px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, .07);
-            border: 1px solid rgba(255, 255, 255, .1);
-        }
-
-        .category-title {
-            margin: 0 0 8px;
-            font-size: 1.15rem;
-            font-weight: 900;
-            letter-spacing: .3px;
-        }
-
-        .category-title.good {
-            color: var(--good);
-        }
-
-        .category-title.warn {
-            color: var(--warn);
-        }
-
-        .category-title.bad {
-            color: var(--bad);
-        }
-
-        .category-desc {
-            margin: 0;
-            color: var(--muted);
-            line-height: 1.65;
-        }
-
-        .result-actions {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            padding: 16px 18px 18px;
-        }
-
-        .secondary-btn {
-            height: 52px;
-            min-width: 150px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, .10);
-            background: rgba(255, 255, 255, .08);
-            color: white;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            transition: transform .15s ease, filter .15s ease;
-        }
-
-        .secondary-btn:hover {
-            transform: translateY(-1px);
-            filter: brightness(1.03);
-        }
-
-        .secondary-btn:active {
-            transform: translateY(1px);
-        }
-
-        .footer-note {
-            text-align: center;
-            color: rgba(245, 247, 255, .66);
-            font-size: .92rem;
-            padding: 0 18px 18px;
-        }
-
-        @media (max-width: 980px) {
-
-            .instruction-grid,
-            .result-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .controls {
-                width: min(520px, 100%);
-            }
-
-            .hero-content {
-                padding: 22px 18px 14px;
-            }
-        }
-
-        @media (max-width: 560px) {
-            .controls {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .dir-btn {
-                min-height: 104px;
-            }
-
-            .screen-title {
-                font-size: 1.6rem;
-            }
-
-            .fish-stage {
-                min-height: 220px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Match by Direction</title>
+  <style>
+    :root {
+      --bg1: #2b3e66;
+      --bg2: #1d2b49;
+      --panel: rgba(255, 255, 255, .08);
+      --line: rgba(255, 255, 255, .12);
+      --text: #f5f7ff;
+      --muted: rgba(245, 247, 255, .78);
+      --good: #9be38c;
+      --warn: #ffd56f;
+      --bad: #ff8e8e;
+      --shadow: 0 20px 50px rgba(0, 0, 0, .22);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, .06) 0 2px, transparent 3px),
+        radial-gradient(circle at 80% 10%, rgba(255, 255, 255, .05) 0 3px, transparent 4px),
+        radial-gradient(circle at 30% 75%, rgba(255, 255, 255, .04) 0 2px, transparent 3px),
+        radial-gradient(circle at 70% 78%, rgba(255, 255, 255, .05) 0 2px, transparent 3px),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 10% 12%, rgba(255, 255, 255, .07) 0 3px, transparent 4px),
+        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, .05) 0 2px, transparent 3px),
+        radial-gradient(circle at 82% 18%, rgba(255, 255, 255, .06) 0 2px, transparent 3px),
+        radial-gradient(circle at 86% 26%, rgba(255, 255, 255, .04) 0 3px, transparent 4px),
+        radial-gradient(circle at 8% 78%, rgba(255, 255, 255, .05) 0 2px, transparent 3px),
+        radial-gradient(circle at 90% 86%, rgba(255, 255, 255, .05) 0 2px, transparent 3px);
+      opacity: .7;
+    }
+
+    .wrap {
+      width: min(1240px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 18px 0 34px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .hero,
+    .game-shell,
+    .result-shell {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .05));
+      border: 1px solid rgba(255, 255, 255, .09);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .top-zigzag {
+      height: 20px;
+      background:
+        linear-gradient(-45deg, transparent 12px, rgba(255, 255, 255, .08) 12px 24px, transparent 24px) bottom/24px 100% repeat-x;
+      opacity: .9;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      align-items: stretch;
+    }
+
+    .hero-content {
+      padding: 26px 28px 18px;
+      text-align: center;
+      display: grid;
+      place-items: center;
+      gap: 18px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(2.3rem, 4vw, 4.2rem);
+      letter-spacing: 1px;
+      font-weight: 900;
+      line-height: 1.05;
+      text-transform: uppercase;
+      text-shadow: 0 8px 22px rgba(0, 0, 0, .25);
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: clamp(1.05rem, 1.6vw, 1.45rem);
+      font-weight: 800;
+    }
+
+    .desc {
+      margin: 0 auto;
+      max-width: 900px;
+      font-size: clamp(1rem, 1.2vw, 1.1rem);
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .instruction-grid {
+      width: min(960px, 100%);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 4px;
+    }
+
+    .instruction {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .09);
+      border-radius: 20px;
+      padding: 16px 14px;
+      text-align: left;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+    }
+
+    .instruction b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .instruction span {
+      color: var(--muted);
+      font-size: .96rem;
+      line-height: 1.5;
+    }
+
+    .name-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .name-input {
+      width: min(420px, 100%);
+      height: 54px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .96);
+      color: #16213a;
+      padding: 0 16px;
+      font-size: 1rem;
+      outline: none;
+      box-shadow: inset 0 2px 12px rgba(0, 0, 0, .08);
+    }
+
+    .btn {
+      height: 54px;
+      min-width: 150px;
+      border: 0;
+      border-radius: 16px;
+      font-weight: 900;
+      letter-spacing: .6px;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(180deg, #5e83ff, #4160d4);
+      box-shadow: 0 10px 24px rgba(56, 86, 205, .34), inset 0 1px 0 rgba(255, 255, 255, .2);
+      transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    .btn:active {
+      transform: translateY(1px) scale(.99);
+    }
+
+    .cover-illustration {
+      padding: 10px 0 34px;
+      display: flex;
+      justify-content: center;
+      gap: clamp(12px, 3vw, 28px);
+      align-items: flex-end;
+      flex-wrap: wrap;
+      opacity: .97;
+    }
+
+    .duck {
+      width: var(--w, 92px);
+      height: calc(var(--w, 92px) * .78);
+      position: relative;
+      border-radius: 50% 50% 45% 45%;
+      background: linear-gradient(180deg, #ffe27a, #f4c542);
+      box-shadow:
+        inset 0 -8px 16px rgba(160, 120, 20, .2),
+        inset 0 2px 0 rgba(255, 255, 255, .5),
+        0 12px 18px rgba(0, 0, 0, .12);
+      transform-origin: center;
+      animation: float 2.6s ease-in-out infinite;
+    }
+
+    .duck::before {
+      content: "";
+      position: absolute;
+      width: 24%;
+      height: 18%;
+      right: -11%;
+      top: 38%;
+      background: #ff9f2f;
+      border-radius: 999px;
+      box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .12);
+    }
+
+    .duck::after {
+      content: "";
+      position: absolute;
+      width: 12%;
+      height: 12%;
+      right: 24%;
+      top: 24%;
+      border-radius: 50%;
+      background: #111;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, .18);
+    }
+
+    .duck .wing {
+      position: absolute;
+      left: 22%;
+      top: 40%;
+      width: 30%;
+      height: 22%;
+      background: rgba(255, 205, 92, .8);
+      border-radius: 50%;
+      box-shadow: inset 0 -4px 8px rgba(0, 0, 0, .08);
+    }
+
+    .duck .beak-tip {
+      position: absolute;
+      right: -1%;
+      top: 39%;
+      width: 8%;
+      height: 6%;
+      border-radius: 999px;
+      background: #ffb85c;
+      opacity: .9;
+    }
+
+    .dir-left {
+      transform: rotate(180deg);
+    }
+
+    .dir-up {
+      transform: rotate(-90deg);
+    }
+
+    .dir-down {
+      transform: rotate(90deg);
+    }
+
+    .dir-right {
+      transform: rotate(0deg);
+    }
+
+    .small-duck {
+      --w: 120px;
+    }
+
+    .backdrop-duck {
+      position: absolute;
+      opacity: .08;
+      filter: blur(.1px);
+      pointer-events: none;
+      transform: scale(.9);
+    }
+
+    .bd1 {
+      left: 2%;
+      top: 20%;
+    }
+
+    .bd2 {
+      right: 3%;
+      top: 18%;
+    }
+
+    .bd3 {
+      left: 7%;
+      bottom: 12%;
+    }
+
+    .bd4 {
+      right: 9%;
+      bottom: 10%;
+    }
+
+    .bd5 {
+      left: 48%;
+      top: 2%;
+      transform: scale(.5);
+      opacity: .06;
+    }
+
+    .bd6 {
+      right: 46%;
+      bottom: 5%;
+      transform: scale(.55);
+      opacity: .06;
+    }
+
+    .game-shell,
+    .result-shell {
+      margin-top: 18px;
+      padding-bottom: 18px;
+    }
+
+    .screen-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      font-weight: 900;
+      margin: 16px 0 2px;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+
+    .game-top {
+      padding: 16px 20px 0;
+      display: grid;
+      gap: 16px;
+    }
+
+    .progress-card {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 22px;
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .level-meta {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: .98rem;
+    }
+
+    .level-meta strong {
+      color: var(--text);
+    }
+
+    .timer-line {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #f3f6ff;
+    }
+
+    .fish-stage {
+      min-height: 260px;
+      display: grid;
+      place-items: center;
+      padding: 12px 14px 6px;
+    }
+
+    .duck-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+      min-height: 170px;
+    }
+
+    .question-title {
+      font-size: 1.02rem;
+      color: var(--muted);
+      margin: 0;
+      text-align: center;
+    }
+
+    .click-tray {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .click-slot {
+      min-width: 118px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .13);
+      background: rgba(255, 255, 255, .06);
+      color: rgba(255, 255, 255, .92);
+      font-weight: 800;
+      text-align: center;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+      transition: all .16s ease;
+    }
+
+    .click-slot.empty {
+      opacity: .55;
+    }
+
+    .click-slot.correct {
+      background: rgba(155, 227, 140, .16);
+      border-color: rgba(155, 227, 140, .35);
+    }
+
+    .click-slot.wrong {
+      background: rgba(255, 142, 142, .15);
+      border-color: rgba(255, 142, 142, .35);
+    }
+
+    .controls-wrap {
+      margin-top: 8px;
+      padding: 6px 14px 22px;
+      display: grid;
+      gap: 12px;
+      justify-items: center;
+    }
+
+    .controls-note {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: .95rem;
+      text-align: center;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(126px, 1fr));
+      gap: 14px;
+      width: min(620px, 100%);
+    }
+
+    .dir-btn {
+      border: 0;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .07));
+      color: white;
+      min-height: 118px;
+      cursor: pointer;
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, .08);
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      transition: transform .12s ease, background .12s ease, box-shadow .12s ease, filter .12s ease;
+      border: 1px solid rgba(255, 255, 255, .10);
+    }
+
+    .dir-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+    }
+
+    .dir-btn:active {
+      transform: translateY(1px) scale(.99);
+    }
+
+    .dir-icon {
+      font-size: 3rem;
+      line-height: 1;
+      text-shadow: 0 8px 16px rgba(0, 0, 0, .22);
+    }
+
+    .dir-key {
+      margin-top: 6px;
+      font-size: .88rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, .83);
+      letter-spacing: .3px;
+    }
+
+    .dir-label {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: .78rem;
+      color: rgba(255, 255, 255, .68);
+      font-weight: 700;
+    }
+
+    .dir-btn.active {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 0 0 2px rgba(125, 208, 255, .4), 0 18px 36px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(255, 255, 255, .08);
+      background: linear-gradient(180deg, rgba(111, 149, 255, .45), rgba(65, 96, 212, .28));
+    }
+
+    .dir-btn.pressed {
+      animation: flash .22s ease;
+      box-shadow: 0 0 0 3px rgba(125, 208, 255, .5), 0 18px 34px rgba(0, 0, 0, .24);
+    }
+
+    @keyframes flash {
+      0% {
+        transform: scale(.98);
+      }
+
+      50% {
+        transform: scale(1.04);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-4px);
+      }
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 16px;
+      padding: 16px 18px 0;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+      min-height: 100%;
+    }
+
+    .panel h3 {
+      margin: 0 0 14px;
+      font-size: 1.35rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-badge {
+      width: 38px;
+      height: 38px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #ffd76b, #caa23e);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .24);
+      color: #fff;
+      font-size: 1.05rem;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, .22);
+      flex: 0 0 auto;
+    }
+
+    .leader-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .leader-item {
+      display: grid;
+      grid-template-columns: 40px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .08);
+      font-weight: 700;
+    }
+
+    .rank-pill {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #18223c;
+      background: #edf4ff;
+      font-weight: 900;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55);
+    }
+
+    .leader-name {
+      color: var(--text);
+      text-align: left;
+    }
+
+    .leader-score {
+      color: #ffeb9c;
+      font-weight: 900;
+    }
+
+    .score-card {
+      display: grid;
+      gap: 14px;
+    }
+
+    .score-big {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(111, 149, 255, .18), rgba(255, 255, 255, .05));
+      border: 1px solid rgba(255, 255, 255, .10);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+    }
+
+    .score-main {
+      font-size: clamp(1.4rem, 2vw, 2rem);
+      font-weight: 900;
+      margin: 0;
+    }
+
+    .score-main .num {
+      color: #ffec99;
+    }
+
+    .score-sub {
+      color: var(--muted);
+      margin: 4px 0 0;
+      line-height: 1.5;
+    }
+
+    .stats {
+      display: grid;
+      gap: 10px;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .08);
+      font-weight: 700;
+    }
+
+    .stat-row span:last-child {
+      color: #ffe78c;
+      font-weight: 900;
+      text-align: right;
+    }
+
+    .category-box {
+      padding: 16px 16px 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .07);
+      border: 1px solid rgba(255, 255, 255, .1);
+    }
+
+    .category-title {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: .3px;
+    }
+
+    .category-title.good {
+      color: var(--good);
+    }
+
+    .category-title.warn {
+      color: var(--warn);
+    }
+
+    .category-title.bad {
+      color: var(--bad);
+    }
+
+    .category-desc {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .result-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 16px 18px 18px;
+    }
+
+    .secondary-btn {
+      height: 52px;
+      min-width: 150px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .08);
+      color: white;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform .15s ease, filter .15s ease;
+    }
+
+    .secondary-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    .footer-note {
+      text-align: center;
+      color: rgba(245, 247, 255, .66);
+      font-size: .92rem;
+      padding: 0 18px 18px;
+    }
+
+    @media (max-width: 980px) {
+
+      .instruction-grid,
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        width: min(520px, 100%);
+      }
+
+      .hero-content {
+        padding: 22px 18px 14px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .controls {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .dir-btn {
+        min-height: 104px;
+      }
+
+      .screen-title {
+        font-size: 1.6rem;
+      }
+
+      .fish-stage {
+        min-height: 220px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="wrap">
-        <!-- COVER -->
-        <section id="cover" class="hero">
-            <div class="top-zigzag"></div>
-            <div class="hero-content">
-                <div class="backdrop-fish bf1 fish small-fish dir-left"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
-                <div class="backdrop-fish bf2 fish small-fish dir-up"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
-                <div class="backdrop-fish bf3 fish small-fish dir-right"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
-                <div class="backdrop-fish bf4 fish small-fish dir-down"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
-                <div class="backdrop-fish bf5 fish small-fish dir-left"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
-                <div class="backdrop-fish bf6 fish small-fish dir-right"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
+  <div class="wrap">
+    <!-- COVER -->
+    <section id="cover" class="hero">
+      <div class="top-zigzag"></div>
+      <div class="hero-content">
+        <div class="backdrop-duck bd1 duck small-duck dir-left">
+          <span class="wing"></span><span class="beak-tip"></span>
+        </div>
+        <div class="backdrop-duck bd2 duck small-duck dir-up">
+          <span class="wing"></span><span class="beak-tip"></span>
+        </div>
+        <div class="backdrop-duck bd3 duck small-duck dir-right">
+          <span class="wing"></span><span class="beak-tip"></span>
+        </div>
+        <div class="backdrop-duck bd4 duck small-duck dir-down">
+          <span class="wing"></span><span class="beak-tip"></span>
+        </div>
+        <div class="backdrop-duck bd5 duck small-duck dir-left">
+          <span class="wing"></span><span class="beak-tip"></span>
+        </div>
+        <div class="backdrop-duck bd6 duck small-duck dir-right">
+          <span class="wing"></span><span class="beak-tip"></span>
+        </div>
 
-                <h1 class="title">MATCH BY DIRECTION</h1>
-                <p class="subtitle">Welcome to the reaction time and cognitive performance test!</p>
-                <p class="desc">
-                    Pilih arah panah yang sesuai dengan arah hadap ikan secepat dan setepat mungkin.
-                </p>
+        <h1 class="title">MATCH BY DIRECTION</h1>
+        <p class="subtitle">Welcome to the reaction time and cognitive performance test!</p>
+        <p class="desc">
+          Pilih arah panah yang sesuai dengan arah hadap bebek secepat dan setepat mungkin.
+        </p>
 
-                <div class="instruction-grid">
-                    <div class="instruction">
-                        <b>1. Use keyboard controls</b>
-                        <span>PgUp = atas, PgDn = bawah, Home = kanan, End = kiri.</span>
-                    </div>
-                    <div class="instruction">
-                        <b>2. Three levels</b>
-                        <span>Level 1: 10 soal, Level 2: 12 soal, Level 3: 15 soal.</span>
-                    </div>
-                    <div class="instruction">
-                        <b>3. Beat the timer</b>
-                        <span>Kerjakan secepat dan setepat mungkin untuk hasil terbaik.</span>
-                    </div>
-                </div>
+        <div class="instruction-grid">
+          <div class="instruction">
+            <b>1. Use keyboard controls</b>
+            <span>PgUp = atas, PgDn = bawah, Home = kanan, End = kiri.</span>
+          </div>
+          <div class="instruction">
+            <b>2. Three levels</b>
+            <span>Level 1: 15 soal, Level 2: 15 soal, Level 3: 15 soal.</span>
+          </div>
+          <div class="instruction">
+            <b>3. Beat the timer</b>
+            <span>Kerjakan secepat dan setepat mungkin untuk hasil terbaik.</span>
+          </div>
+        </div>
 
-                <div class="name-row">
-                    <input id="playerName" class="name-input" type="text" placeholder="Enter your name">
-                    <button class="btn" onclick="startGame()">PLAY</button>
-                </div>
+        <div class="name-row">
+          <input id="playerName" class="name-input" type="text" placeholder="Enter your name" />
+          <button class="btn" onclick="startGame()">PLAY</button>
+        </div>
+      </div>
+
+      <div class="cover-illustration" aria-hidden="true">
+        <div class="duck small-duck dir-right"><span class="wing"></span><span class="beak-tip"></span></div>
+        <div class="duck small-duck dir-up"><span class="wing"></span><span class="beak-tip"></span></div>
+        <div class="duck small-duck dir-left"><span class="wing"></span><span class="beak-tip"></span></div>
+        <div class="duck small-duck dir-down"><span class="wing"></span><span class="beak-tip"></span></div>
+      </div>
+    </section>
+
+    <!-- GAME -->
+    <section id="game" class="game-shell hidden">
+      <div class="top-zigzag"></div>
+
+      <h2 class="screen-title">MATCH BY DIRECTION</h2>
+
+      <div class="game-top">
+        <div class="progress-card">
+          <div class="level-meta">
+            <div>Level: <strong id="levelLabel">1</strong></div>
+            <div>Soal: <strong id="questionCounter">0 / 0</strong></div>
+            <div>Klik: <strong id="clickCounter">0 / 0</strong></div>
+          </div>
+          <div class="timer-line">Sisa Waktu: <span id="timeLeft">0</span> detik</div>
+        </div>
+
+        <div class="fish-stage">
+          <div>
+            <p class="question-title">Ikuti urutan arah yang muncul dengan klik yang tepat.</p>
+            <div id="fishRow" class="duck-row"></div>
+            <div class="click-tray" id="clickTray"></div>
+          </div>
+        </div>
+
+        <div class="controls-wrap">
+          <div class="controls-note">
+            Tekan tombol keyboard yang sesuai arah bebek. Tombol yang dipilih akan terlihat aktif.
+          </div>
+
+          <div class="controls">
+            <button class="dir-btn" id="btn-left" onclick="pressDirection('left')">
+              <div>
+                <div class="dir-icon">←</div>
+                <div class="dir-key">End</div>
+              </div>
+              <div class="dir-label">Kiri</div>
+            </button>
+
+            <button class="dir-btn" id="btn-up" onclick="pressDirection('up')">
+              <div>
+                <div class="dir-icon">↑</div>
+                <div class="dir-key">PgUp</div>
+              </div>
+              <div class="dir-label">Atas</div>
+            </button>
+
+            <button class="dir-btn" id="btn-right" onclick="pressDirection('right')">
+              <div>
+                <div class="dir-icon">→</div>
+                <div class="dir-key">Home</div>
+              </div>
+              <div class="dir-label">Kanan</div>
+            </button>
+
+            <button class="dir-btn" id="btn-down" onclick="pressDirection('down')">
+              <div>
+                <div class="dir-icon">↓</div>
+                <div class="dir-key">PgDn</div>
+              </div>
+              <div class="dir-label">Bawah</div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULT -->
+    <section id="result" class="result-shell hidden">
+      <div class="top-zigzag"></div>
+
+      <h2 class="screen-title">MATCH BY DIRECTION</h2>
+
+      <div class="result-grid">
+        <div class="panel">
+          <h3><span class="icon-badge">🏆</span>Leaderboard</h3>
+          <div id="leaderboard" class="leader-list"></div>
+        </div>
+
+        <div class="panel score-card">
+          <div class="score-big">
+            <div>
+              <p class="score-main" id="finalScore">Score: <span class="num">0</span> / 100</p>
+              <p class="score-sub" id="finalSubtitle">Hasil akhir permainan akan tampil di sini.</p>
             </div>
+            <div class="icon-badge" style="width:64px;height:64px;font-size:1.55rem;">★</div>
+          </div>
 
-            <div class="cover-illustration" aria-hidden="true">
-                <div class="fish small-fish dir-right"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
-                <div class="fish small-fish dir-up"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
-                <div class="fish small-fish dir-left"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
-                <div class="fish small-fish dir-down"><span class="fin"></span><span class="stripe"></span><span class="mouth"></span></div>
-            </div>
-        </section>
+          <div class="stats">
+            <div class="stat-row"><span>Level 1</span><span id="statL1">-</span></div>
+            <div class="stat-row"><span>Level 2</span><span id="statL2">-</span></div>
+            <div class="stat-row"><span>Level 3</span><span id="statL3">-</span></div>
+            <div class="stat-row"><span>Total benar</span><span id="totalCorrectText">-</span></div>
+            <div class="stat-row"><span>Total waktu</span><span id="totalTimeText">-</span></div>
+            <div class="stat-row"><span>Akurasi</span><span id="accuracyText">-</span></div>
+            <div class="stat-row"><span>Speed</span><span id="speedText">-</span></div>
+            <div class="stat-row"><span>Skor akhir</span><span id="scorePctText">-</span></div>
+          </div>
 
-        <!-- GAME -->
-        <section id="game" class="game-shell hidden">
-            <div class="top-zigzag"></div>
+          <div class="category-box">
+            <p id="categoryTitle" class="category-title">-</p>
+            <p id="categoryDesc" class="category-desc">-</p>
+          </div>
+        </div>
+      </div>
 
-            <h2 class="screen-title">MATCH BY DIRECTION</h2>
+      <div class="result-actions">
+        <button class="secondary-btn" onclick="shareScore()">SHARE</button>
+        <button class="btn" onclick="location.reload()">PLAY AGAIN</button>
+      </div>
 
-            <div class="game-top">
-                <div class="progress-card">
-                    <div class="level-meta">
-                        <div>Level: <strong id="levelLabel">1</strong></div>
-                        <div>Soal: <strong id="questionCounter">0 / 0</strong></div>
-                        <div>Klik: <strong id="clickCounter">0 / 0</strong></div>
-                    </div>
-                    <div class="timer-line">Sisa Waktu: <span id="timeLeft">0</span> detik</div>
-                </div>
+      <div class="footer-note">
+        Leaderboard tersimpan di perangkat ini. Setiap hasil akan diberi nomor percobaan.
+      </div>
+    </section>
+  </div>
 
-                <div class="fish-stage">
-                    <div>
-                        <p class="question-title">Ikuti urutan arah yang muncul dengan klik yang tepat.</p>
-                        <div id="fishRow" class="fish-row"></div>
-                        <div class="click-tray" id="clickTray"></div>
-                    </div>
-                </div>
+  <script>
+    const levelConfig = [
+      { questions: 10, time: 45, requiredClicks: 1, label: "Level 1" },
+      { questions: 12, time: 60, requiredClicks: 2, label: "Level 2" },
+      { questions: 15, time: 75, requiredClicks: 3, label: "Level 3" },
+    ];
 
-                <div class="controls-wrap">
-                    <div class="controls-note">
-                        Tekan tombol keyboard yang sesuai arah ikan. Tombol yang dipilih akan terlihat aktif.
-                    </div>
+    // Total max score = 100
+    // Akurasi 70 poin, speed 30 poin
+    const levelAccuracyWeights = [20, 25, 25]; // total 70
+    const speedMax = 30;
 
-                    <div class="controls">
-                        <button class="dir-btn" id="btn-left" onclick="pressDirection('left')">
-                            <div>
-                                <div class="dir-icon">←</div>
-                                <div class="dir-key">End</div>
-                            </div>
-                            <div class="dir-label">Kiri</div>
-                        </button>
+    const keyToDirection = {
+      PageUp: "up",
+      PageDown: "down",
+      Home: "right",
+      End: "left",
+      ArrowUp: "up",
+      ArrowDown: "down",
+      ArrowRight: "right",
+      ArrowLeft: "left",
+    };
 
-                        <button class="dir-btn" id="btn-up" onclick="pressDirection('up')">
-                            <div>
-                                <div class="dir-icon">↑</div>
-                                <div class="dir-key">PgUp</div>
-                            </div>
-                            <div class="dir-label">Atas</div>
-                        </button>
+    const directionLabels = {
+      left: "Kiri",
+      up: "Atas",
+      right: "Kanan",
+      down: "Bawah",
+    };
 
-                        <button class="dir-btn" id="btn-right" onclick="pressDirection('right')">
-                            <div>
-                                <div class="dir-icon">→</div>
-                                <div class="dir-key">Home</div>
-                            </div>
-                            <div class="dir-label">Kanan</div>
-                        </button>
+    let level = 0;
+    let questionIndex = 0;
+    let timeLeft = 0;
+    let timerId = null;
+    let levelStartMs = 0;
 
-                        <button class="dir-btn" id="btn-down" onclick="pressDirection('down')">
-                            <div>
-                                <div class="dir-icon">↓</div>
-                                <div class="dir-key">PgDn</div>
-                            </div>
-                            <div class="dir-label">Bawah</div>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
+    let currentTargets = [];
+    let currentClickIndex = 0;
+    let currentQuestionCorrect = true;
+    let isTransitioning = false;
 
-        <!-- RESULT -->
-        <section id="result" class="result-shell hidden">
-            <div class="top-zigzag"></div>
+    let totalCorrectQuestions = [0, 0, 0];
+    let levelTimeSpent = [0, 0, 0];
+    let leaderboard = [];
 
-            <h2 class="screen-title">MATCH BY DIRECTION</h2>
+    const fishRow = document.getElementById("fishRow");
+    const clickTray = document.getElementById("clickTray");
+    const timeLeftEl = document.getElementById("timeLeft");
+    const levelLabel = document.getElementById("levelLabel");
+    const questionCounter = document.getElementById("questionCounter");
+    const clickCounter = document.getElementById("clickCounter");
 
-            <div class="result-grid">
-                <div class="panel">
-                    <h3><span class="icon-badge">🏆</span>Leaderboard</h3>
-                    <div id="leaderboard" class="leader-list"></div>
-                </div>
+    function startGame() {
+      document.getElementById("cover").classList.add("hidden");
+      document.getElementById("game").classList.remove("hidden");
+      loadLeaderboard();
+      startLevel(0);
+    }
 
-                <div class="panel score-card">
-                    <div class="score-big">
-                        <div>
-                            <p class="score-main" id="finalScore">Score: <span class="num">0</span></p>
-                            <p class="score-sub" id="finalSubtitle">Hasil akhir permainan akan tampil di sini.</p>
-                        </div>
-                        <div class="icon-badge" style="width:64px;height:64px;font-size:1.55rem;">★</div>
-                    </div>
+    function startLevel(nextLevelIndex) {
+      clearInterval(timerId);
 
-                    <div class="stats">
-                        <div class="stat-row"><span>Level 1</span><span id="statL1">-</span></div>
-                        <div class="stat-row"><span>Level 2</span><span id="statL2">-</span></div>
-                        <div class="stat-row"><span>Level 3</span><span id="statL3">-</span></div>
-                        <div class="stat-row"><span>Total benar</span><span id="totalCorrectText">-</span></div>
-                        <div class="stat-row"><span>Total waktu</span><span id="totalTimeText">-</span></div>
-                        <div class="stat-row"><span>Akurasi</span><span id="accuracyText">-</span></div>
-                        <div class="stat-row"><span>Kecepatan</span><span id="speedText">-</span></div>
-                        <div class="stat-row"><span>Skor %</span><span id="scorePctText">-</span></div>
-                    </div>
+      level = nextLevelIndex;
+      if (level > 2) {
+        endGame();
+        return;
+      }
 
-                    <div class="category-box">
-                        <p id="categoryTitle" class="category-title">-</p>
-                        <p id="categoryDesc" class="category-desc">-</p>
-                    </div>
-                </div>
-            </div>
+      questionIndex = 0;
+      currentClickIndex = 0;
+      currentTargets = [];
+      currentQuestionCorrect = true;
+      isTransitioning = false;
 
-            <div class="result-actions">
-                <button class="secondary-btn" onclick="shareScore()">SHARE</button>
-                <button class="btn" onclick="location.reload()">PLAY AGAIN</button>
-            </div>
+      const cfg = levelConfig[level];
+      timeLeft = cfg.time;
+      levelStartMs = Date.now();
 
-            <div class="footer-note">
-                Leaderboard tersimpan di perangkat ini. Setiap hasil akan diberi nomor percobaan.
-            </div>
-        </section>
-    </div>
+      levelLabel.textContent = level + 1;
+      questionCounter.textContent = `0 / ${cfg.questions}`;
+      clickCounter.textContent = `0 / ${cfg.requiredClicks}`;
+      timeLeftEl.textContent = timeLeft;
 
-    <script>
-        const levelConfig = [
-            { questions: 10, time: 45, requiredClicks: 1, label: "Level 1" },
-            { questions: 12, time: 60, requiredClicks: 2, label: "Level 2" },
-            { questions: 15, time: 75, requiredClicks: 3, label: "Level 3" },
-        ];
+      renderQuestion();
 
-        // Total akurasi 80 poin, speed 20 poin, total 100 poin.
-        const accuracyLevelMax = [20, 25, 35]; // total 80
-        const speedMax = 20;
+      timerId = setInterval(() => {
+        timeLeft--;
+        timeLeftEl.textContent = timeLeft;
 
-        const keyToDirection = {
-            PageUp: "up",
-            PageDown: "down",
-            Home: "right",
-            End: "left",
-            ArrowUp: "up",
-            ArrowDown: "down",
-            ArrowRight: "right",
-            ArrowLeft: "left",
+        if (timeLeft <= 0) {
+          finishLevel();
+        }
+      }, 1000);
+    }
+
+    function finishLevel() {
+      clearInterval(timerId);
+      const elapsed = Math.max(0, Math.ceil((Date.now() - levelStartMs) / 1000));
+      levelTimeSpent[level] = elapsed;
+
+      if (level < 2) {
+        startLevel(level + 1);
+      } else {
+        endGame();
+      }
+    }
+
+    function randomDirection() {
+      const dirs = ["left", "right", "up", "down"];
+      return dirs[Math.floor(Math.random() * dirs.length)];
+    }
+
+    function renderDuck(dir) {
+      const duck = document.createElement("div");
+      duck.className = `duck dir-${dir}`;
+      duck.innerHTML = `<span class="wing"></span><span class="beak-tip"></span>`;
+      return duck;
+    }
+
+    function renderQuestion() {
+      const cfg = levelConfig[level];
+
+      if (questionIndex >= cfg.questions) {
+        finishLevel();
+        return;
+      }
+
+      currentTargets = Array.from({ length: cfg.requiredClicks }, () => randomDirection());
+      currentClickIndex = 0;
+      currentQuestionCorrect = true;
+      isTransitioning = false;
+
+      fishRow.innerHTML = "";
+      currentTargets.forEach((dir) => {
+        fishRow.appendChild(renderDuck(dir));
+      });
+
+      renderClickTray();
+
+      questionIndex++;
+      questionCounter.textContent = `${questionIndex} / ${cfg.questions}`;
+      clickCounter.textContent = `0 / ${cfg.requiredClicks}`;
+    }
+
+    function renderClickTray(lastState = null) {
+      const cfg = levelConfig[level];
+      clickTray.innerHTML = "";
+
+      for (let i = 0; i < cfg.requiredClicks; i++) {
+        const slot = document.createElement("div");
+        slot.className = "click-slot" + (i < currentClickIndex ? " correct" : " empty");
+
+        if (i < currentClickIndex && lastState && lastState[i]) {
+          slot.classList.add(lastState[i].correct ? "correct" : "wrong");
+          slot.innerHTML = `${i + 1}. ${directionLabels[lastState[i].pressed]} ${lastState[i].correct ? "✓" : "✕"}`;
+        } else if (i < currentClickIndex) {
+          slot.innerHTML = `${i + 1}. Sudah diklik`;
+        } else {
+          slot.innerHTML = `${i + 1}. Belum`;
+        }
+
+        clickTray.appendChild(slot);
+      }
+    }
+
+    function updateButtonStates(activeDir) {
+      ["left", "up", "right", "down"].forEach((dir) => {
+        const btn = document.getElementById(`btn-${dir}`);
+        btn.classList.remove("active");
+        if (dir === activeDir) btn.classList.add("active");
+      });
+
+      const btn = document.getElementById(`btn-${activeDir}`);
+      btn.classList.add("pressed");
+      setTimeout(() => btn.classList.remove("pressed"), 180);
+    }
+
+    function pressDirection(direction) {
+      const cfg = levelConfig[level];
+      if (!cfg || currentTargets.length === 0 || isTransitioning) return;
+
+      updateButtonStates(direction);
+
+      const expected = currentTargets[currentClickIndex];
+      const isCorrect = direction === expected;
+
+      const progressState = new Array(cfg.requiredClicks).fill(null);
+      for (let i = 0; i < currentClickIndex; i++) {
+        progressState[i] = { pressed: currentTargets[i], correct: true };
+      }
+      progressState[currentClickIndex] = { pressed: direction, correct: isCorrect };
+
+      if (!isCorrect) currentQuestionCorrect = false;
+
+      currentClickIndex++;
+      clickCounter.textContent = `${currentClickIndex} / ${cfg.requiredClicks}`;
+      renderClickTray(progressState);
+
+      if (currentClickIndex >= cfg.requiredClicks) {
+        isTransitioning = true;
+
+        if (currentQuestionCorrect) {
+          totalCorrectQuestions[level]++;
+        }
+
+        setTimeout(() => {
+          renderQuestion();
+        }, 140);
+      }
+    }
+
+    document.addEventListener("keydown", (e) => {
+      const dir = keyToDirection[e.key];
+      if (!dir) return;
+
+      if (document.activeElement && document.activeElement.tagName === "INPUT") return;
+
+      e.preventDefault();
+      pressDirection(dir);
+    }, { passive: false });
+
+    function calculateScores() {
+      const totalQuestions = levelConfig.reduce((sum, cfg) => sum + cfg.questions, 0);
+      const totalAllowedTime = levelConfig.reduce((sum, cfg) => sum + cfg.time, 0);
+      const totalTimeUsed = levelTimeSpent.reduce((a, b) => a + b, 0);
+      const totalCorrect = totalCorrectQuestions.reduce((a, b) => a + b, 0);
+
+      const level1Score = (totalCorrectQuestions[0] / levelConfig[0].questions) * levelAccuracyWeights[0];
+      const level2Score = (totalCorrectQuestions[1] / levelConfig[1].questions) * levelAccuracyWeights[1];
+      const level3Score = (totalCorrectQuestions[2] / levelConfig[2].questions) * levelAccuracyWeights[2];
+      const accuracyScore = level1Score + level2Score + level3Score;
+
+      const speedRatio = totalAllowedTime > 0 ? (1 - (totalTimeUsed / totalAllowedTime)) : 0;
+      const speedScore = Math.max(0, Math.min(speedMax, Math.round(speedRatio * speedMax)));
+
+      const finalScore = Math.round(accuracyScore + speedScore);
+
+      return {
+        totalQuestions,
+        totalAllowedTime,
+        totalTimeUsed,
+        totalCorrect,
+        level1Score,
+        level2Score,
+        level3Score,
+        accuracyScore,
+        speedScore,
+        finalScore,
+        accuracyPct: Math.round((accuracyScore / 70) * 100),
+        speedPct: Math.round((speedScore / 30) * 100),
+      };
+    }
+
+    function endGame() {
+      clearInterval(timerId);
+
+      document.getElementById("game").classList.add("hidden");
+      document.getElementById("result").classList.remove("hidden");
+
+      const s = calculateScores();
+      const category = getCategory(s.accuracyPct, s.speedPct);
+
+      document.getElementById("finalScore").innerHTML = `Score: <span class="num">${s.finalScore}</span> / 100`;
+      document.getElementById("finalSubtitle").textContent =
+        `Benar ${s.totalCorrect}/${s.totalQuestions} · Akurasi ${s.accuracyScore.toFixed(2)}/70 · Speed ${s.speedScore}/30`;
+
+      document.getElementById("statL1").textContent =
+        `${totalCorrectQuestions[0]} / ${levelConfig[0].questions} benar · ${levelTimeSpent[0]} dtk · ${s.level1Score.toFixed(2)} poin`;
+
+      document.getElementById("statL2").textContent =
+        `${totalCorrectQuestions[1]} / ${levelConfig[1].questions} benar · ${levelTimeSpent[1]} dtk · ${s.level2Score.toFixed(2)} poin`;
+
+      document.getElementById("statL3").textContent =
+        `${totalCorrectQuestions[2]} / ${levelConfig[2].questions} benar · ${levelTimeSpent[2]} dtk · ${s.level3Score.toFixed(2)} poin`;
+
+      document.getElementById("totalCorrectText").textContent = `${s.totalCorrect}/${s.totalQuestions} benar`;
+      document.getElementById("totalTimeText").textContent = `${s.totalTimeUsed} dtk`;
+      document.getElementById("accuracyText").textContent = `${s.accuracyScore.toFixed(2)} / 70`;
+      document.getElementById("speedText").textContent = `${s.speedScore} / 30`;
+      document.getElementById("scorePctText").textContent = `${s.finalScore} / 100`;
+
+      document.getElementById("categoryTitle").textContent = category.title;
+      document.getElementById("categoryDesc").textContent = category.desc;
+      document.getElementById("categoryTitle").className = `category-title ${category.className}`;
+
+      saveLeaderboard(s.finalScore, s.totalCorrect, s.totalQuestions, s.totalTimeUsed, s.accuracyPct, s.speedPct);
+      loadLeaderboard();
+      renderLeaderboard();
+    }
+
+    function getCategory(accuracyPct, speedPct) {
+      if (accuracyPct >= 85 && speedPct >= 70) {
+        return {
+          title: "🟢 SANGAT CEPAT & TEPAT",
+          desc: "Kinerja sangat baik. Ketepatan jawaban dan kecepatan respon sama-sama tinggi.",
+          className: "good"
         };
+      }
 
-        const directionLabels = {
-            left: "Kiri",
-            up: "Atas",
-            right: "Kanan",
-            down: "Bawah",
+      if (accuracyPct >= 70 && speedPct >= 50) {
+        return {
+          title: "🟡 CUKUP CEPAT & TEPAT",
+          desc: "Kemampuan cukup baik, namun masih bisa ditingkatkan pada bagian kecepatan atau ketelitian.",
+          className: "warn"
         };
-
-        let level = 0;
-        let questionIndex = 0;
-        let timeLeft = 0;
-        let timerId = null;
-        let levelStartMs = 0;
-        let currentTargets = [];
-        let currentClickIndex = 0;
-        let currentQuestionCorrect = true;
-        let isTransitioning = false;
-
-        let totalCorrectQuestions = [0, 0, 0];
-        let answeredQuestions = [0, 0, 0];
-        let levelTimeSpent = [0, 0, 0];
-        let leaderboard = [];
-
-        const fishRow = document.getElementById("fishRow");
-        const clickTray = document.getElementById("clickTray");
-        const timeLeftEl = document.getElementById("timeLeft");
-        const levelLabel = document.getElementById("levelLabel");
-        const questionCounter = document.getElementById("questionCounter");
-        const clickCounter = document.getElementById("clickCounter");
-
-        function startGame() {
-            document.getElementById("cover").classList.add("hidden");
-            document.getElementById("game").classList.remove("hidden");
-            loadLeaderboard();
-            startLevel(0);
-        }
-
-        function startLevel(nextLevelIndex) {
-            clearInterval(timerId);
-
-            level = nextLevelIndex;
-            if (level > 2) {
-                endGame();
-                return;
-            }
-
-            questionIndex = 0;
-            currentClickIndex = 0;
-            currentTargets = [];
-            currentQuestionCorrect = true;
-            isTransitioning = false;
-
-            const cfg = levelConfig[level];
-            timeLeft = cfg.time;
-            levelStartMs = Date.now();
-
-            levelLabel.textContent = level + 1;
-            questionCounter.textContent = `0 / ${cfg.questions}`;
-            clickCounter.textContent = `0 / ${cfg.requiredClicks}`;
-            timeLeftEl.textContent = timeLeft;
-
-            renderQuestion();
-
-            timerId = setInterval(() => {
-                timeLeft--;
-                timeLeftEl.textContent = timeLeft;
-
-                if (timeLeft <= 0) {
-                    finishLevel();
-                }
-            }, 1000);
-        }
-
-        function finishLevel() {
-            clearInterval(timerId);
-
-            const elapsed = Math.max(0, Math.ceil((Date.now() - levelStartMs) / 1000));
-            levelTimeSpent[level] = elapsed;
-
-            if (level < 2) {
-                startLevel(level + 1);
-            } else {
-                endGame();
-            }
-        }
-
-        function randomDirection() {
-            const dirs = ["left", "right", "up", "down"];
-            return dirs[Math.floor(Math.random() * dirs.length)];
-        }
-
-        function renderQuestion() {
-            const cfg = levelConfig[level];
-
-            if (questionIndex >= cfg.questions) {
-                finishLevel();
-                return;
-            }
-
-            currentTargets = Array.from({ length: cfg.requiredClicks }, () => randomDirection());
-            currentClickIndex = 0;
-            currentQuestionCorrect = true;
-            isTransitioning = false;
-
-            fishRow.innerHTML = "";
-            currentTargets.forEach((dir) => {
-                const fish = document.createElement("div");
-                fish.className = `fish dir-${dir}`;
-                fish.innerHTML = `<span class="fin"></span><span class="stripe"></span><span class="mouth"></span>`;
-                fishRow.appendChild(fish);
-            });
-
-            renderClickTray();
-
-            questionIndex++;
-            questionCounter.textContent = `${questionIndex} / ${cfg.questions}`;
-            clickCounter.textContent = `0 / ${cfg.requiredClicks}`;
-        }
-
-        function renderClickTray(lastState = null) {
-            const cfg = levelConfig[level];
-            const required = cfg.requiredClicks;
-            clickTray.innerHTML = "";
-
-            for (let i = 0; i < required; i++) {
-                const slot = document.createElement("div");
-                slot.className = "click-slot" + (i < currentClickIndex ? " correct" : " empty");
-
-                if (i < currentClickIndex && lastState && lastState[i]) {
-                    slot.classList.add(lastState[i].correct ? "correct" : "wrong");
-                    slot.innerHTML = `${i + 1}. ${directionLabels[lastState[i].pressed]} ${lastState[i].correct ? "✓" : "✕"}`;
-                } else if (i < currentClickIndex) {
-                    slot.innerHTML = `${i + 1}. Sudah diklik`;
-                } else {
-                    slot.innerHTML = `${i + 1}. Belum`;
-                }
-
-                clickTray.appendChild(slot);
-            }
-        }
-
-        function updateButtonStates(activeDir) {
-            const ids = ["left", "up", "right", "down"];
-            ids.forEach(dir => {
-                const btn = document.getElementById(`btn-${dir}`);
-                btn.classList.remove("active");
-                if (dir === activeDir) btn.classList.add("active");
-            });
-
-            const btn = document.getElementById(`btn-${activeDir}`);
-            btn.classList.add("pressed");
-            setTimeout(() => btn.classList.remove("pressed"), 180);
-        }
-
-        function pressDirection(direction) {
-            const cfg = levelConfig[level];
-            if (!cfg || currentTargets.length === 0 || isTransitioning) return;
-
-            updateButtonStates(direction);
-
-            const expected = currentTargets[currentClickIndex];
-            const isCorrect = direction === expected;
-
-            const progressState = new Array(cfg.requiredClicks).fill(null);
-            for (let i = 0; i < currentClickIndex; i++) {
-                progressState[i] = { pressed: currentTargets[i], correct: true };
-            }
-
-            progressState[currentClickIndex] = { pressed: direction, correct: isCorrect };
-
-            if (!isCorrect) {
-                currentQuestionCorrect = false;
-            }
-
-            currentClickIndex++;
-            clickCounter.textContent = `${currentClickIndex} / ${cfg.requiredClicks}`;
-            renderClickTray(progressState);
-
-            if (currentClickIndex >= cfg.requiredClicks) {
-                isTransitioning = true;
-
-                answeredQuestions[level]++;
-                if (currentQuestionCorrect) {
-                    totalCorrectQuestions[level]++;
-                }
-
-                setTimeout(() => {
-                    renderQuestion();
-                }, 140);
-            }
-        }
-
-        document.addEventListener("keydown", (e) => {
-            const dir = keyToDirection[e.key];
-            if (!dir) return;
-
-            if (document.activeElement && document.activeElement.tagName === "INPUT") return;
-
-            e.preventDefault();
-            pressDirection(dir);
-        }, { passive: false });
-
-        function calculateScores() {
-            const totalCorrect = totalCorrectQuestions.reduce((a, b) => a + b, 0);
-            const totalQuestions = levelConfig.reduce((sum, cfg) => sum + cfg.questions, 0);
-            const totalAllowedTime = levelConfig.reduce((sum, cfg) => sum + cfg.time, 0);
-            const totalTimeUsed = levelTimeSpent.reduce((a, b) => a + b, 0);
-
-            const l1 = totalCorrectQuestions[0] * (accuracyLevelMax[0] / levelConfig[0].questions);
-            const l2 = totalCorrectQuestions[1] * (accuracyLevelMax[1] / levelConfig[1].questions);
-            const l3 = totalCorrectQuestions[2] * (accuracyLevelMax[2] / levelConfig[2].questions);
-
-            const accuracyScore = l1 + l2 + l3;
-
-            const speedRatio = totalAllowedTime > 0 ? (1 - (totalTimeUsed / totalAllowedTime)) : 0;
-            const speedScore = Math.max(0, Math.min(speedMax, Math.round(speedRatio * speedMax)));
-
-            const finalScore = Math.round(accuracyScore + speedScore);
-
-            const accuracyPct = Math.round((accuracyScore / 80) * 100);
-            const speedPct = Math.round((speedScore / 20) * 100);
-            const scorePct = finalScore;
-
-            return {
-                totalCorrect,
-                totalQuestions,
-                totalAllowedTime,
-                totalTimeUsed,
-                l1,
-                l2,
-                l3,
-                accuracyScore,
-                speedScore,
-                finalScore,
-                accuracyPct,
-                speedPct,
-                scorePct
-            };
-        }
-
-        function endGame() {
-            clearInterval(timerId);
-
-            document.getElementById("game").classList.add("hidden");
-            document.getElementById("result").classList.remove("hidden");
-
-            const s = calculateScores();
-            const category = getCategory(s.accuracyPct, s.speedPct);
-
-            document.getElementById("finalScore").innerHTML = `Score: <span class="num">${s.finalScore}</span> / 100`;
-            document.getElementById("finalSubtitle").textContent =
-                `Benar ${s.totalCorrect}/${s.totalQuestions} · Akurasi ${Math.round(s.accuracyScore * 100) / 100}/80 · Speed ${s.speedScore}/20`;
-
-            document.getElementById("statL1").textContent =
-                `${totalCorrectQuestions[0]} / ${levelConfig[0].questions} benar · ${levelTimeSpent[0]} dtk · ${Math.round(s.l1 * 100) / 100} poin`;
-
-            document.getElementById("statL2").textContent =
-                `${totalCorrectQuestions[1]} / ${levelConfig[1].questions} benar · ${levelTimeSpent[1]} dtk · ${Math.round(s.l2 * 100) / 100} poin`;
-
-            document.getElementById("statL3").textContent =
-                `${totalCorrectQuestions[2]} / ${levelConfig[2].questions} benar · ${levelTimeSpent[2]} dtk · ${Math.round(s.l3 * 100) / 100} poin`;
-
-            document.getElementById("totalCorrectText").textContent = `${s.totalCorrect}/${s.totalQuestions} benar`;
-            document.getElementById("totalTimeText").textContent = `${s.totalTimeUsed} dtk`;
-            document.getElementById("accuracyText").textContent = `${Math.round(s.accuracyScore * 100) / 100} / 80`;
-            document.getElementById("speedText").textContent = `${s.speedScore} / 20`;
-            document.getElementById("scorePctText").textContent = `${s.finalScore} / 100`;
-
-            document.getElementById("categoryTitle").textContent = category.title;
-            document.getElementById("categoryDesc").textContent = category.desc;
-            document.getElementById("categoryTitle").className = `category-title ${category.className}`;
-
-            saveLeaderboard(s.finalScore, s.totalCorrect, s.totalQuestions, s.totalTimeUsed, s.accuracyPct, s.speedPct);
-            loadLeaderboard();
-            renderLeaderboard();
-        }
-
-        function getCategory(accuracyPct, speedPct) {
-            if (accuracyPct >= 85 && speedPct >= 70) {
-                return {
-                    title: "🟢 SANGAT CEPAT & TEPAT",
-                    desc: "Kinerja sangat baik. Ketepatan jawaban dan kecepatan respon sama-sama tinggi.",
-                    className: "good"
-                };
-            }
-
-            if (accuracyPct >= 70 && speedPct >= 50) {
-                return {
-                    title: "🟡 CUKUP CEPAT & TEPAT",
-                    desc: "Kemampuan cukup baik, namun masih bisa ditingkatkan pada bagian kecepatan atau ketelitian.",
-                    className: "warn"
-                };
-            }
-
-            return {
-                title: "🔴 PERLU LATIHAN",
-                desc: "Kecepatan dan ketepatan masih perlu ditingkatkan, terutama pada level dengan jumlah klik lebih banyak.",
-                className: "bad"
-            };
-        }
-
-        function getNextAttemptNumber() {
-            const current = Number(localStorage.getItem("mbd_attempt_counter_v1") || "0");
-            const next = current + 1;
-            localStorage.setItem("mbd_attempt_counter_v1", String(next));
-            return next;
-        }
-
-        function saveLeaderboard(finalScore, totalCorrect, totalQuestions, totalTimeUsed, accuracyPct, speedPct) {
-            const playerName = document.getElementById("playerName").value.trim() || "Player";
-            const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v4") || "[]");
-            const attemptNo = getNextAttemptNumber();
-
-            data.push({
-                name: playerName,
-                attemptNo,
-                score: finalScore,
-                totalCorrect,
-                totalQuestions,
-                totalTimeUsed,
-                accuracyPct,
-                speedPct,
-                time: new Date().toLocaleString("id-ID")
-            });
-
-            data.sort((a, b) => b.score - a.score || b.accuracyPct - a.accuracyPct || a.totalTimeUsed - b.totalTimeUsed);
-            localStorage.setItem("mbd_leaderboard_v4", JSON.stringify(data.slice(0, 10)));
-        }
-
-        function loadLeaderboard() {
-            leaderboard = JSON.parse(localStorage.getItem("mbd_leaderboard_v4") || "[]");
-            renderLeaderboard();
-        }
-
-        function renderLeaderboard() {
-            const box = document.getElementById("leaderboard");
-
-            if (!leaderboard.length) {
-                box.innerHTML = `
-                    <div class="leader-item">
-                        <span class="rank-pill">-</span>
-                        <span class="leader-name">Belum ada data</span>
-                        <span class="leader-score">0</span>
-                    </div>`;
-                return;
-            }
-
-            box.innerHTML = leaderboard.map((row, idx) => `
-                <div class="leader-item">
-                    <div class="rank-pill">${idx + 1}</div>
-                    <div class="leader-name">
-                        ${row.name}
-                        <div style="font-size:.86rem;color:rgba(255,255,255,.68);font-weight:600;margin-top:2px;">
-                            Percobaan #${row.attemptNo} · Benar ${row.totalCorrect}/${row.totalQuestions} · Akurasi ${row.accuracyPct}% · ${row.totalTimeUsed} dtk
-                        </div>
-                    </div>
-                    <div class="leader-score">${row.score}</div>
-                </div>
-            `).join("");
-        }
-
-        async function shareScore() {
-            const s = calculateScores();
-            const text = `Match by Direction - Score ${s.finalScore}/100. Benar ${s.totalCorrect}/${s.totalQuestions}, waktu ${s.totalTimeUsed} detik.`;
-
-            if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: "Match by Direction",
-                        text
-                    });
-                    return;
-                } catch (e) { }
-            }
-
-            try {
-                await navigator.clipboard.writeText(text);
-                alert("Ringkasan skor berhasil disalin.");
-            } catch (e) {
-                alert(text);
-            }
-        }
-
-        loadLeaderboard();
-    </script>
+      }
+
+      return {
+        title: "🔴 PERLU LATIHAN",
+        desc: "Kecepatan dan ketepatan masih perlu ditingkatkan, terutama pada level dengan jumlah klik lebih banyak.",
+        className: "bad"
+      };
+    }
+
+    function getNextAttemptNumber() {
+      const current = Number(localStorage.getItem("mbd_attempt_counter_v1") || "0");
+      const next = current + 1;
+      localStorage.setItem("mbd_attempt_counter_v1", String(next));
+      return next;
+    }
+
+    function saveLeaderboard(finalScore, totalCorrect, totalQuestions, totalTimeUsed, accuracyPct, speedPct) {
+      const playerName = document.getElementById("playerName").value.trim() || "Player";
+      const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v5") || "[]");
+      const attemptNo = getNextAttemptNumber();
+
+      data.push({
+        name: playerName,
+        attemptNo,
+        score: finalScore,
+        totalCorrect,
+        totalQuestions,
+        totalTimeUsed,
+        accuracyPct,
+        speedPct,
+        time: new Date().toLocaleString("id-ID")
+      });
+
+      data.sort((a, b) => b.score - a.score || b.accuracyPct - a.accuracyPct || a.totalTimeUsed - b.totalTimeUsed);
+      localStorage.setItem("mbd_leaderboard_v5", JSON.stringify(data.slice(0, 10)));
+    }
+
+    function loadLeaderboard() {
+      leaderboard = JSON.parse(localStorage.getItem("mbd_leaderboard_v5") || "[]");
+      renderLeaderboard();
+    }
+
+    function renderLeaderboard() {
+      const box = document.getElementById("leaderboard");
+
+      if (!leaderboard.length) {
+        box.innerHTML = `
+          <div class="leader-item">
+            <span class="rank-pill">-</span>
+            <span class="leader-name">Belum ada data</span>
+            <span class="leader-score">0</span>
+          </div>`;
+        return;
+      }
+
+      box.innerHTML = leaderboard.map((row, idx) => `
+        <div class="leader-item">
+          <div class="rank-pill">${idx + 1}</div>
+          <div class="leader-name">
+            ${row.name}
+            <div style="font-size:.86rem;color:rgba(255,255,255,.68);font-weight:600;margin-top:2px;">
+              Percobaan #${row.attemptNo} · Benar ${row.totalCorrect}/${row.totalQuestions} · Akurasi ${row.accuracyPct}% · ${row.totalTimeUsed} dtk
+            </div>
+          </div>
+          <div class="leader-score">${row.score}</div>
+        </div>
+      `).join("");
+    }
+
+    async function shareScore() {
+      const s = calculateScores();
+      const text = `Match by Direction - Score ${s.finalScore}/100. Benar ${s.totalCorrect}/${s.totalQuestions}, waktu ${s.totalTimeUsed} detik.`;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: "Match by Direction",
+            text
+          });
+          return;
+        } catch (e) { }
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+        alert("Ringkasan skor berhasil disalin.");
+      } catch (e) {
+        alert(text);
+      }
+    }
+
+    loadLeaderboard();
+  </script>
 </body>
 
 </html>
