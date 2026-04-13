@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,8 +8,6 @@
     :root {
       --bg1: #2b3e66;
       --bg2: #1d2b49;
-      --panel: rgba(255, 255, 255, .08);
-      --line: rgba(255, 255, 255, .12);
       --text: #f5f7ff;
       --muted: rgba(245, 247, 255, .78);
       --good: #9be38c;
@@ -19,12 +16,9 @@
       --shadow: 0 20px 50px rgba(0, 0, 0, .22);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html,
-    body {
+    html, body {
       margin: 0;
       min-height: 100%;
       font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -61,13 +55,9 @@
       z-index: 1;
     }
 
-    .hidden {
-      display: none !important;
-    }
+    .hidden { display: none !important; }
 
-    .hero,
-    .game-shell,
-    .result-shell {
+    .hero, .game-shell, .result-shell {
       background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .05));
       border: 1px solid rgba(255, 255, 255, .09);
       border-radius: 28px;
@@ -112,6 +102,7 @@
       margin: 0;
       font-size: clamp(1.05rem, 1.6vw, 1.45rem);
       font-weight: 800;
+      color: var(--text);
     }
 
     .desc {
@@ -187,14 +178,8 @@
       transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
     }
 
-    .btn:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-    }
-
-    .btn:active {
-      transform: translateY(1px) scale(.99);
-    }
+    .btn:hover { transform: translateY(-1px); filter: brightness(1.03); }
+    .btn:active { transform: translateY(1px) scale(.99); }
 
     .cover-illustration {
       padding: 10px 0 34px;
@@ -207,84 +192,68 @@
     }
 
     .duck {
-      width: var(--w, 92px);
-      height: calc(var(--w, 92px) * .78);
+      width: var(--w, 96px);
+      height: calc(var(--w, 96px) * .78);
       position: relative;
-      border-radius: 50% 50% 45% 45%;
-      background: linear-gradient(180deg, #ffe27a, #f4c542);
+      border-radius: 48% 52% 46% 54%;
+      background: linear-gradient(180deg, #ffe680, #f4c643);
       box-shadow:
         inset 0 -8px 16px rgba(160, 120, 20, .2),
         inset 0 2px 0 rgba(255, 255, 255, .5),
         0 12px 18px rgba(0, 0, 0, .12);
       transform-origin: center;
-      animation: float 2.6s ease-in-out infinite;
     }
 
-    .duck::before {
-      content: "";
+    .duck .tail {
       position: absolute;
-      width: 24%;
-      height: 18%;
-      right: -11%;
-      top: 38%;
-      background: #ff9f2f;
-      border-radius: 999px;
-      box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .12);
-    }
-
-    .duck::after {
-      content: "";
-      position: absolute;
-      width: 12%;
-      height: 12%;
-      right: 24%;
-      top: 24%;
-      border-radius: 50%;
-      background: #111;
-      box-shadow: 0 0 0 4px rgba(255, 255, 255, .18);
+      left: -8%;
+      top: 28%;
+      width: 18%;
+      height: 20%;
+      background: #e4ac2d;
+      clip-path: polygon(100% 0, 0 50%, 100% 100%);
+      opacity: .95;
     }
 
     .duck .wing {
       position: absolute;
       left: 22%;
-      top: 40%;
-      width: 30%;
-      height: 22%;
+      top: 36%;
+      width: 28%;
+      height: 24%;
       background: rgba(255, 205, 92, .8);
       border-radius: 50%;
       box-shadow: inset 0 -4px 8px rgba(0, 0, 0, .08);
     }
 
-    .duck .beak-tip {
+    .duck .eye {
       position: absolute;
-      right: -1%;
-      top: 39%;
-      width: 8%;
-      height: 6%;
-      border-radius: 999px;
-      background: #ffb85c;
-      opacity: .9;
+      right: 28%;
+      top: 22%;
+      width: 11%;
+      height: 11%;
+      border-radius: 50%;
+      background: #111;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, .18);
     }
 
-    .dir-left {
-      transform: rotate(180deg);
+    .duck .beak {
+      position: absolute;
+      right: -5%;
+      top: 38%;
+      width: 24%;
+      height: 17%;
+      background: #ff9f2f;
+      border-radius: 0 999px 999px 0;
+      box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .12);
     }
 
-    .dir-up {
-      transform: rotate(-90deg);
-    }
+    .dir-left { transform: rotate(180deg); }
+    .dir-up { transform: rotate(-90deg); }
+    .dir-down { transform: rotate(90deg); }
+    .dir-right { transform: rotate(0deg); }
 
-    .dir-down {
-      transform: rotate(90deg);
-    }
-
-    .dir-right {
-      transform: rotate(0deg);
-    }
-
-    .small-duck {
-      --w: 120px;
-    }
+    .small-duck { --w: 120px; }
 
     .backdrop-duck {
       position: absolute;
@@ -294,42 +263,14 @@
       transform: scale(.9);
     }
 
-    .bd1 {
-      left: 2%;
-      top: 20%;
-    }
+    .bd1 { left: 2%; top: 20%; }
+    .bd2 { right: 3%; top: 18%; }
+    .bd3 { left: 7%; bottom: 12%; }
+    .bd4 { right: 9%; bottom: 10%; }
+    .bd5 { left: 48%; top: 2%; transform: scale(.5); opacity: .06; }
+    .bd6 { right: 46%; bottom: 5%; transform: scale(.55); opacity: .06; }
 
-    .bd2 {
-      right: 3%;
-      top: 18%;
-    }
-
-    .bd3 {
-      left: 7%;
-      bottom: 12%;
-    }
-
-    .bd4 {
-      right: 9%;
-      bottom: 10%;
-    }
-
-    .bd5 {
-      left: 48%;
-      top: 2%;
-      transform: scale(.5);
-      opacity: .06;
-    }
-
-    .bd6 {
-      right: 46%;
-      bottom: 5%;
-      transform: scale(.55);
-      opacity: .06;
-    }
-
-    .game-shell,
-    .result-shell {
+    .game-shell, .result-shell {
       margin-top: 18px;
       padding-bottom: 18px;
     }
@@ -369,9 +310,7 @@
       font-size: .98rem;
     }
 
-    .level-meta strong {
-      color: var(--text);
-    }
+    .level-meta strong { color: var(--text); }
 
     .timer-line {
       font-size: 1.05rem;
@@ -423,15 +362,11 @@
       transition: all .16s ease;
     }
 
-    .click-slot.empty {
-      opacity: .55;
-    }
-
+    .click-slot.empty { opacity: .55; }
     .click-slot.correct {
       background: rgba(155, 227, 140, .16);
       border-color: rgba(155, 227, 140, .35);
     }
-
     .click-slot.wrong {
       background: rgba(255, 142, 142, .15);
       border-color: rgba(255, 142, 142, .35);
@@ -475,14 +410,8 @@
       border: 1px solid rgba(255, 255, 255, .10);
     }
 
-    .dir-btn:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.04);
-    }
-
-    .dir-btn:active {
-      transform: translateY(1px) scale(.99);
-    }
+    .dir-btn:hover { transform: translateY(-1px); filter: brightness(1.04); }
+    .dir-btn:active { transform: translateY(1px) scale(.99); }
 
     .dir-icon {
       font-size: 3rem;
@@ -521,29 +450,9 @@
     }
 
     @keyframes flash {
-      0% {
-        transform: scale(.98);
-      }
-
-      50% {
-        transform: scale(1.04);
-      }
-
-      100% {
-        transform: scale(1);
-      }
-    }
-
-    @keyframes float {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-4px);
-      }
+      0% { transform: scale(.98); }
+      50% { transform: scale(1.04); }
+      100% { transform: scale(1); }
     }
 
     .result-grid {
@@ -625,10 +534,7 @@
       font-weight: 900;
     }
 
-    .score-card {
-      display: grid;
-      gap: 14px;
-    }
+    .score-card { display: grid; gap: 14px; }
 
     .score-big {
       display: flex;
@@ -648,9 +554,7 @@
       margin: 0;
     }
 
-    .score-main .num {
-      color: #ffec99;
-    }
+    .score-main .num { color: #ffec99; }
 
     .score-sub {
       color: var(--muted);
@@ -694,17 +598,9 @@
       letter-spacing: .3px;
     }
 
-    .category-title.good {
-      color: var(--good);
-    }
-
-    .category-title.warn {
-      color: var(--warn);
-    }
-
-    .category-title.bad {
-      color: var(--bad);
-    }
+    .category-title.good { color: var(--good); }
+    .category-title.warn { color: var(--warn); }
+    .category-title.bad { color: var(--bad); }
 
     .category-desc {
       margin: 0;
@@ -733,10 +629,8 @@
       transition: transform .15s ease, filter .15s ease;
     }
 
-    .secondary-btn:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.03);
-    }
+    .secondary-btn:hover { transform: translateY(-1px); filter: brightness(1.03); }
+    .secondary-btn:active { transform: translateY(1px); }
 
     .footer-note {
       text-align: center;
@@ -746,65 +640,31 @@
     }
 
     @media (max-width: 980px) {
-
-      .instruction-grid,
-      .result-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .controls {
-        width: min(520px, 100%);
-      }
-
-      .hero-content {
-        padding: 22px 18px 14px;
-      }
+      .instruction-grid, .result-grid { grid-template-columns: 1fr; }
+      .controls { width: min(520px, 100%); }
+      .hero-content { padding: 22px 18px 14px; }
     }
 
     @media (max-width: 560px) {
-      .controls {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .dir-btn {
-        min-height: 104px;
-      }
-
-      .screen-title {
-        font-size: 1.6rem;
-      }
-
-      .fish-stage {
-        min-height: 220px;
-      }
+      .controls { grid-template-columns: 1fr 1fr; }
+      .dir-btn { min-height: 104px; }
+      .screen-title { font-size: 1.6rem; }
+      .fish-stage { min-height: 220px; }
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <!-- COVER -->
     <section id="cover" class="hero">
       <div class="top-zigzag"></div>
       <div class="hero-content">
-        <div class="backdrop-duck bd1 duck small-duck dir-left">
-          <span class="wing"></span><span class="beak-tip"></span>
-        </div>
-        <div class="backdrop-duck bd2 duck small-duck dir-up">
-          <span class="wing"></span><span class="beak-tip"></span>
-        </div>
-        <div class="backdrop-duck bd3 duck small-duck dir-right">
-          <span class="wing"></span><span class="beak-tip"></span>
-        </div>
-        <div class="backdrop-duck bd4 duck small-duck dir-down">
-          <span class="wing"></span><span class="beak-tip"></span>
-        </div>
-        <div class="backdrop-duck bd5 duck small-duck dir-left">
-          <span class="wing"></span><span class="beak-tip"></span>
-        </div>
-        <div class="backdrop-duck bd6 duck small-duck dir-right">
-          <span class="wing"></span><span class="beak-tip"></span>
-        </div>
+        <div class="backdrop-duck bd1 duck small-duck dir-left"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="backdrop-duck bd2 duck small-duck dir-up"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="backdrop-duck bd3 duck small-duck dir-right"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="backdrop-duck bd4 duck small-duck dir-down"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="backdrop-duck bd5 duck small-duck dir-left"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="backdrop-duck bd6 duck small-duck dir-right"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
 
         <h1 class="title">MATCH BY DIRECTION</h1>
         <p class="subtitle">Welcome to the reaction time and cognitive performance test!</p>
@@ -815,11 +675,11 @@
         <div class="instruction-grid">
           <div class="instruction">
             <b>1. Use keyboard controls</b>
-            <span>PgUp = atas, PgDn = bawah, Home = kanan, End = kiri.</span>
+            <span>Arrow Up, Arrow Down, Arrow Right, Arrow Left.</span>
           </div>
           <div class="instruction">
             <b>2. Three levels</b>
-            <span>Level 1: 15 soal, Level 2: 15 soal, Level 3: 15 soal.</span>
+            <span>Level 1: 15 soal dengan durasi 45 detik, Level 2: 15 soal dengan durasi 70 detik, Level 3: 15 soal dengan durasi 90 detik.</span>
           </div>
           <div class="instruction">
             <b>3. Beat the timer</b>
@@ -834,17 +694,15 @@
       </div>
 
       <div class="cover-illustration" aria-hidden="true">
-        <div class="duck small-duck dir-right"><span class="wing"></span><span class="beak-tip"></span></div>
-        <div class="duck small-duck dir-up"><span class="wing"></span><span class="beak-tip"></span></div>
-        <div class="duck small-duck dir-left"><span class="wing"></span><span class="beak-tip"></span></div>
-        <div class="duck small-duck dir-down"><span class="wing"></span><span class="beak-tip"></span></div>
+        <div class="duck small-duck dir-right"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="duck small-duck dir-up"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="duck small-duck dir-left"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="duck small-duck dir-down"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
       </div>
     </section>
 
-    <!-- GAME -->
     <section id="game" class="game-shell hidden">
       <div class="top-zigzag"></div>
-
       <h2 class="screen-title">MATCH BY DIRECTION</h2>
 
       <div class="game-top">
@@ -874,7 +732,7 @@
             <button class="dir-btn" id="btn-left" onclick="pressDirection('left')">
               <div>
                 <div class="dir-icon">←</div>
-                <div class="dir-key">End</div>
+                <div class="dir-key">Left</div>
               </div>
               <div class="dir-label">Kiri</div>
             </button>
@@ -882,7 +740,7 @@
             <button class="dir-btn" id="btn-up" onclick="pressDirection('up')">
               <div>
                 <div class="dir-icon">↑</div>
-                <div class="dir-key">PgUp</div>
+                <div class="dir-key">Up</div>
               </div>
               <div class="dir-label">Atas</div>
             </button>
@@ -890,7 +748,7 @@
             <button class="dir-btn" id="btn-right" onclick="pressDirection('right')">
               <div>
                 <div class="dir-icon">→</div>
-                <div class="dir-key">Home</div>
+                <div class="dir-key">Right</div>
               </div>
               <div class="dir-label">Kanan</div>
             </button>
@@ -898,7 +756,7 @@
             <button class="dir-btn" id="btn-down" onclick="pressDirection('down')">
               <div>
                 <div class="dir-icon">↓</div>
-                <div class="dir-key">PgDn</div>
+                <div class="dir-key">Down</div>
               </div>
               <div class="dir-label">Bawah</div>
             </button>
@@ -907,10 +765,8 @@
       </div>
     </section>
 
-    <!-- RESULT -->
     <section id="result" class="result-shell hidden">
       <div class="top-zigzag"></div>
-
       <h2 class="screen-title">MATCH BY DIRECTION</h2>
 
       <div class="result-grid">
@@ -959,21 +815,12 @@
 
   <script>
     const levelConfig = [
-      { questions: 10, time: 45, requiredClicks: 1, label: "Level 1" },
-      { questions: 12, time: 60, requiredClicks: 2, label: "Level 2" },
-      { questions: 15, time: 75, requiredClicks: 3, label: "Level 3" },
+      { questions: 15, time: 45, requiredClicks: 1, label: "Level 1", maxScore: 30 },
+      { questions: 15, time: 70, requiredClicks: 2, label: "Level 2", maxScore: 30 },
+      { questions: 15, time: 90, requiredClicks: 3, label: "Level 3", maxScore: 40 },
     ];
 
-    // Total max score = 100
-    // Akurasi 70 poin, speed 30 poin
-    const levelAccuracyWeights = [20, 25, 25]; // total 70
-    const speedMax = 30;
-
     const keyToDirection = {
-      PageUp: "up",
-      PageDown: "down",
-      Home: "right",
-      End: "left",
       ArrowUp: "up",
       ArrowDown: "down",
       ArrowRight: "right",
@@ -998,7 +845,7 @@
     let currentQuestionCorrect = true;
     let isTransitioning = false;
 
-    let totalCorrectQuestions = [0, 0, 0];
+    let correctPerLevel = [0, 0, 0];
     let levelTimeSpent = [0, 0, 0];
     let leaderboard = [];
 
@@ -1053,15 +900,21 @@
     }
 
     function finishLevel() {
+      if (isTransitioning) return;
+      isTransitioning = true;
+
       clearInterval(timerId);
-      const elapsed = Math.max(0, Math.ceil((Date.now() - levelStartMs) / 1000));
+
+      const elapsed = Math.max(0, Math.min(levelConfig[level].time, Math.ceil((Date.now() - levelStartMs) / 1000)));
       levelTimeSpent[level] = elapsed;
 
-      if (level < 2) {
-        startLevel(level + 1);
-      } else {
-        endGame();
-      }
+      setTimeout(() => {
+        if (level < 2) {
+          startLevel(level + 1);
+        } else {
+          endGame();
+        }
+      }, 180);
     }
 
     function randomDirection() {
@@ -1072,7 +925,7 @@
     function renderDuck(dir) {
       const duck = document.createElement("div");
       duck.className = `duck dir-${dir}`;
-      duck.innerHTML = `<span class="wing"></span><span class="beak-tip"></span>`;
+      duck.innerHTML = `<span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span>`;
       return duck;
     }
 
@@ -1090,9 +943,7 @@
       isTransitioning = false;
 
       fishRow.innerHTML = "";
-      currentTargets.forEach((dir) => {
-        fishRow.appendChild(renderDuck(dir));
-      });
+      currentTargets.forEach((dir) => fishRow.appendChild(renderDuck(dir)));
 
       renderClickTray();
 
@@ -1159,7 +1010,7 @@
         isTransitioning = true;
 
         if (currentQuestionCorrect) {
-          totalCorrectQuestions[level]++;
+          correctPerLevel[level]++;
         }
 
         setTimeout(() => {
@@ -1182,31 +1033,35 @@
       const totalQuestions = levelConfig.reduce((sum, cfg) => sum + cfg.questions, 0);
       const totalAllowedTime = levelConfig.reduce((sum, cfg) => sum + cfg.time, 0);
       const totalTimeUsed = levelTimeSpent.reduce((a, b) => a + b, 0);
-      const totalCorrect = totalCorrectQuestions.reduce((a, b) => a + b, 0);
+      const totalCorrect = correctPerLevel.reduce((a, b) => a + b, 0);
 
-      const level1Score = (totalCorrectQuestions[0] / levelConfig[0].questions) * levelAccuracyWeights[0];
-      const level2Score = (totalCorrectQuestions[1] / levelConfig[1].questions) * levelAccuracyWeights[1];
-      const level3Score = (totalCorrectQuestions[2] / levelConfig[2].questions) * levelAccuracyWeights[2];
-      const accuracyScore = level1Score + level2Score + level3Score;
+      const levelScores = levelConfig.map((cfg, i) => {
+        const accuracyRatio = cfg.questions ? (correctPerLevel[i] / cfg.questions) : 0;
+        const speedRatio = Math.max(0, 1 - (levelTimeSpent[i] / cfg.time));
+        const score = cfg.maxScore * (0.7 * accuracyRatio + 0.3 * speedRatio);
+        return {
+          score,
+          accuracyRatio,
+          speedRatio,
+        };
+      });
 
-      const speedRatio = totalAllowedTime > 0 ? (1 - (totalTimeUsed / totalAllowedTime)) : 0;
-      const speedScore = Math.max(0, Math.min(speedMax, Math.round(speedRatio * speedMax)));
+      const finalScore = Math.max(0, Math.min(100, Math.round(levelScores[0].score + levelScores[1].score + levelScores[2].score)));
 
-      const finalScore = Math.round(accuracyScore + speedScore);
+      const accuracyScore = levelScores[0].score + levelScores[1].score + levelScores[2].score - (
+        (levelScores[0].score + levelScores[1].score + levelScores[2].score) * 0.3
+      );
+      const speedScore = finalScore - Math.round((levelScores[0].score * 0.7) + (levelScores[1].score * 0.7) + (levelScores[2].score * 0.7));
 
       return {
         totalQuestions,
         totalAllowedTime,
         totalTimeUsed,
         totalCorrect,
-        level1Score,
-        level2Score,
-        level3Score,
-        accuracyScore,
-        speedScore,
+        levelScores,
         finalScore,
-        accuracyPct: Math.round((accuracyScore / 70) * 100),
-        speedPct: Math.round((speedScore / 30) * 100),
+        accuracyTextValue: (levelScores[0].score + levelScores[1].score + levelScores[2].score) * 0.7,
+        speedTextValue: (levelScores[0].score + levelScores[1].score + levelScores[2].score) * 0.3,
       };
     }
 
@@ -1217,38 +1072,45 @@
       document.getElementById("result").classList.remove("hidden");
 
       const s = calculateScores();
-      const category = getCategory(s.accuracyPct, s.speedPct);
+
+      const lvl1 = s.levelScores[0].score;
+      const lvl2 = s.levelScores[1].score;
+      const lvl3 = s.levelScores[2].score;
+
+      const accuracyPts = Math.round(lvl1 * 0.7 + lvl2 * 0.7 + lvl3 * 0.7);
+      const speedPts = Math.round(lvl1 * 0.3 + lvl2 * 0.3 + lvl3 * 0.3);
 
       document.getElementById("finalScore").innerHTML = `Score: <span class="num">${s.finalScore}</span> / 100`;
       document.getElementById("finalSubtitle").textContent =
-        `Benar ${s.totalCorrect}/${s.totalQuestions} · Akurasi ${s.accuracyScore.toFixed(2)}/70 · Speed ${s.speedScore}/30`;
+        `Benar ${s.totalCorrect}/${s.totalQuestions} · Total waktu ${s.totalTimeUsed} detik`;
 
       document.getElementById("statL1").textContent =
-        `${totalCorrectQuestions[0]} / ${levelConfig[0].questions} benar · ${levelTimeSpent[0]} dtk · ${s.level1Score.toFixed(2)} poin`;
+        `${correctPerLevel[0]} / ${levelConfig[0].questions} benar · ${levelTimeSpent[0]} dtk · ${lvl1.toFixed(1)}/30 poin`;
 
       document.getElementById("statL2").textContent =
-        `${totalCorrectQuestions[1]} / ${levelConfig[1].questions} benar · ${levelTimeSpent[1]} dtk · ${s.level2Score.toFixed(2)} poin`;
+        `${correctPerLevel[1]} / ${levelConfig[1].questions} benar · ${levelTimeSpent[1]} dtk · ${lvl2.toFixed(1)}/30 poin`;
 
       document.getElementById("statL3").textContent =
-        `${totalCorrectQuestions[2]} / ${levelConfig[2].questions} benar · ${levelTimeSpent[2]} dtk · ${s.level3Score.toFixed(2)} poin`;
+        `${correctPerLevel[2]} / ${levelConfig[2].questions} benar · ${levelTimeSpent[2]} dtk · ${lvl3.toFixed(1)}/40 poin`;
 
       document.getElementById("totalCorrectText").textContent = `${s.totalCorrect}/${s.totalQuestions} benar`;
       document.getElementById("totalTimeText").textContent = `${s.totalTimeUsed} dtk`;
-      document.getElementById("accuracyText").textContent = `${s.accuracyScore.toFixed(2)} / 70`;
-      document.getElementById("speedText").textContent = `${s.speedScore} / 30`;
+      document.getElementById("accuracyText").textContent = `${accuracyPts} / 70`;
+      document.getElementById("speedText").textContent = `${speedPts} / 30`;
       document.getElementById("scorePctText").textContent = `${s.finalScore} / 100`;
 
+      const category = getCategory(s.finalScore);
       document.getElementById("categoryTitle").textContent = category.title;
       document.getElementById("categoryDesc").textContent = category.desc;
       document.getElementById("categoryTitle").className = `category-title ${category.className}`;
 
-      saveLeaderboard(s.finalScore, s.totalCorrect, s.totalQuestions, s.totalTimeUsed, s.accuracyPct, s.speedPct);
+      saveLeaderboard(s.finalScore, s.totalCorrect, s.totalQuestions, s.totalTimeUsed);
       loadLeaderboard();
       renderLeaderboard();
     }
 
-    function getCategory(accuracyPct, speedPct) {
-      if (accuracyPct >= 85 && speedPct >= 70) {
+    function getCategory(finalScore) {
+      if (finalScore >= 85) {
         return {
           title: "🟢 SANGAT CEPAT & TEPAT",
           desc: "Kinerja sangat baik. Ketepatan jawaban dan kecepatan respon sama-sama tinggi.",
@@ -1256,7 +1118,7 @@
         };
       }
 
-      if (accuracyPct >= 70 && speedPct >= 50) {
+      if (finalScore >= 70) {
         return {
           title: "🟡 CUKUP CEPAT & TEPAT",
           desc: "Kemampuan cukup baik, namun masih bisa ditingkatkan pada bagian kecepatan atau ketelitian.",
@@ -1278,10 +1140,13 @@
       return next;
     }
 
-    function saveLeaderboard(finalScore, totalCorrect, totalQuestions, totalTimeUsed, accuracyPct, speedPct) {
+    function saveLeaderboard(finalScore, totalCorrect, totalQuestions, totalTimeUsed) {
       const playerName = document.getElementById("playerName").value.trim() || "Player";
-      const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v5") || "[]");
+      const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v6") || "[]");
       const attemptNo = getNextAttemptNumber();
+
+      const accuracyPct = totalQuestions ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+      const speedPct = Math.max(0, Math.min(100, Math.round((1 - (totalTimeUsed / 180)) * 100)));
 
       data.push({
         name: playerName,
@@ -1296,11 +1161,11 @@
       });
 
       data.sort((a, b) => b.score - a.score || b.accuracyPct - a.accuracyPct || a.totalTimeUsed - b.totalTimeUsed);
-      localStorage.setItem("mbd_leaderboard_v5", JSON.stringify(data.slice(0, 10)));
+      localStorage.setItem("mbd_leaderboard_v6", JSON.stringify(data.slice(0, 10)));
     }
 
     function loadLeaderboard() {
-      leaderboard = JSON.parse(localStorage.getItem("mbd_leaderboard_v5") || "[]");
+      leaderboard = JSON.parse(localStorage.getItem("mbd_leaderboard_v6") || "[]");
       renderLeaderboard();
     }
 
@@ -1323,7 +1188,7 @@
           <div class="leader-name">
             ${row.name}
             <div style="font-size:.86rem;color:rgba(255,255,255,.68);font-weight:600;margin-top:2px;">
-              Percobaan #${row.attemptNo} · Benar ${row.totalCorrect}/${row.totalQuestions} · Akurasi ${row.accuracyPct}% · ${row.totalTimeUsed} dtk
+              Percobaan #${row.attemptNo} · Benar ${row.totalCorrect}/${row.totalQuestions} · ${row.totalTimeUsed} dtk
             </div>
           </div>
           <div class="leader-score">${row.score}</div>
@@ -1356,5 +1221,4 @@
     loadLeaderboard();
   </script>
 </body>
-
 </html>
