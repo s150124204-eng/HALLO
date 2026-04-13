@@ -974,7 +974,10 @@
             { questions: 15, time: 75, requiredClicks: 3, label: "Level 3" },
         ];
 
-        const levelWeights = [10, 15, 20]; // bobot per soal benar per level
+        // Total akurasi 80 poin, speed 20 poin, total 100 poin.
+        const accuracyLevelMax = [20, 25, 35]; // total 80
+        const speedMax = 20;
+
         const keyToDirection = {
             PageUp: "up",
             PageDown: "down",
@@ -1187,58 +1190,77 @@
             pressDirection(dir);
         }, { passive: false });
 
+        function calculateScores() {
+            const totalCorrect = totalCorrectQuestions.reduce((a, b) => a + b, 0);
+            const totalQuestions = levelConfig.reduce((sum, cfg) => sum + cfg.questions, 0);
+            const totalAllowedTime = levelConfig.reduce((sum, cfg) => sum + cfg.time, 0);
+            const totalTimeUsed = levelTimeSpent.reduce((a, b) => a + b, 0);
+
+            const l1 = totalCorrectQuestions[0] * (accuracyLevelMax[0] / levelConfig[0].questions);
+            const l2 = totalCorrectQuestions[1] * (accuracyLevelMax[1] / levelConfig[1].questions);
+            const l3 = totalCorrectQuestions[2] * (accuracyLevelMax[2] / levelConfig[2].questions);
+
+            const accuracyScore = l1 + l2 + l3;
+
+            const speedRatio = totalAllowedTime > 0 ? (1 - (totalTimeUsed / totalAllowedTime)) : 0;
+            const speedScore = Math.max(0, Math.min(speedMax, Math.round(speedRatio * speedMax)));
+
+            const finalScore = Math.round(accuracyScore + speedScore);
+
+            const accuracyPct = Math.round((accuracyScore / 80) * 100);
+            const speedPct = Math.round((speedScore / 20) * 100);
+            const scorePct = finalScore;
+
+            return {
+                totalCorrect,
+                totalQuestions,
+                totalAllowedTime,
+                totalTimeUsed,
+                l1,
+                l2,
+                l3,
+                accuracyScore,
+                speedScore,
+                finalScore,
+                accuracyPct,
+                speedPct,
+                scorePct
+            };
+        }
+
         function endGame() {
             clearInterval(timerId);
 
             document.getElementById("game").classList.add("hidden");
             document.getElementById("result").classList.remove("hidden");
 
-            const totalQuestions = levelConfig.reduce((sum, cfg) => sum + cfg.questions, 0);
-            const totalAllowedTime = levelConfig.reduce((sum, cfg) => sum + cfg.time, 0);
-            const totalCorrect = totalCorrectQuestions.reduce((a, b) => a + b, 0);
-            const totalAnswered = answeredQuestions.reduce((a, b) => a + b, 0);
-            const totalTimeUsed = levelTimeSpent.reduce((a, b) => a + b, 0);
+            const s = calculateScores();
+            const category = getCategory(s.accuracyPct, s.speedPct);
 
-            const accuracyPct = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
-            const speedPct = totalAllowedTime > 0
-                ? Math.max(0, Math.min(100, Math.round((1 - (totalTimeUsed / totalAllowedTime)) * 100)))
-                : 0;
-
-            const baseScore = totalCorrectQuestions[0] * levelWeights[0] +
-                totalCorrectQuestions[1] * levelWeights[1] +
-                totalCorrectQuestions[2] * levelWeights[2];
-
-            const speedBonus = Math.max(0, Math.round(((totalAllowedTime - totalTimeUsed) / totalAllowedTime) * 200));
-            const finalScore = baseScore + speedBonus;
-
-            const scorePct = Math.round((finalScore / ((10 * levelWeights[0]) + (12 * levelWeights[1]) + (15 * levelWeights[2]) + 200)) * 100);
-
-            const category = getCategory(accuracyPct, speedPct);
-
-            document.getElementById("finalScore").innerHTML = `Score: <span class="num">${finalScore}</span> points`;
+            document.getElementById("finalScore").innerHTML = `Score: <span class="num">${s.finalScore}</span> / 100`;
             document.getElementById("finalSubtitle").textContent =
-                `Benar ${totalCorrect}/${totalQuestions} · Akurasi ${accuracyPct}% · Kecepatan ${speedPct}%`;
+                `Benar ${s.totalCorrect}/${s.totalQuestions} · Akurasi ${Math.round(s.accuracyScore * 100) / 100}/80 · Speed ${s.speedScore}/20`;
 
             document.getElementById("statL1").textContent =
-                `${totalCorrectQuestions[0]} / ${levelConfig[0].questions} benar · ${levelTimeSpent[0]} dtk`;
+                `${totalCorrectQuestions[0]} / ${levelConfig[0].questions} benar · ${levelTimeSpent[0]} dtk · ${Math.round(s.l1 * 100) / 100} poin`;
 
             document.getElementById("statL2").textContent =
-                `${totalCorrectQuestions[1]} / ${levelConfig[1].questions} benar · ${levelTimeSpent[1]} dtk`;
+                `${totalCorrectQuestions[1]} / ${levelConfig[1].questions} benar · ${levelTimeSpent[1]} dtk · ${Math.round(s.l2 * 100) / 100} poin`;
 
             document.getElementById("statL3").textContent =
-                `${totalCorrectQuestions[2]} / ${levelConfig[2].questions} benar · ${levelTimeSpent[2]} dtk`;
+                `${totalCorrectQuestions[2]} / ${levelConfig[2].questions} benar · ${levelTimeSpent[2]} dtk · ${Math.round(s.l3 * 100) / 100} poin`;
 
-            document.getElementById("totalCorrectText").textContent = `${totalCorrect}/${totalQuestions} benar`;
-            document.getElementById("totalTimeText").textContent = `${totalTimeUsed} dtk`;
-            document.getElementById("accuracyText").textContent = `${accuracyPct}%`;
-            document.getElementById("speedText").textContent = `${speedPct}%`;
-            document.getElementById("scorePctText").textContent = `${scorePct}%`;
+            document.getElementById("totalCorrectText").textContent = `${s.totalCorrect}/${s.totalQuestions} benar`;
+            document.getElementById("totalTimeText").textContent = `${s.totalTimeUsed} dtk`;
+            document.getElementById("accuracyText").textContent = `${Math.round(s.accuracyScore * 100) / 100} / 80`;
+            document.getElementById("speedText").textContent = `${s.speedScore} / 20`;
+            document.getElementById("scorePctText").textContent = `${s.finalScore} / 100`;
 
             document.getElementById("categoryTitle").textContent = category.title;
             document.getElementById("categoryDesc").textContent = category.desc;
             document.getElementById("categoryTitle").className = `category-title ${category.className}`;
 
-            saveLeaderboard(finalScore, accuracyPct, speedPct, totalCorrect, totalQuestions, totalTimeUsed, scorePct);
+            saveLeaderboard(s.finalScore, s.totalCorrect, s.totalQuestions, s.totalTimeUsed, s.accuracyPct, s.speedPct);
             loadLeaderboard();
             renderLeaderboard();
         }
@@ -1274,30 +1296,29 @@
             return next;
         }
 
-        function saveLeaderboard(finalScore, accuracyPct, speedPct, totalCorrect, totalQuestions, totalTimeUsed, scorePct) {
+        function saveLeaderboard(finalScore, totalCorrect, totalQuestions, totalTimeUsed, accuracyPct, speedPct) {
             const playerName = document.getElementById("playerName").value.trim() || "Player";
-            const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v3") || "[]");
+            const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v4") || "[]");
             const attemptNo = getNextAttemptNumber();
 
             data.push({
                 name: playerName,
                 attemptNo,
                 score: finalScore,
-                accuracyPct,
-                speedPct,
                 totalCorrect,
                 totalQuestions,
                 totalTimeUsed,
-                scorePct,
+                accuracyPct,
+                speedPct,
                 time: new Date().toLocaleString("id-ID")
             });
 
             data.sort((a, b) => b.score - a.score || b.accuracyPct - a.accuracyPct || a.totalTimeUsed - b.totalTimeUsed);
-            localStorage.setItem("mbd_leaderboard_v3", JSON.stringify(data.slice(0, 10)));
+            localStorage.setItem("mbd_leaderboard_v4", JSON.stringify(data.slice(0, 10)));
         }
 
         function loadLeaderboard() {
-            leaderboard = JSON.parse(localStorage.getItem("mbd_leaderboard_v3") || "[]");
+            leaderboard = JSON.parse(localStorage.getItem("mbd_leaderboard_v4") || "[]");
             renderLeaderboard();
         }
 
@@ -1329,10 +1350,8 @@
         }
 
         async function shareScore() {
-            const totalQuestions = levelConfig.reduce((sum, cfg) => sum + cfg.questions, 0);
-            const totalCorrect = totalCorrectQuestions.reduce((a, b) => a + b, 0);
-            const totalTimeUsed = levelTimeSpent.reduce((a, b) => a + b, 0);
-            const text = `Match by Direction - Benar ${totalCorrect}/${totalQuestions}, waktu ${totalTimeUsed} detik.`;
+            const s = calculateScores();
+            const text = `Match by Direction - Score ${s.finalScore}/100. Benar ${s.totalCorrect}/${s.totalQuestions}, waktu ${s.totalTimeUsed} detik.`;
 
             if (navigator.share) {
                 try {
