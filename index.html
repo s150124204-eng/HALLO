@@ -679,7 +679,7 @@
           </div>
           <div class="instruction">
             <b>2. Three levels</b>
-            <span>Level 1: 15 soal dengan durasi 45 detik, Level 2: 15 soal dengan durasi 70 detik, Level 3: 15 soal dengan durasi 90 detik.</span>
+            <span>Level 1: 15 soal / 45 detik, Level 2: 15 soal / 70 detik, Level 3: 15 soal / 90 detik.</span>
           </div>
           <div class="instruction">
             <b>3. Beat the timer</b>
@@ -844,6 +844,7 @@
     let currentClickIndex = 0;
     let currentQuestionCorrect = true;
     let isTransitioning = false;
+    let levelEnded = false;
 
     let correctPerLevel = [0, 0, 0];
     let levelTimeSpent = [0, 0, 0];
@@ -859,12 +860,18 @@
     function startGame() {
       document.getElementById("cover").classList.add("hidden");
       document.getElementById("game").classList.remove("hidden");
+
+      correctPerLevel = [0, 0, 0];
+      levelTimeSpent = [0, 0, 0];
+      levelEnded = false;
+
       loadLeaderboard();
       startLevel(0);
     }
 
     function startLevel(nextLevelIndex) {
       clearInterval(timerId);
+      levelEnded = false;
 
       level = nextLevelIndex;
       if (level > 2) {
@@ -890,8 +897,10 @@
       renderQuestion();
 
       timerId = setInterval(() => {
+        if (levelEnded) return;
+
         timeLeft--;
-        timeLeftEl.textContent = timeLeft;
+        timeLeftEl.textContent = Math.max(0, timeLeft);
 
         if (timeLeft <= 0) {
           finishLevel();
@@ -900,12 +909,16 @@
     }
 
     function finishLevel() {
-      if (isTransitioning) return;
+      if (levelEnded) return;
+      levelEnded = true;
       isTransitioning = true;
 
       clearInterval(timerId);
 
-      const elapsed = Math.max(0, Math.min(levelConfig[level].time, Math.ceil((Date.now() - levelStartMs) / 1000)));
+      const elapsed = Math.max(
+        0,
+        Math.min(levelConfig[level].time, Math.ceil((Date.now() - levelStartMs) / 1000))
+      );
       levelTimeSpent[level] = elapsed;
 
       setTimeout(() => {
@@ -914,7 +927,7 @@
         } else {
           endGame();
         }
-      }, 180);
+      }, 120);
     }
 
     function randomDirection() {
@@ -930,6 +943,8 @@
     }
 
     function renderQuestion() {
+      if (levelEnded) return;
+
       const cfg = levelConfig[level];
 
       if (questionIndex >= cfg.questions) {
@@ -987,7 +1002,7 @@
 
     function pressDirection(direction) {
       const cfg = levelConfig[level];
-      if (!cfg || currentTargets.length === 0 || isTransitioning) return;
+      if (!cfg || currentTargets.length === 0 || isTransitioning || levelEnded) return;
 
       updateButtonStates(direction);
 
@@ -1014,7 +1029,13 @@
         }
 
         setTimeout(() => {
-          renderQuestion();
+          if (levelEnded) return;
+
+          if (questionIndex >= cfg.questions) {
+            finishLevel();
+          } else {
+            renderQuestion();
+          }
         }, 140);
       }
     }
@@ -1039,19 +1060,23 @@
         const accuracyRatio = cfg.questions ? (correctPerLevel[i] / cfg.questions) : 0;
         const speedRatio = Math.max(0, 1 - (levelTimeSpent[i] / cfg.time));
         const score = cfg.maxScore * (0.7 * accuracyRatio + 0.3 * speedRatio);
-        return {
-          score,
-          accuracyRatio,
-          speedRatio,
-        };
+        return { score, accuracyRatio, speedRatio };
       });
 
-      const finalScore = Math.max(0, Math.min(100, Math.round(levelScores[0].score + levelScores[1].score + levelScores[2].score)));
+      const rawFinal = levelScores[0].score + levelScores[1].score + levelScores[2].score;
+      const finalScore = Math.max(0, Math.min(100, Math.round(rawFinal)));
 
-      const accuracyScore = levelScores[0].score + levelScores[1].score + levelScores[2].score - (
-        (levelScores[0].score + levelScores[1].score + levelScores[2].score) * 0.3
+      const accuracyComponent = (
+        levelScores[0].score * 0.7 +
+        levelScores[1].score * 0.7 +
+        levelScores[2].score * 0.7
       );
-      const speedScore = finalScore - Math.round((levelScores[0].score * 0.7) + (levelScores[1].score * 0.7) + (levelScores[2].score * 0.7));
+
+      const speedComponent = (
+        levelScores[0].score * 0.3 +
+        levelScores[1].score * 0.3 +
+        levelScores[2].score * 0.3
+      );
 
       return {
         totalQuestions,
@@ -1060,8 +1085,8 @@
         totalCorrect,
         levelScores,
         finalScore,
-        accuracyTextValue: (levelScores[0].score + levelScores[1].score + levelScores[2].score) * 0.7,
-        speedTextValue: (levelScores[0].score + levelScores[1].score + levelScores[2].score) * 0.3,
+        accuracyTextValue: Math.round(accuracyComponent),
+        speedTextValue: Math.round(speedComponent),
       };
     }
 
@@ -1076,9 +1101,6 @@
       const lvl1 = s.levelScores[0].score;
       const lvl2 = s.levelScores[1].score;
       const lvl3 = s.levelScores[2].score;
-
-      const accuracyPts = Math.round(lvl1 * 0.7 + lvl2 * 0.7 + lvl3 * 0.7);
-      const speedPts = Math.round(lvl1 * 0.3 + lvl2 * 0.3 + lvl3 * 0.3);
 
       document.getElementById("finalScore").innerHTML = `Score: <span class="num">${s.finalScore}</span> / 100`;
       document.getElementById("finalSubtitle").textContent =
@@ -1095,8 +1117,8 @@
 
       document.getElementById("totalCorrectText").textContent = `${s.totalCorrect}/${s.totalQuestions} benar`;
       document.getElementById("totalTimeText").textContent = `${s.totalTimeUsed} dtk`;
-      document.getElementById("accuracyText").textContent = `${accuracyPts} / 70`;
-      document.getElementById("speedText").textContent = `${speedPts} / 30`;
+      document.getElementById("accuracyText").textContent = `${s.accuracyTextValue} / 70`;
+      document.getElementById("speedText").textContent = `${s.speedTextValue} / 30`;
       document.getElementById("scorePctText").textContent = `${s.finalScore} / 100`;
 
       const category = getCategory(s.finalScore);
