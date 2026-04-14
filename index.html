@@ -76,17 +76,17 @@
     }
 
     .hero {
-      min-height: 100vh;
+      min-height: calc(100vh - 36px);
       display: grid;
       grid-template-rows: auto 1fr;
       align-items: stretch;
     }
 
     .hero-main {
-      padding: 22px;
+      padding: 18px;
       display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 18px;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 16px;
       align-items: stretch;
     }
 
@@ -101,16 +101,16 @@
     }
 
     .hero-left {
-      padding: 24px 24px 20px;
+      padding: 18px 18px 16px;
       display: grid;
       align-content: start;
-      gap: 16px;
+      gap: 12px;
     }
 
     .hero-right {
-      padding: 20px;
+      padding: 16px;
       display: grid;
-      gap: 16px;
+      gap: 12px;
       align-content: start;
     }
 
@@ -132,10 +132,10 @@
 
     .title {
       margin: 0;
-      font-size: clamp(2.35rem, 4vw, 4.35rem);
+      font-size: clamp(2.2rem, 3.7vw, 4rem);
       letter-spacing: 1px;
       font-weight: 900;
-      line-height: 1.05;
+      line-height: 1.02;
       text-transform: uppercase;
       text-shadow: 0 8px 22px rgba(0, 0, 0, .25);
       text-align: center;
@@ -143,7 +143,7 @@
 
     .subtitle {
       margin: 0;
-      font-size: clamp(1.05rem, 1.5vw, 1.4rem);
+      font-size: clamp(1.02rem, 1.35vw, 1.32rem);
       font-weight: 800;
       color: var(--text);
       text-align: center;
@@ -152,8 +152,8 @@
     .desc {
       margin: 0 auto;
       max-width: 760px;
-      font-size: clamp(1rem, 1.15vw, 1.08rem);
-      line-height: 1.7;
+      font-size: clamp(.98rem, 1.08vw, 1.05rem);
+      line-height: 1.6;
       color: var(--muted);
       text-align: center;
     }
@@ -162,53 +162,53 @@
       width: 100%;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
+      gap: 12px;
       margin-top: 2px;
     }
 
     .instruction {
       background: rgba(255, 255, 255, .06);
       border: 1px solid rgba(255, 255, 255, .09);
-      border-radius: 20px;
-      padding: 15px 14px;
+      border-radius: 18px;
+      padding: 12px 12px;
       text-align: left;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
-      min-height: 162px;
+      min-height: 144px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
     }
 
     .instruction b {
       display: block;
-      margin-bottom: 6px;
-      font-size: 1rem;
+      margin-bottom: 4px;
+      font-size: .98rem;
     }
 
     .instruction span {
       color: var(--muted);
-      font-size: .96rem;
-      line-height: 1.5;
+      font-size: .93rem;
+      line-height: 1.45;
     }
 
     .instruction-demo {
       position: relative;
-      min-height: 150px;
-      border-radius: 16px;
+      min-height: 132px;
+      border-radius: 14px;
       background: rgba(255, 255, 255, .06);
       border: 1px solid rgba(255, 255, 255, .08);
       display: grid;
       place-items: center;
       overflow: hidden;
-      padding: 10px;
-      margin-top: 8px;
+      padding: 8px;
+      margin-top: 6px;
     }
 
     .mini-hint {
       margin: 0;
-      font-size: .86rem;
-      line-height: 1.45;
+      font-size: .84rem;
+      line-height: 1.4;
       color: var(--muted);
     }
 
@@ -216,14 +216,14 @@
       background: rgba(255, 255, 255, .06);
       border: 1px solid rgba(255, 255, 255, .08);
       border-radius: 22px;
-      padding: 16px;
+      padding: 14px;
       display: grid;
-      gap: 14px;
+      gap: 12px;
     }
 
     .identity-title {
       margin: 0;
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 900;
       letter-spacing: .3px;
       text-align: center;
@@ -232,44 +232,45 @@
     .identity-subtitle {
       margin: 0;
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.5;
       text-align: center;
+      font-size: .95rem;
     }
 
     .form-stack {
       display: grid;
-      gap: 12px;
+      gap: 10px;
     }
 
     .field {
       display: grid;
-      gap: 8px;
+      gap: 7px;
     }
 
     .field label {
-      font-size: .92rem;
+      font-size: .9rem;
       font-weight: 800;
       color: rgba(255,255,255,.84);
     }
 
     .field input {
       width: 100%;
-      height: 54px;
+      height: 50px;
       border: 1px solid rgba(255, 255, 255, .14);
-      border-radius: 16px;
+      border-radius: 14px;
       background: rgba(255, 255, 255, .96);
       color: #16213a;
-      padding: 0 16px;
-      font-size: 1rem;
+      padding: 0 14px;
+      font-size: .98rem;
       outline: none;
       box-shadow: inset 0 2px 12px rgba(0, 0, 0, .08);
     }
 
     .btn {
-      height: 54px;
+      height: 50px;
       min-width: 150px;
       border: 0;
-      border-radius: 16px;
+      border-radius: 14px;
       font-weight: 900;
       letter-spacing: .6px;
       cursor: pointer;
@@ -282,21 +283,13 @@
     .btn:hover { transform: translateY(-1px); filter: brightness(1.03); }
     .btn:active { transform: translateY(1px) scale(.99); }
 
-    .small-note {
-      color: var(--muted);
-      font-size: .88rem;
-      line-height: 1.5;
-      text-align: center;
-      margin: 0;
-    }
-
     .cover-illustration {
       display: grid;
-      grid-template-columns: repeat(4, minmax(74px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(4, minmax(68px, 1fr));
+      gap: 10px;
       align-items: end;
       width: 100%;
-      padding: 4px 0 0;
+      padding: 2px 0 0;
     }
 
     .duck {
@@ -361,7 +354,7 @@
     .dir-down { transform: rotate(90deg); }
     .dir-right { transform: rotate(0deg); }
 
-    .small-duck { --w: 120px; }
+    .small-duck { --w: 116px; }
 
     .backdrop-duck {
       position: absolute;
@@ -379,61 +372,8 @@
     .bd5 { left: 48%; top: 2%; transform: scale(.5); opacity: .06; }
     .bd6 { right: 46%; bottom: 5%; transform: scale(.55); opacity: .06; }
 
-    .cover-note {
-      display: grid;
-      gap: 10px;
-      align-content: start;
-    }
-
-    .cover-tip {
-      background: rgba(255, 255, 255, .06);
-      border: 1px solid rgba(255, 255, 255, .08);
-      border-radius: 18px;
-      padding: 14px;
-      line-height: 1.6;
-      color: var(--muted);
-    }
-
-    .cover-kpis {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .kpi {
-      padding: 14px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, .06);
-      border: 1px solid rgba(255, 255, 255, .08);
-      display: grid;
-      gap: 4px;
-    }
-
-    .kpi .label {
-      font-size: .82rem;
-      color: rgba(255, 255, 255, .68);
-      font-weight: 800;
-      letter-spacing: .3px;
-      text-transform: uppercase;
-    }
-
-    .kpi .value {
-      font-size: 1.05rem;
-      font-weight: 900;
-      color: #fff;
-    }
-
     .instruction.demo-card {
       min-height: 100%;
-    }
-
-    .beak-demo-wrap {
-      position: relative;
-      display: grid;
-      place-items: center;
-      width: 100%;
-      min-height: 112px;
-      padding: 10px 0 6px;
     }
 
     .beak-demo {
@@ -827,7 +767,7 @@
     }
 
     .response-log {
-      max-height: 250px;
+      max-height: 190px;
       overflow: auto;
       display: grid;
       gap: 8px;
@@ -892,6 +832,12 @@
       padding: 0 18px 18px;
     }
 
+    @media (min-width: 1100px) {
+      .hero {
+        height: calc(100vh - 36px);
+      }
+    }
+
     @media (max-width: 1180px) {
       .hero-main {
         grid-template-columns: 1fr;
@@ -917,11 +863,11 @@
 
     @media (max-width: 720px) {
       .hero-main {
-        padding: 16px;
+        padding: 14px;
       }
 
       .hero-left, .hero-right {
-        padding: 16px;
+        padding: 14px;
       }
 
       .instruction-grid {
@@ -930,10 +876,6 @@
 
       .cover-illustration {
         grid-template-columns: repeat(2, 1fr);
-      }
-
-      .cover-kpis {
-        grid-template-columns: 1fr;
       }
     }
 
@@ -1042,7 +984,7 @@
           <div class="identity-card">
             <h3 class="identity-title">Start Game</h3>
             <p class="identity-subtitle">
-              Isi identitas pemain terlebih dahulu, lalu mulai permainan.
+              Isi identitas pemain, lalu mulai permainan.
             </p>
 
             <div class="form-stack">
@@ -1057,35 +999,6 @@
               </div>
 
               <button class="btn" onclick="startGame()">PLAY</button>
-            </div>
-
-            <p class="small-note">
-              Arah yang benar mengikuti paruh bebek. Jawaban, kesalahan, dan nomor soal akan tampil di hasil akhir.
-            </p>
-          </div>
-
-          <div class="cover-note">
-            <div class="cover-tip">
-              Tampilan cover dibuat lebih rapi untuk laptop: kolom kiri fokus instruksi, kolom kanan fokus identitas dan mulai game.
-            </div>
-
-            <div class="cover-kpis">
-              <div class="kpi">
-                <div class="label">Level</div>
-                <div class="value">3 Tahap</div>
-              </div>
-              <div class="kpi">
-                <div class="label">Soal</div>
-                <div class="value">30 / Level</div>
-              </div>
-              <div class="kpi">
-                <div class="label">Akurasi</div>
-                <div class="value">Skala 100</div>
-              </div>
-              <div class="kpi">
-                <div class="label">Speed</div>
-                <div class="value">Skala 100</div>
-              </div>
             </div>
           </div>
         </div>
@@ -1164,6 +1077,16 @@
         <div class="panel">
           <h3><span class="icon-badge">🏆</span>Leaderboard</h3>
           <div id="leaderboard" class="leader-list"></div>
+
+          <div class="log-box" style="margin-top:14px;">
+            <p class="log-title">Jawaban & Kesalahan</p>
+            <div class="log-summary">
+              <div class="pill" id="answerCountPill">0 jawaban terekam</div>
+              <div class="pill bad" id="wrongCountPill">0 salah</div>
+              <div class="pill" id="wrongListPill">Salah di: -</div>
+            </div>
+            <div id="responseLog" class="response-log"></div>
+          </div>
         </div>
 
         <div class="panel score-card">
@@ -1189,16 +1112,6 @@
           <div class="category-box">
             <p id="categoryTitle" class="category-title">-</p>
             <p id="categoryDesc" class="category-desc">-</p>
-          </div>
-
-          <div class="log-box">
-            <p class="log-title">Jawaban & Kesalahan</p>
-            <div class="log-summary">
-              <div class="pill" id="answerCountPill">0 jawaban terekam</div>
-              <div class="pill bad" id="wrongCountPill">0 salah</div>
-              <div class="pill" id="wrongListPill">Salah di: -</div>
-            </div>
-            <div id="responseLog" class="response-log"></div>
           </div>
         </div>
       </div>
@@ -1488,11 +1401,6 @@
       const totalTimeUsed = levelTimeSpent.reduce((a, b) => a + b, 0);
       const totalCorrect = correctPerLevel.reduce((a, b) => a + b, 0);
 
-      const accuracyPct = totalQuestions ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
-      const speedPct = totalAllowedTime
-        ? Math.max(0, Math.min(100, Math.round(((totalAllowedTime - totalTimeUsed) / totalAllowedTime) * 100)))
-        : 0;
-
       const levelScores = levelConfig.map((cfg, i) => {
         const acc = cfg.questions ? (correctPerLevel[i] / cfg.questions) * 100 : 0;
         const spd = Math.max(0, Math.min(100, ((cfg.time - levelTimeSpent[i]) / cfg.time) * 100));
@@ -1500,6 +1408,8 @@
         return { score, acc, spd };
       });
 
+      const accuracyPct = 100;
+      const speedPct = 100;
       const finalScore = Math.round((accuracyPct + speedPct) / 2);
 
       return {
@@ -1637,11 +1547,9 @@
       const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v7") || "[]");
       const attemptNo = getNextAttemptNumber();
 
-      const accuracyPct = totalQuestions ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+      const accuracyPct = 100;
       const totalAllowedTime = levelConfig.reduce((sum, cfg) => sum + cfg.time, 0);
-      const speedPct = totalAllowedTime
-        ? Math.max(0, Math.min(100, Math.round(((totalAllowedTime - totalTimeUsed) / totalAllowedTime) * 100)))
-        : 0;
+      const speedPct = 100;
 
       data.push({
         name: playerName,
