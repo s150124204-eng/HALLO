@@ -16,8 +16,6 @@
       --bad: #ff8e8e;
       --shadow: 0 20px 50px rgba(0, 0, 0, .22);
       --beak-red: #ff4a4a;
-      --panel: rgba(255, 255, 255, .07);
-      --panel-border: rgba(255, 255, 255, .10);
     }
 
     * { box-sizing: border-box; }
@@ -52,7 +50,7 @@
     }
 
     .wrap {
-      width: min(1280px, calc(100% - 28px));
+      width: min(1320px, calc(100% - 28px));
       margin: 0 auto;
       padding: 18px 0 34px;
       position: relative;
@@ -85,12 +83,11 @@
     }
 
     .hero-main {
-      padding: 22px 22px 18px;
+      padding: 22px;
       display: grid;
-      grid-template-columns: 1.05fr .95fr;
+      grid-template-columns: 1.1fr .9fr;
       gap: 18px;
       align-items: stretch;
-      position: relative;
     }
 
     .hero-left,
@@ -104,22 +101,17 @@
     }
 
     .hero-left {
-      padding: 24px 22px 20px;
+      padding: 24px 24px 20px;
       display: grid;
-      align-content: center;
-      justify-items: center;
-      text-align: center;
+      align-content: start;
       gap: 16px;
-      min-height: 100%;
     }
 
     .hero-right {
       padding: 20px;
       display: grid;
-      grid-template-rows: auto auto 1fr;
       gap: 16px;
-      align-content: center;
-      min-height: 100%;
+      align-content: start;
     }
 
     .eyebrow {
@@ -134,45 +126,134 @@
       font-size: .88rem;
       font-weight: 800;
       letter-spacing: .3px;
+      width: fit-content;
+      margin: 0 auto;
     }
 
     .title {
       margin: 0;
-      font-size: clamp(2.4rem, 4vw, 4.4rem);
+      font-size: clamp(2.35rem, 4vw, 4.35rem);
       letter-spacing: 1px;
       font-weight: 900;
       line-height: 1.05;
       text-transform: uppercase;
       text-shadow: 0 8px 22px rgba(0, 0, 0, .25);
+      text-align: center;
     }
 
     .subtitle {
       margin: 0;
-      font-size: clamp(1.05rem, 1.5vw, 1.42rem);
+      font-size: clamp(1.05rem, 1.5vw, 1.4rem);
       font-weight: 800;
       color: var(--text);
+      text-align: center;
     }
 
     .desc {
-      margin: 0;
+      margin: 0 auto;
       max-width: 760px;
       font-size: clamp(1rem, 1.15vw, 1.08rem);
       line-height: 1.7;
       color: var(--muted);
+      text-align: center;
     }
 
-    .name-row {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 2px;
+    .instruction-grid {
       width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 2px;
     }
 
-    .name-input {
-      width: min(420px, 100%);
+    .instruction {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .09);
+      border-radius: 20px;
+      padding: 15px 14px;
+      text-align: left;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+      min-height: 162px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .instruction b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .instruction span {
+      color: var(--muted);
+      font-size: .96rem;
+      line-height: 1.5;
+    }
+
+    .instruction-demo {
+      position: relative;
+      min-height: 150px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .08);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 10px;
+      margin-top: 8px;
+    }
+
+    .mini-hint {
+      margin: 0;
+      font-size: .86rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .identity-card {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 22px;
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .identity-title {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: .3px;
+      text-align: center;
+    }
+
+    .identity-subtitle {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .form-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: .92rem;
+      font-weight: 800;
+      color: rgba(255,255,255,.84);
+    }
+
+    .field input {
+      width: 100%;
       height: 54px;
       border: 1px solid rgba(255, 255, 255, .14);
       border-radius: 16px;
@@ -201,58 +282,12 @@
     .btn:hover { transform: translateY(-1px); filter: brightness(1.03); }
     .btn:active { transform: translateY(1px) scale(.99); }
 
-    .instruction-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-top: 2px;
-    }
-
-    .instruction {
-      background: rgba(255, 255, 255, .06);
-      border: 1px solid rgba(255, 255, 255, .09);
-      border-radius: 20px;
-      padding: 15px 14px;
-      text-align: left;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
-      min-height: 156px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .instruction b {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 1rem;
-    }
-
-    .instruction span {
+    .small-note {
       color: var(--muted);
-      font-size: .96rem;
+      font-size: .88rem;
       line-height: 1.5;
-    }
-
-    .instruction-demo {
-      position: relative;
-      min-height: 142px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, .06);
-      border: 1px solid rgba(255, 255, 255, .08);
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      padding: 10px;
-      margin-top: 8px;
-    }
-
-    .mini-hint {
+      text-align: center;
       margin: 0;
-      font-size: .86rem;
-      line-height: 1.45;
-      color: var(--muted);
     }
 
     .cover-illustration {
@@ -334,7 +369,7 @@
       filter: blur(.1px);
       pointer-events: none;
       transform: scale(.9);
-      z-index: 1;
+      z-index: 0;
     }
 
     .bd1 { left: 2%; top: 20%; }
@@ -354,7 +389,7 @@
       background: rgba(255, 255, 255, .06);
       border: 1px solid rgba(255, 255, 255, .08);
       border-radius: 18px;
-      padding: 14px 14px;
+      padding: 14px;
       line-height: 1.6;
       color: var(--muted);
     }
@@ -402,48 +437,30 @@
     }
 
     .beak-demo {
-      width: 112px;
-      height: 87px;
-      transform: none;
+      width: 100%;
+      max-width: 270px;
+      height: auto;
+      display: block;
     }
 
     .beak-circle {
-      position: absolute;
-      right: -1%;
-      top: 38%;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: 4px solid var(--beak-red);
-      box-shadow: 0 0 0 3px rgba(255, 74, 74, .12);
-      pointer-events: none;
+      fill: none;
+      stroke: var(--beak-red);
+      stroke-width: 6;
     }
 
-    .direction-arrow {
-      position: absolute;
-      right: 14px;
-      top: 16px;
-      display: grid;
-      justify-items: center;
-      gap: 4px;
-      color: #ffe4e4;
+    .arrow-line {
+      fill: none;
+      stroke: var(--beak-red);
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .arrow-text {
+      font-size: 16px;
       font-weight: 900;
-      text-shadow: 0 3px 8px rgba(0, 0, 0, .22);
-      pointer-events: none;
-    }
-
-    .direction-arrow .arrow-icon {
-      font-size: 1.9rem;
-      line-height: 1;
-      color: var(--beak-red);
-      transform: translateX(-5px);
-    }
-
-    .direction-arrow .arrow-text {
-      font-size: .76rem;
-      text-align: center;
-      line-height: 1.3;
-      max-width: 120px;
+      fill: #ffe4e4;
     }
 
     .game-shell, .result-shell {
@@ -760,14 +777,16 @@
       text-align: right;
     }
 
-    .category-box {
+    .category-box,
+    .log-box {
       padding: 16px 16px 18px;
       border-radius: 20px;
       background: rgba(255, 255, 255, .07);
       border: 1px solid rgba(255, 255, 255, .1);
     }
 
-    .category-title {
+    .category-title,
+    .log-title {
       margin: 0 0 8px;
       font-size: 1.15rem;
       font-weight: 900;
@@ -782,6 +801,64 @@
       margin: 0;
       color: var(--muted);
       line-height: 1.65;
+    }
+
+    .log-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .09);
+      color: rgba(255, 255, 255, .92);
+      font-size: .88rem;
+      font-weight: 800;
+    }
+
+    .pill.bad {
+      background: rgba(255, 142, 142, .15);
+      border-color: rgba(255, 142, 142, .3);
+      color: #ffd0d0;
+    }
+
+    .response-log {
+      max-height: 250px;
+      overflow: auto;
+      display: grid;
+      gap: 8px;
+      padding-right: 4px;
+    }
+
+    .response-item {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 16px;
+      padding: 10px 12px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .response-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      font-weight: 800;
+      color: rgba(255,255,255,.92);
+    }
+
+    .response-status.ok { color: #baf5a8; }
+    .response-status.bad { color: #ff9e9e; }
+
+    .response-detail {
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.5;
     }
 
     .result-actions {
@@ -890,11 +967,6 @@
             Pilih arah panah yang sesuai dengan arah yang ditunjuk paruh bebek secepat dan setepat mungkin.
           </p>
 
-          <div class="name-row">
-            <input id="playerName" class="name-input" type="text" placeholder="Enter your name" />
-            <button class="btn" onclick="startGame()">PLAY</button>
-          </div>
-
           <div class="instruction-grid">
             <div class="instruction">
               <div>
@@ -924,21 +996,37 @@
               </div>
 
               <div class="instruction-demo" aria-hidden="true">
-                <div class="direction-arrow">
-                  <div class="arrow-icon">→</div>
-                  <div class="arrow-text">panah mengikuti arah paruh</div>
-                </div>
+                <svg class="beak-demo" viewBox="0 0 420 190" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <marker id="arrowHead" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
+                      <path d="M 0 0 L 12 6 L 0 12 z" fill="#ff4a4a"></path>
+                    </marker>
+                  </defs>
 
-                <div class="duck beak-demo dir-right">
-                  <span class="tail"></span>
-                  <span class="wing"></span>
-                  <span class="eye"></span>
-                  <span class="beak"></span>
-                  <span class="beak-circle"></span>
-                </div>
+                  <text x="26" y="24" class="arrow-text">Arah mengikuti paruh</text>
+
+                  <path d="M 58 146 C 112 146, 165 132, 226 98" class="arrow-line" marker-end="url(#arrowHead)"></path>
+
+                  <g transform="translate(50,18)">
+                    <ellipse cx="148" cy="82" rx="86" ry="62" fill="#f4c643" />
+                    <ellipse cx="144" cy="86" rx="72" ry="50" fill="#ffd86a" opacity=".55" />
+                    <circle cx="194" cy="64" r="34" fill="#f4c643" />
+                    <ellipse cx="122" cy="88" rx="30" ry="24" fill="rgba(255,255,255,.18)" />
+
+                    <path d="M 86 84 L 52 68 L 54 99 Z" fill="#e0a92b" />
+                    <path d="M 54 68 L 20 62 L 31 78 Z" fill="#d69a1f" opacity=".95" />
+
+                    <circle cx="206" cy="60" r="6" fill="#111" />
+
+                    <path d="M 223 76 L 279 76 L 287 86 L 279 96 L 223 96 Z" fill="#ff9f2f" />
+                    <path d="M 283 76 L 301 80 L 301 92 L 283 96 Z" fill="#ffb14d" />
+
+                    <circle cx="283" cy="86" r="26" class="beak-circle"></circle>
+                  </g>
+                </svg>
               </div>
 
-              <p class="mini-hint">Lingkaran merah menandai bagian paruh bebek.</p>
+              <p class="mini-hint">Lingkaran merah pas di bagian paruh, panah menunjukkan arah yang harus diikuti.</p>
             </div>
           </div>
         </div>
@@ -951,9 +1039,34 @@
             <div class="duck small-duck dir-down"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
           </div>
 
+          <div class="identity-card">
+            <h3 class="identity-title">Start Game</h3>
+            <p class="identity-subtitle">
+              Isi identitas pemain terlebih dahulu, lalu mulai permainan.
+            </p>
+
+            <div class="form-stack">
+              <div class="field">
+                <label for="playerName">Nama</label>
+                <input id="playerName" type="text" placeholder="Masukkan nama" />
+              </div>
+
+              <div class="field">
+                <label for="playerEmail">Email</label>
+                <input id="playerEmail" type="email" placeholder="Masukkan email" />
+              </div>
+
+              <button class="btn" onclick="startGame()">PLAY</button>
+            </div>
+
+            <p class="small-note">
+              Arah yang benar mengikuti paruh bebek. Jawaban, kesalahan, dan nomor soal akan tampil di hasil akhir.
+            </p>
+          </div>
+
           <div class="cover-note">
             <div class="cover-tip">
-              Tampilan dibuat lebih bersih untuk laptop: isi kiri fokus ke petunjuk, sisi kanan fokus ke ilustrasi.
+              Tampilan cover dibuat lebih rapi untuk laptop: kolom kiri fokus instruksi, kolom kanan fokus identitas dan mulai game.
             </div>
 
             <div class="cover-kpis">
@@ -967,11 +1080,11 @@
               </div>
               <div class="kpi">
                 <div class="label">Akurasi</div>
-                <div class="value">100 / 100</div>
+                <div class="value">Skala 100</div>
               </div>
               <div class="kpi">
                 <div class="label">Speed</div>
-                <div class="value">100 / 100</div>
+                <div class="value">Skala 100</div>
               </div>
             </div>
           </div>
@@ -1069,13 +1182,23 @@
             <div class="stat-row"><span>Total benar</span><span id="totalCorrectText">-</span></div>
             <div class="stat-row"><span>Total waktu</span><span id="totalTimeText">-</span></div>
             <div class="stat-row"><span>Akurasi</span><span id="accuracyText">-</span></div>
-            <div class="stat-row"><span>Speed</span><span id="speedText">-</span></div>
+            <div class="stat-row"><span>Kecepatan</span><span id="speedText">-</span></div>
             <div class="stat-row"><span>Skor akhir</span><span id="scorePctText">-</span></div>
           </div>
 
           <div class="category-box">
             <p id="categoryTitle" class="category-title">-</p>
             <p id="categoryDesc" class="category-desc">-</p>
+          </div>
+
+          <div class="log-box">
+            <p class="log-title">Jawaban & Kesalahan</p>
+            <div class="log-summary">
+              <div class="pill" id="answerCountPill">0 jawaban terekam</div>
+              <div class="pill bad" id="wrongCountPill">0 salah</div>
+              <div class="pill" id="wrongListPill">Salah di: -</div>
+            </div>
+            <div id="responseLog" class="response-log"></div>
           </div>
         </div>
       </div>
@@ -1112,6 +1235,13 @@
       down: "Bawah",
     };
 
+    const directionArrows = {
+      left: "←",
+      up: "↑",
+      right: "→",
+      down: "↓",
+    };
+
     let level = 0;
     let questionIndex = 0;
     let timeLeft = 0;
@@ -1124,8 +1254,12 @@
     let isTransitioning = false;
     let levelEnded = false;
 
+    let currentAnswers = [];
+    let currentQuestionNo = 0;
+
     let correctPerLevel = [0, 0, 0];
     let levelTimeSpent = [0, 0, 0];
+    let questionLogs = [];
     let leaderboard = [];
 
     const fishRow = document.getElementById("fishRow");
@@ -1141,6 +1275,7 @@
 
       correctPerLevel = [0, 0, 0];
       levelTimeSpent = [0, 0, 0];
+      questionLogs = [];
       levelEnded = false;
 
       loadLeaderboard();
@@ -1162,6 +1297,8 @@
       currentTargets = [];
       currentQuestionCorrect = true;
       isTransitioning = false;
+      currentAnswers = [];
+      currentQuestionNo = 0;
 
       const cfg = levelConfig[level];
       timeLeft = cfg.time;
@@ -1234,6 +1371,8 @@
       currentClickIndex = 0;
       currentQuestionCorrect = true;
       isTransitioning = false;
+      currentAnswers = [];
+      currentQuestionNo = questionIndex + 1;
 
       fishRow.innerHTML = "";
       currentTargets.forEach((dir) => fishRow.appendChild(renderDuck(dir)));
@@ -1241,7 +1380,7 @@
       renderClickTray();
 
       questionIndex++;
-      questionCounter.textContent = `${questionIndex} / ${cfg.questions}`;
+      questionCounter.textContent = `${currentQuestionNo} / ${cfg.questions}`;
       clickCounter.textContent = `0 / ${cfg.requiredClicks}`;
     }
 
@@ -1278,6 +1417,18 @@
       setTimeout(() => btn.classList.remove("pressed"), 180);
     }
 
+    function recordCurrentQuestion(finalPressedDirection) {
+      questionLogs.push({
+        level: level + 1,
+        questionNo: currentQuestionNo,
+        requiredClicks: levelConfig[level].requiredClicks,
+        expected: [...currentTargets],
+        answers: [...currentAnswers],
+        correct: currentQuestionCorrect,
+        finalPressedDirection,
+      });
+    }
+
     function pressDirection(direction) {
       const cfg = levelConfig[level];
       if (!cfg || currentTargets.length === 0 || isTransitioning || levelEnded) return;
@@ -1289,9 +1440,11 @@
 
       const progressState = new Array(cfg.requiredClicks).fill(null);
       for (let i = 0; i < currentClickIndex; i++) {
-        progressState[i] = { pressed: currentTargets[i], correct: true };
+        progressState[i] = { pressed: currentAnswers[i], correct: true };
       }
       progressState[currentClickIndex] = { pressed: direction, correct: isCorrect };
+
+      currentAnswers.push(direction);
 
       if (!isCorrect) currentQuestionCorrect = false;
 
@@ -1301,6 +1454,7 @@
 
       if (currentClickIndex >= cfg.requiredClicks) {
         isTransitioning = true;
+        recordCurrentQuestion(direction);
 
         if (currentQuestionCorrect) {
           correctPerLevel[level]++;
@@ -1334,15 +1488,19 @@
       const totalTimeUsed = levelTimeSpent.reduce((a, b) => a + b, 0);
       const totalCorrect = correctPerLevel.reduce((a, b) => a + b, 0);
 
+      const accuracyPct = totalQuestions ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+      const speedPct = totalAllowedTime
+        ? Math.max(0, Math.min(100, Math.round(((totalAllowedTime - totalTimeUsed) / totalAllowedTime) * 100)))
+        : 0;
+
       const levelScores = levelConfig.map((cfg, i) => {
-        const accuracyRatio = cfg.questions ? (correctPerLevel[i] / cfg.questions) : 0;
-        const speedRatio = Math.max(0, 1 - (levelTimeSpent[i] / cfg.time));
-        const score = cfg.maxScore * (0.7 * accuracyRatio + 0.3 * speedRatio);
-        return { score, accuracyRatio, speedRatio };
+        const acc = cfg.questions ? (correctPerLevel[i] / cfg.questions) * 100 : 0;
+        const spd = Math.max(0, Math.min(100, ((cfg.time - levelTimeSpent[i]) / cfg.time) * 100));
+        const score = Math.round((acc + spd) / 2);
+        return { score, acc, spd };
       });
 
-      const rawFinal = levelScores[0].score + levelScores[1].score + levelScores[2].score;
-      const finalScore = Math.max(0, Math.min(100, Math.round(rawFinal)));
+      const finalScore = Math.round((accuracyPct + speedPct) / 2);
 
       return {
         totalQuestions,
@@ -1351,9 +1509,53 @@
         totalCorrect,
         levelScores,
         finalScore,
-        accuracyTextValue: 100,
-        speedTextValue: 100,
+        accuracyTextValue: accuracyPct,
+        speedTextValue: speedPct,
       };
+    }
+
+    function buildResponseSummary() {
+      const box = document.getElementById("responseLog");
+      const wrongListPill = document.getElementById("wrongListPill");
+      const answerCountPill = document.getElementById("answerCountPill");
+      const wrongCountPill = document.getElementById("wrongCountPill");
+
+      answerCountPill.textContent = `${questionLogs.length} jawaban terekam`;
+
+      const wrongLogs = questionLogs.filter(item => !item.correct);
+      wrongCountPill.textContent = `${wrongLogs.length} salah`;
+
+      if (!wrongLogs.length) {
+        wrongListPill.textContent = "Salah di: -";
+      } else {
+        const wrongLabels = wrongLogs.map(item => `L${item.level} #${item.questionNo}`).join(", ");
+        wrongListPill.textContent = `Salah di: ${wrongLabels}`;
+      }
+
+      if (!questionLogs.length) {
+        box.innerHTML = `<div class="response-item"><div class="response-head"><span>Belum ada log</span></div></div>`;
+        return;
+      }
+
+      box.innerHTML = questionLogs.map((item) => {
+        const expectedText = item.expected.map(d => directionArrows[d]).join(" ");
+        const answerText = item.answers.map(d => directionArrows[d]).join(" ");
+        const statusClass = item.correct ? "ok" : "bad";
+        const statusText = item.correct ? "Benar" : "Salah";
+
+        return `
+          <div class="response-item">
+            <div class="response-head">
+              <span>L${item.level} #${item.questionNo}</span>
+              <span class="response-status ${statusClass}">${statusText}</span>
+            </div>
+            <div class="response-detail">
+              Target: ${expectedText}<br>
+              Jawaban: ${answerText}
+            </div>
+          </div>
+        `;
+      }).join("");
     }
 
     function endGame() {
@@ -1373,13 +1575,13 @@
         `Benar ${s.totalCorrect}/${s.totalQuestions} · Total waktu ${s.totalTimeUsed} detik`;
 
       document.getElementById("statL1").textContent =
-        `${correctPerLevel[0]} / ${levelConfig[0].questions} benar · ${levelTimeSpent[0]} dtk · ${lvl1.toFixed(1)}/30 poin`;
+        `${correctPerLevel[0]} / ${levelConfig[0].questions} benar · ${levelTimeSpent[0]} dtk · ${lvl1}/100 poin`;
 
       document.getElementById("statL2").textContent =
-        `${correctPerLevel[1]} / ${levelConfig[1].questions} benar · ${levelTimeSpent[1]} dtk · ${lvl2.toFixed(1)}/30 poin`;
+        `${correctPerLevel[1]} / ${levelConfig[1].questions} benar · ${levelTimeSpent[1]} dtk · ${lvl2}/100 poin`;
 
       document.getElementById("statL3").textContent =
-        `${correctPerLevel[2]} / ${levelConfig[2].questions} benar · ${levelTimeSpent[2]} dtk · ${lvl3.toFixed(1)}/40 poin`;
+        `${correctPerLevel[2]} / ${levelConfig[2].questions} benar · ${levelTimeSpent[2]} dtk · ${lvl3}/100 poin`;
 
       document.getElementById("totalCorrectText").textContent = `${s.totalCorrect}/${s.totalQuestions} benar`;
       document.getElementById("totalTimeText").textContent = `${s.totalTimeUsed} dtk`;
@@ -1392,6 +1594,7 @@
       document.getElementById("categoryDesc").textContent = category.desc;
       document.getElementById("categoryTitle").className = `category-title ${category.className}`;
 
+      buildResponseSummary();
       saveLeaderboard(s.finalScore, s.totalCorrect, s.totalQuestions, s.totalTimeUsed);
       loadLeaderboard();
       renderLeaderboard();
@@ -1430,14 +1633,19 @@
 
     function saveLeaderboard(finalScore, totalCorrect, totalQuestions, totalTimeUsed) {
       const playerName = document.getElementById("playerName").value.trim() || "Player";
-      const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v6") || "[]");
+      const playerEmail = document.getElementById("playerEmail").value.trim() || "-";
+      const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v7") || "[]");
       const attemptNo = getNextAttemptNumber();
 
-      const accuracyPct = 100;
-      const speedPct = 100;
+      const accuracyPct = totalQuestions ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+      const totalAllowedTime = levelConfig.reduce((sum, cfg) => sum + cfg.time, 0);
+      const speedPct = totalAllowedTime
+        ? Math.max(0, Math.min(100, Math.round(((totalAllowedTime - totalTimeUsed) / totalAllowedTime) * 100)))
+        : 0;
 
       data.push({
         name: playerName,
+        email: playerEmail,
         attemptNo,
         score: finalScore,
         totalCorrect,
@@ -1449,11 +1657,11 @@
       });
 
       data.sort((a, b) => b.score - a.score || b.accuracyPct - a.accuracyPct || a.totalTimeUsed - b.totalTimeUsed);
-      localStorage.setItem("mbd_leaderboard_v6", JSON.stringify(data.slice(0, 10)));
+      localStorage.setItem("mbd_leaderboard_v7", JSON.stringify(data.slice(0, 10)));
     }
 
     function loadLeaderboard() {
-      leaderboard = JSON.parse(localStorage.getItem("mbd_leaderboard_v6") || "[]");
+      leaderboard = JSON.parse(localStorage.getItem("mbd_leaderboard_v7") || "[]");
       renderLeaderboard();
     }
 
@@ -1476,7 +1684,7 @@
           <div class="leader-name">
             ${row.name}
             <div style="font-size:.86rem;color:rgba(255,255,255,.68);font-weight:600;margin-top:2px;">
-              Percobaan #${row.attemptNo} · Benar ${row.totalCorrect}/${row.totalQuestions} · ${row.totalTimeUsed} dtk
+              ${row.email} · Percobaan #${row.attemptNo} · Benar ${row.totalCorrect}/${row.totalQuestions} · ${row.totalTimeUsed} dtk
             </div>
           </div>
           <div class="leader-score">${row.score}</div>
