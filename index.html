@@ -679,20 +679,40 @@
           </div>
           <div class="instruction">
             <b>2. Three levels</b>
-            <span>Level 1: 15 soal / 45 detik, Level 2: 15 soal / 70 detik, Level 3: 15 soal / 90 detik.</span>
+            <span>Level 1: 30 soal / 60 detik, Level 2: 30 soal / 50 detik, Level 3: 30 soal / 40 detik.</span>
           </div>
           <div class="instruction">
             <b>3. Beat the timer</b>
             <span>Kerjakan secepat dan setepat mungkin untuk hasil terbaik.</span>
           </div>
+          <div class="instruction">
+            <b>4. Follow the duck's beak</b>
+            <span> Arah yang harus diikuti adalah arah yang ditunjuk oleh paruh bebek.</span>
         </div>
 
         <div class="name-row">
           <input id="playerName" class="name-input" type="text" placeholder="Enter your name" />
           <button class="btn" onclick="startGame()">PLAY</button>
         </div>
-      </div>
+           <div class="instruction-demo" aria-hidden="true">
+              <div class="direction-arrow">
+                <div class="arrow-icon">→</div>
+                <div class="arrow-text">panah mengikuti arah paruh</div>
+              </div>
 
+              <div class="duck beak-demo dir-right">
+                <span class="tail"></span>
+                <span class="wing"></span>
+                <span class="eye"></span>
+                <span class="beak"></span>
+                <span class="beak-circle"></span>
+              </div>
+            </div>
+
+            <p class="mini-hint">Lingkaran merah menandai bagian paruh bebek.</p>
+          </div>
+      </div> 
+      
       <div class="cover-illustration" aria-hidden="true">
         <div class="duck small-duck dir-right"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
         <div class="duck small-duck dir-up"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
@@ -815,9 +835,9 @@
 
   <script>
     const levelConfig = [
-      { questions: 15, time: 45, requiredClicks: 1, label: "Level 1", maxScore: 30 },
-      { questions: 15, time: 70, requiredClicks: 2, label: "Level 2", maxScore: 30 },
-      { questions: 15, time: 90, requiredClicks: 3, label: "Level 3", maxScore: 40 },
+      { questions: 30, time: 60, requiredClicks: 1, label: "Level 1", maxScore: 30 },
+      { questions: 30, time: 50, requiredClicks: 2, label: "Level 2", maxScore: 30 },
+      { questions: 30, time: 40, requiredClicks: 3, label: "Level 3", maxScore: 40 },
     ];
 
     const keyToDirection = {
