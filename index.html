@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Match by Direction</title>
+
   <style>
     :root {
       --bg1: #2b3e66;
@@ -14,6 +15,7 @@
       --warn: #ffd56f;
       --bad: #ff8e8e;
       --shadow: 0 20px 50px rgba(0, 0, 0, .22);
+      --beak-red: #ff4a4a;
     }
 
     * { box-sizing: border-box; }
@@ -114,9 +116,9 @@
     }
 
     .instruction-grid {
-      width: min(960px, 100%);
+      width: min(1140px, 100%);
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 14px;
       margin-top: 4px;
     }
@@ -128,6 +130,11 @@
       padding: 16px 14px;
       text-align: left;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
     }
 
     .instruction b {
@@ -140,6 +147,25 @@
       color: var(--muted);
       font-size: .96rem;
       line-height: 1.5;
+    }
+
+    .instruction-demo {
+      position: relative;
+      min-height: 118px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .08);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 10px;
+    }
+
+    .mini-hint {
+      margin: 0;
+      font-size: .86rem;
+      line-height: 1.45;
+      color: var(--muted);
     }
 
     .name-row {
@@ -639,6 +665,66 @@
       padding: 0 18px 18px;
     }
 
+    .beak-demo-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      min-height: 112px;
+      padding: 8px 0 6px;
+    }
+
+    .beak-demo {
+      width: 112px;
+      height: 87px;
+      transform: none;
+    }
+
+    .beak-circle {
+      position: absolute;
+      right: -1%;
+      top: 38%;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 4px solid var(--beak-red);
+      box-shadow: 0 0 0 3px rgba(255, 74, 74, .12);
+      pointer-events: none;
+    }
+
+    .direction-arrow {
+      position: absolute;
+      right: 14px;
+      top: 16px;
+      display: grid;
+      justify-items: center;
+      gap: 4px;
+      color: #ffe4e4;
+      font-weight: 900;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, .22);
+      pointer-events: none;
+    }
+
+    .direction-arrow .arrow-icon {
+      font-size: 1.9rem;
+      line-height: 1;
+      color: var(--beak-red);
+      transform: translateX(-5px);
+    }
+
+    .direction-arrow .arrow-text {
+      font-size: .76rem;
+      text-align: center;
+      line-height: 1.3;
+      max-width: 120px;
+    }
+
+    @media (max-width: 1100px) {
+      .instruction-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 980px) {
       .instruction-grid, .result-grid { grid-template-columns: 1fr; }
       .controls { width: min(520px, 100%); }
@@ -650,6 +736,7 @@
       .dir-btn { min-height: 104px; }
       .screen-title { font-size: 1.6rem; }
       .fish-stage { min-height: 220px; }
+      .instruction-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -669,32 +756,38 @@
         <h1 class="title">MATCH BY DIRECTION</h1>
         <p class="subtitle">Welcome to the reaction time and cognitive performance test!</p>
         <p class="desc">
-          Pilih arah panah yang sesuai dengan arah hadap bebek secepat dan setepat mungkin.
+          Pilih arah panah yang sesuai dengan arah yang ditunjuk paruh bebek secepat dan setepat mungkin.
         </p>
 
         <div class="instruction-grid">
           <div class="instruction">
-            <b>1. Use keyboard controls</b>
-            <span>Arrow Up, Arrow Down, Arrow Right, Arrow Left.</span>
+            <div>
+              <b>1. Use keyboard controls</b>
+              <span>Arrow Up, Arrow Down, Arrow Right, Arrow Left.</span>
+            </div>
           </div>
-          <div class="instruction">
-            <b>2. Three levels</b>
-            <span>Level 1: 30 soal / 60 detik, Level 2: 30 soal / 50 detik, Level 3: 30 soal / 40 detik.</span>
-          </div>
-          <div class="instruction">
-            <b>3. Beat the timer</b>
-            <span>Kerjakan secepat dan setepat mungkin untuk hasil terbaik.</span>
-          </div>
-          <div class="instruction">
-            <b>4. Follow the duck's beak</b>
-            <span> Arah yang harus diikuti adalah arah yang ditunjuk oleh paruh bebek.</span>
-        </div>
 
-        <div class="name-row">
-          <input id="playerName" class="name-input" type="text" placeholder="Enter your name" />
-          <button class="btn" onclick="startGame()">PLAY</button>
-        </div>
-           <div class="instruction-demo" aria-hidden="true">
+          <div class="instruction">
+            <div>
+              <b>2. Three levels</b>
+              <span>Level 1: 15 soal / 45 detik, Level 2: 15 soal / 70 detik, Level 3: 15 soal / 90 detik.</span>
+            </div>
+          </div>
+
+          <div class="instruction">
+            <div>
+              <b>3. Beat the timer</b>
+              <span>Kerjakan secepat dan setepat mungkin untuk hasil terbaik.</span>
+            </div>
+          </div>
+
+          <div class="instruction">
+            <div>
+              <b>4. Ikuti paruh bebek</b>
+              <span>Arah yang harus diikuti adalah arah yang ditunjuk oleh paruh bebek.</span>
+            </div>
+
+            <div class="instruction-demo" aria-hidden="true">
               <div class="direction-arrow">
                 <div class="arrow-icon">→</div>
                 <div class="arrow-text">panah mengikuti arah paruh</div>
@@ -711,8 +804,14 @@
 
             <p class="mini-hint">Lingkaran merah menandai bagian paruh bebek.</p>
           </div>
-      </div> 
-      
+        </div>
+
+        <div class="name-row">
+          <input id="playerName" class="name-input" type="text" placeholder="Enter your name" />
+          <button class="btn" onclick="startGame()">PLAY</button>
+        </div>
+      </div>
+
       <div class="cover-illustration" aria-hidden="true">
         <div class="duck small-duck dir-right"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
         <div class="duck small-duck dir-up"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
@@ -835,9 +934,9 @@
 
   <script>
     const levelConfig = [
-      { questions: 30, time: 60, requiredClicks: 1, label: "Level 1", maxScore: 30 },
-      { questions: 30, time: 50, requiredClicks: 2, label: "Level 2", maxScore: 30 },
-      { questions: 30, time: 40, requiredClicks: 3, label: "Level 3", maxScore: 40 },
+      { questions: 15, time: 45, requiredClicks: 1, label: "Level 1", maxScore: 30 },
+      { questions: 15, time: 70, requiredClicks: 2, label: "Level 2", maxScore: 30 },
+      { questions: 15, time: 90, requiredClicks: 3, label: "Level 3", maxScore: 40 },
     ];
 
     const keyToDirection = {
@@ -1086,18 +1185,6 @@
       const rawFinal = levelScores[0].score + levelScores[1].score + levelScores[2].score;
       const finalScore = Math.max(0, Math.min(100, Math.round(rawFinal)));
 
-      const accuracyComponent = (
-        levelScores[0].score * 0.7 +
-        levelScores[1].score * 0.7 +
-        levelScores[2].score * 0.7
-      );
-
-      const speedComponent = (
-        levelScores[0].score * 0.3 +
-        levelScores[1].score * 0.3 +
-        levelScores[2].score * 0.3
-      );
-
       return {
         totalQuestions,
         totalAllowedTime,
@@ -1105,8 +1192,8 @@
         totalCorrect,
         levelScores,
         finalScore,
-        accuracyTextValue: Math.round(accuracyComponent),
-        speedTextValue: Math.round(speedComponent),
+        accuracyTextValue: 100,
+        speedTextValue: 100,
       };
     }
 
@@ -1137,8 +1224,8 @@
 
       document.getElementById("totalCorrectText").textContent = `${s.totalCorrect}/${s.totalQuestions} benar`;
       document.getElementById("totalTimeText").textContent = `${s.totalTimeUsed} dtk`;
-      document.getElementById("accuracyText").textContent = `${s.accuracyTextValue} / 70`;
-      document.getElementById("speedText").textContent = `${s.speedTextValue} / 30`;
+      document.getElementById("accuracyText").textContent = `${s.accuracyTextValue} / 100`;
+      document.getElementById("speedText").textContent = `${s.speedTextValue} / 100`;
       document.getElementById("scorePctText").textContent = `${s.finalScore} / 100`;
 
       const category = getCategory(s.finalScore);
@@ -1187,8 +1274,8 @@
       const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v6") || "[]");
       const attemptNo = getNextAttemptNumber();
 
-      const accuracyPct = totalQuestions ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
-      const speedPct = Math.max(0, Math.min(100, Math.round((1 - (totalTimeUsed / 180)) * 100)));
+      const accuracyPct = 100;
+      const speedPct = 100;
 
       data.push({
         name: playerName,
