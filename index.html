@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Match by Direction</title>
-
   <style>
     :root {
       --bg1: #2b3e66;
@@ -15,7 +14,6 @@
       --warn: #ffd56f;
       --bad: #ff8e8e;
       --shadow: 0 20px 50px rgba(0, 0, 0, .22);
-      --beak-red: #ff4a4a;
     }
 
     * { box-sizing: border-box; }
@@ -50,7 +48,7 @@
     }
 
     .wrap {
-      width: min(1320px, calc(100% - 28px));
+      width: min(1240px, calc(100% - 28px));
       margin: 0 auto;
       padding: 18px 0 34px;
       position: relative;
@@ -76,222 +74,158 @@
     }
 
     .hero {
-      min-height: calc(100vh - 36px);
+      min-height: 100vh;
       display: grid;
       grid-template-rows: auto 1fr;
       align-items: stretch;
     }
 
-    .hero-main {
-      padding: 16px;
+    .hero-content {
+      padding: 26px 28px 18px;
+      text-align: center;
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      align-items: stretch;
-    }
-
-    .hero-card {
-      border-radius: 26px;
-      background: rgba(255, 255, 255, .05);
-      border: 1px solid rgba(255, 255, 255, .09);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
-      overflow: hidden;
-      position: relative;
-      padding: 14px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .08);
-      border: 1px solid rgba(255, 255, 255, .10);
-      color: rgba(255, 255, 255, .92);
-      font-size: .86rem;
-      font-weight: 800;
-      letter-spacing: .3px;
-      width: fit-content;
-      margin: 0 auto;
+      place-items: center;
+      gap: 18px;
     }
 
     .title {
       margin: 0;
-      font-size: clamp(2.1rem, 3.5vw, 3.8rem);
+      font-size: clamp(2.3rem, 4vw, 4.2rem);
       letter-spacing: 1px;
       font-weight: 900;
-      line-height: 1.02;
+      line-height: 1.05;
       text-transform: uppercase;
       text-shadow: 0 8px 22px rgba(0, 0, 0, .25);
-      text-align: center;
     }
 
     .subtitle {
       margin: 0;
-      font-size: clamp(1rem, 1.25vw, 1.25rem);
+      font-size: clamp(1.05rem, 1.6vw, 1.45rem);
       font-weight: 800;
       color: var(--text);
-      text-align: center;
     }
 
     .desc {
       margin: 0 auto;
-      max-width: 840px;
-      font-size: clamp(.96rem, 1vw, 1.04rem);
-      line-height: 1.6;
+      max-width: 900px;
+      font-size: clamp(1rem, 1.2vw, 1.1rem);
+      line-height: 1.7;
       color: var(--muted);
-      text-align: center;
     }
 
     .instruction-grid {
-      width: 100%;
+      width: min(1040px, 100%);
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 2px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 4px;
     }
 
     .instruction {
       background: rgba(255, 255, 255, .06);
       border: 1px solid rgba(255, 255, 255, .09);
-      border-radius: 18px;
-      padding: 12px 12px;
+      border-radius: 20px;
+      padding: 16px 14px;
       text-align: left;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
-      min-height: 142px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 8px;
     }
 
     .instruction b {
       display: block;
-      margin-bottom: 4px;
-      font-size: .98rem;
+      margin-bottom: 6px;
+      font-size: 1rem;
     }
 
     .instruction span {
       color: var(--muted);
-      font-size: .92rem;
-      line-height: 1.45;
+      font-size: .96rem;
+      line-height: 1.5;
     }
 
-    .instruction-demo {
+    .instruction-duck-wrap {
       position: relative;
-      min-height: 126px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, .06);
-      border: 1px solid rgba(255, 255, 255, .08);
+      width: 150px;
+      height: 108px;
+      margin: 10px auto 8px;
       display: grid;
       place-items: center;
-      overflow: hidden;
-      padding: 8px;
-      margin-top: 6px;
     }
 
-    .mini-hint {
+    .instruction-duck-wrap .duck {
+      transform: scale(.84);
+    }
+
+    .beak-ring {
+      position: absolute;
+      right: 12px;
+      top: 37px;
+      width: 36px;
+      height: 36px;
+      border: 4px solid rgba(255, 55, 55, .95);
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, .18);
+      pointer-events: none;
+    }
+
+    .instruction-note {
       margin: 0;
-      font-size: .84rem;
-      line-height: 1.4;
-      color: var(--muted);
-    }
-
-    .identity-card {
-      background: rgba(255, 255, 255, .06);
-      border: 1px solid rgba(255, 255, 255, .08);
-      border-radius: 22px;
-      padding: 14px;
-      display: grid;
-      gap: 12px;
-      max-width: 760px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    .identity-title {
-      margin: 0;
-      font-size: 1.22rem;
-      font-weight: 900;
-      letter-spacing: .3px;
-      text-align: center;
-    }
-
-    .identity-subtitle {
-      margin: 0;
+      margin-top: 8px;
       color: var(--muted);
       line-height: 1.5;
-      text-align: center;
-      font-size: .95rem;
+      font-size: .96rem;
     }
 
     .form-stack {
+      width: min(420px, 100%);
       display: grid;
-      gap: 10px;
-      max-width: 520px;
-      margin: 0 auto;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .form-input {
       width: 100%;
-    }
-
-    .field {
-      display: grid;
-      gap: 7px;
-    }
-
-    .field label {
-      font-size: .9rem;
-      font-weight: 800;
-      color: rgba(255,255,255,.84);
-    }
-
-    .field input {
-      width: 100%;
-      height: 50px;
+      height: 54px;
       border: 1px solid rgba(255, 255, 255, .14);
-      border-radius: 14px;
+      border-radius: 16px;
       background: rgba(255, 255, 255, .96);
       color: #16213a;
-      padding: 0 14px;
-      font-size: .98rem;
+      padding: 0 16px;
+      font-size: 1rem;
       outline: none;
       box-shadow: inset 0 2px 12px rgba(0, 0, 0, .08);
     }
 
     .btn {
-      height: 50px;
+      height: 54px;
       min-width: 150px;
       border: 0;
-      border-radius: 14px;
+      border-radius: 16px;
       font-weight: 900;
       letter-spacing: .6px;
       cursor: pointer;
       color: white;
       background: linear-gradient(180deg, #5e83ff, #4160d4);
       box-shadow: 0 10px 24px rgba(56, 86, 205, .34), inset 0 1px 0 rgba(255, 255, 255, .2);
-      transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+      transition: transform .15s ease, filter .15s ease, box-shadow .15s ease, opacity .15s ease;
     }
 
     .btn:hover { transform: translateY(-1px); filter: brightness(1.03); }
     .btn:active { transform: translateY(1px) scale(.99); }
-
-    .small-note {
-      color: var(--muted);
-      font-size: .88rem;
-      line-height: 1.5;
-      text-align: center;
-      margin: 0;
+    .btn:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      transform: none;
+      filter: none;
     }
 
     .cover-illustration {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(68px, 1fr));
-      gap: 10px;
-      align-items: end;
-      width: 100%;
-      padding: 2px 0 0;
-      max-width: 760px;
-      margin: 0 auto;
+      padding: 10px 0 34px;
+      display: flex;
+      justify-content: center;
+      gap: clamp(12px, 3vw, 28px);
+      align-items: flex-end;
+      flex-wrap: wrap;
+      opacity: .97;
     }
 
     .duck {
@@ -356,7 +290,7 @@
     .dir-down { transform: rotate(90deg); }
     .dir-right { transform: rotate(0deg); }
 
-    .small-duck { --w: 110px; }
+    .small-duck { --w: 120px; }
 
     .backdrop-duck {
       position: absolute;
@@ -364,7 +298,6 @@
       filter: blur(.1px);
       pointer-events: none;
       transform: scale(.9);
-      z-index: 0;
     }
 
     .bd1 { left: 2%; top: 20%; }
@@ -373,37 +306,6 @@
     .bd4 { right: 9%; bottom: 10%; }
     .bd5 { left: 48%; top: 2%; transform: scale(.5); opacity: .06; }
     .bd6 { right: 46%; bottom: 5%; transform: scale(.55); opacity: .06; }
-
-    .instruction.demo-card {
-      min-height: 100%;
-    }
-
-    .beak-demo {
-      width: 100%;
-      max-width: 250px;
-      height: auto;
-      display: block;
-    }
-
-    .beak-circle {
-      fill: none;
-      stroke: var(--beak-red);
-      stroke-width: 6;
-    }
-
-    .arrow-line {
-      fill: none;
-      stroke: var(--beak-red);
-      stroke-width: 6;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .arrow-text {
-      font-size: 16px;
-      font-weight: 900;
-      fill: #ffe4e4;
-    }
 
     .game-shell, .result-shell {
       margin-top: 18px;
@@ -597,6 +499,11 @@
       padding: 16px 18px 0;
     }
 
+    .left-column {
+      display: grid;
+      gap: 16px;
+    }
+
     .panel {
       background: rgba(255, 255, 255, .06);
       border: 1px solid rgba(255, 255, 255, .08);
@@ -633,6 +540,9 @@
       display: grid;
       gap: 8px;
       margin-top: 8px;
+      max-height: 360px;
+      overflow: auto;
+      padding-right: 4px;
     }
 
     .leader-item {
@@ -684,7 +594,7 @@
     }
 
     .score-main {
-      font-size: clamp(1.35rem, 2vw, 1.95rem);
+      font-size: clamp(1.4rem, 2vw, 2rem);
       font-weight: 900;
       margin: 0;
     }
@@ -719,57 +629,14 @@
       text-align: right;
     }
 
-    .level-summary-grid {
-      display: grid;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .level-summary-card {
-      border-radius: 18px;
-      background: rgba(255, 255, 255, .06);
-      border: 1px solid rgba(255, 255, 255, .08);
-      padding: 12px 12px 10px;
-      display: grid;
-      gap: 8px;
-    }
-
-    .level-summary-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      font-weight: 900;
-    }
-
-    .level-summary-title {
-      color: #fff;
-      font-size: 1rem;
-    }
-
-    .level-summary-time {
-      color: #ffeb9c;
-      font-size: .92rem;
-    }
-
-    .level-summary-body {
-      display: grid;
-      gap: 4px;
-      color: var(--muted);
-      font-size: .92rem;
-      line-height: 1.45;
-    }
-
-    .category-box,
-    .log-box {
+    .category-box {
       padding: 16px 16px 18px;
       border-radius: 20px;
       background: rgba(255, 255, 255, .07);
       border: 1px solid rgba(255, 255, 255, .1);
     }
 
-    .category-title,
-    .log-title {
+    .category-title {
       margin: 0 0 8px;
       font-size: 1.15rem;
       font-weight: 900;
@@ -786,62 +653,80 @@
       line-height: 1.65;
     }
 
-    .log-summary {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .pill {
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .08);
-      border: 1px solid rgba(255, 255, 255, .09);
-      color: rgba(255, 255, 255, .92);
-      font-size: .88rem;
-      font-weight: 800;
-    }
-
-    .pill.bad {
-      background: rgba(255, 142, 142, .15);
-      border-color: rgba(255, 142, 142, .3);
-      color: #ffd0d0;
-    }
-
     .response-log {
-      max-height: 190px;
-      overflow: auto;
       display: grid;
-      gap: 8px;
+      gap: 12px;
+      max-height: 560px;
+      overflow: auto;
       padding-right: 4px;
     }
 
-    .response-item {
-      background: rgba(255, 255, 255, .06);
+    .response-level {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .05);
       border: 1px solid rgba(255, 255, 255, .08);
-      border-radius: 16px;
-      padding: 10px 12px;
-      display: grid;
-      gap: 6px;
     }
 
-    .response-head {
+    .response-level h4 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+      font-weight: 900;
+    }
+
+    .response-summary {
       display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      font-weight: 800;
-      color: rgba(255,255,255,.92);
-    }
-
-    .response-status.ok { color: #baf5a8; }
-    .response-status.bad { color: #ff9e9e; }
-
-    .response-detail {
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
       color: var(--muted);
       font-size: .92rem;
-      line-height: 1.5;
+      line-height: 1.55;
+    }
+
+    .response-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .07);
+      border: 1px solid rgba(255, 255, 255, .08);
+      font-weight: 700;
+    }
+
+    .response-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .response-item {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .08);
+      line-height: 1.55;
+    }
+
+    .response-item.ok {
+      border-color: rgba(155, 227, 140, .25);
+      background: rgba(155, 227, 140, .08);
+    }
+
+    .response-item.bad {
+      border-color: rgba(255, 142, 142, .25);
+      background: rgba(255, 142, 142, .08);
+    }
+
+    .response-item.skip {
+      border-color: rgba(255, 213, 111, .22);
+      background: rgba(255, 213, 111, .08);
+    }
+
+    .response-sub {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: .9rem;
     }
 
     .result-actions {
@@ -875,51 +760,23 @@
       padding: 0 18px 18px;
     }
 
-    @media (min-width: 1100px) {
-      .hero {
-        height: calc(100vh - 36px);
-      }
-    }
-
-    @media (max-width: 1180px) {
-      .instruction-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .cover-illustration {
-        grid-template-columns: repeat(4, 1fr);
-      }
+    @media (max-width: 1100px) {
+      .instruction-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 980px) {
       .result-grid { grid-template-columns: 1fr; }
-      .controls { width: min(520px, 100%); }
-    }
-
-    @media (max-width: 720px) {
-      .hero-main {
-        padding: 14px;
-      }
-
-      .hero-card,
-      .identity-card {
-        padding: 14px;
-      }
-
-      .instruction-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .cover-illustration {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .hero-content { padding: 22px 18px 14px; }
     }
 
     @media (max-width: 560px) {
+      .instruction-grid { grid-template-columns: 1fr; }
       .controls { grid-template-columns: 1fr 1fr; }
       .dir-btn { min-height: 104px; }
       .screen-title { font-size: 1.6rem; }
       .fish-stage { min-height: 220px; }
+      .leader-item { grid-template-columns: 34px 1fr; }
+      .leader-score { grid-column: 2 / 3; justify-self: end; margin-top: -4px; }
     }
   </style>
 </head>
@@ -928,111 +785,62 @@
   <div class="wrap">
     <section id="cover" class="hero">
       <div class="top-zigzag"></div>
+      <div class="hero-content">
+        <div class="backdrop-duck bd1 duck small-duck dir-left"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="backdrop-duck bd2 duck small-duck dir-up"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="backdrop-duck bd3 duck small-duck dir-right"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="backdrop-duck bd4 duck small-duck dir-down"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="backdrop-duck bd5 duck small-duck dir-left"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="backdrop-duck bd6 duck small-duck dir-right"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
 
-      <div class="hero-main">
-        <div class="hero-card">
-          <div class="backdrop-duck bd1 duck small-duck dir-left"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
-          <div class="backdrop-duck bd2 duck small-duck dir-up"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
-          <div class="backdrop-duck bd3 duck small-duck dir-right"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
-          <div class="backdrop-duck bd4 duck small-duck dir-down"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
-          <div class="backdrop-duck bd5 duck small-duck dir-left"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
-          <div class="backdrop-duck bd6 duck small-duck dir-right"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <h1 class="title">MATCH BY DIRECTION</h1>
+        <p class="subtitle">Welcome to the reaction time and cognitive performance test!</p>
+        <p class="desc">
+          Pilih arah panah yang sesuai dengan arah hadap bebek secepat dan setepat mungkin.
+        </p>
 
-          <div class="eyebrow">🐤 Match by Direction</div>
-          <h1 class="title">MATCH BY DIRECTION</h1>
-          <p class="subtitle">Welcome to the reaction time and cognitive performance test!</p>
-          <p class="desc">
-            Pilih arah panah yang sesuai dengan arah yang ditunjuk paruh bebek secepat dan setepat mungkin.
-          </p>
-
-          <div class="instruction-grid">
-            <div class="instruction">
-              <div>
-                <b>1. Use keyboard controls</b>
-                <span>Arrow Up, Arrow Down, Arrow Right, Arrow Left.</span>
-              </div>
-            </div>
-
-            <div class="instruction">
-              <div>
-                <b>2. Three levels</b>
-                <span>Level 1: 30 soal / 45 detik, Level 2: 30 soal / 35 detik, Level 3: 30 soal / 30 detik.</span>
-              </div>
-            </div>
-
-            <div class="instruction">
-              <div>
-                <b>3. Beat the timer</b>
-                <span>Kerjakan secepat dan setepat mungkin untuk hasil terbaik.</span>
-              </div>
-            </div>
-
-            <div class="instruction demo-card">
-              <div>
-                <b>4. Ikuti paruh bebek</b>
-                <span>Arah yang harus diikuti adalah arah yang ditunjuk oleh paruh bebek.</span>
-              </div>
-
-              <div class="instruction-demo" aria-hidden="true">
-                <svg class="beak-demo" viewBox="0 0 420 190" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <marker id="arrowHead" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
-                      <path d="M 0 0 L 12 6 L 0 12 z" fill="#ff4a4a"></path>
-                    </marker>
-                  </defs>
-
-                  <text x="26" y="24" class="arrow-text">Arah mengikuti paruh</text>
-
-                  <path d="M 58 146 C 112 146, 165 132, 226 98" class="arrow-line" marker-end="url(#arrowHead)"></path>
-
-                  <g transform="translate(50,18)">
-                    <ellipse cx="148" cy="82" rx="86" ry="62" fill="#f4c643" />
-                    <ellipse cx="144" cy="86" rx="72" ry="50" fill="#ffd86a" opacity=".55" />
-                    <circle cx="194" cy="64" r="34" fill="#f4c643" />
-                    <ellipse cx="122" cy="88" rx="30" ry="24" fill="rgba(255,255,255,.18)" />
-
-                    <path d="M 86 84 L 52 68 L 54 99 Z" fill="#e0a92b" />
-                    <path d="M 54 68 L 20 62 L 31 78 Z" fill="#d69a1f" opacity=".95" />
-
-                    <circle cx="206" cy="60" r="6" fill="#111" />
-
-                    <path d="M 223 76 L 279 76 L 287 86 L 279 96 L 223 96 Z" fill="#ff9f2f" />
-                    <path d="M 283 76 L 301 80 L 301 92 L 283 96 Z" fill="#ffb14d" />
-
-                    <circle cx="283" cy="86" r="26" class="beak-circle"></circle>
-                  </g>
-                </svg>
-              </div>
-
-              <p class="mini-hint">Lingkaran merah pas di bagian paruh, panah menunjukkan arah yang harus diikuti.</p>
-            </div>
+        <div class="instruction-grid">
+          <div class="instruction">
+            <b>1. Use keyboard controls</b>
+            <span>Arrow Up, Arrow Down, Arrow Right, Arrow Left.</span>
           </div>
-
-          <div class="identity-card">
-            <h3 class="identity-title">Start Game</h3>
-            <p class="identity-subtitle">
-              Isi identitas pemain, lalu mulai permainan.
-            </p>
-
-            <div class="form-stack">
-              <div class="field">
-                <label for="playerName">Nama</label>
-                <input id="playerName" type="text" placeholder="Masukkan nama" />
+          <div class="instruction">
+            <b>2. Three levels</b>
+            <span>Level 1: 30 soal / 45 detik, Level 2: 30 soal / 35 detik, Level 3: 30 soal / 30 detik.</span>
+          </div>
+          <div class="instruction">
+            <b>3. Beat the timer</b>
+            <span>Kerjakan secepat dan setepat mungkin untuk hasil terbaik.</span>
+          </div>
+          <div class="instruction">
+            <b>4. Beak = correct direction</b>
+            <div class="instruction-duck-wrap" aria-hidden="true">
+              <div class="duck small-duck dir-right">
+                <span class="tail"></span>
+                <span class="wing"></span>
+                <span class="eye"></span>
+                <span class="beak"></span>
               </div>
-
-              <div class="field">
-                <label for="playerEmail">Email</label>
-                <input id="playerEmail" type="email" placeholder="Masukkan email" />
-              </div>
-
-              <button class="btn" onclick="startGame()">PLAY</button>
+              <div class="beak-ring"></div>
             </div>
-
-            <p class="small-note" id="startNote">
-              Arah yang benar mengikuti paruh bebek.
+            <p class="instruction-note">
+              Arah yang benar adalah arah dimana paruh bebek menghadap.
             </p>
           </div>
         </div>
+
+        <div class="form-stack">
+          <input id="playerName" class="form-input" type="text" placeholder="Enter your name" />
+          <input id="playerEmail" class="form-input" type="email" placeholder="Enter your email" />
+          <button id="playBtn" class="btn" onclick="startGame()" disabled>PLAY</button>
+        </div>
+      </div>
+
+      <div class="cover-illustration" aria-hidden="true">
+        <div class="duck small-duck dir-right"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="duck small-duck dir-up"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="duck small-duck dir-left"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
+        <div class="duck small-duck dir-down"><span class="tail"></span><span class="wing"></span><span class="eye"></span><span class="beak"></span></div>
       </div>
     </section>
 
@@ -1105,19 +913,14 @@
       <h2 class="screen-title">MATCH BY DIRECTION</h2>
 
       <div class="result-grid">
-        <div class="panel">
-          <h3><span class="icon-badge">🏆</span>Leaderboard</h3>
-          <div id="leaderboard" class="leader-list"></div>
+        <div class="left-column">
+          <div class="panel">
+            <h3><span class="icon-badge">🏆</span>Leaderboard</h3>
+            <div id="leaderboard" class="leader-list"></div>
+          </div>
 
-          <div class="level-summary-grid" id="levelSummaryGrid"></div>
-
-          <div class="log-box" style="margin-top:14px;">
-            <p class="log-title">Jawaban & Kesalahan</p>
-            <div class="log-summary">
-              <div class="pill" id="answerCountPill">0 jawaban terekam</div>
-              <div class="pill bad" id="wrongCountPill">0 salah</div>
-              <div class="pill" id="wrongListPill">Salah di: -</div>
-            </div>
+          <div class="panel">
+            <h3><span class="icon-badge">⏱️</span>Riwayat Respons</h3>
             <div id="responseLog" class="response-log"></div>
           </div>
         </div>
@@ -1125,18 +928,23 @@
         <div class="panel score-card">
           <div class="score-big">
             <div>
-              <p class="score-main" id="finalScore">Skor akhir: <span class="num">0</span> / 100</p>
-              <p class="score-sub" id="finalSubtitle">Akurasi, kecepatan, dan skor akhir akan tampil di sini.</p>
+              <p class="score-main" id="finalScore">Score: <span class="num">0</span> / 100</p>
+              <p class="score-sub" id="finalSubtitle">Hasil akhir permainan akan tampil di sini.</p>
             </div>
             <div class="icon-badge" style="width:64px;height:64px;font-size:1.55rem;">★</div>
           </div>
 
           <div class="stats">
-            <div class="stat-row"><span>Akurasi</span><span id="accuracyText">-</span></div>
-            <div class="stat-row"><span>Kecepatan</span><span id="speedText">-</span></div>
-            <div class="stat-row"><span>Skor akhir (rata-rata)</span><span id="scorePctText">-</span></div>
+            <div class="stat-row"><span>Level 1</span><span id="statL1">-</span></div>
+            <div class="stat-row"><span>Level 2</span><span id="statL2">-</span></div>
+            <div class="stat-row"><span>Level 3</span><span id="statL3">-</span></div>
             <div class="stat-row"><span>Total benar</span><span id="totalCorrectText">-</span></div>
+            <div class="stat-row"><span>Jawaban salah</span><span id="wrongCountText">-</span></div>
+            <div class="stat-row"><span>Soal dilewati</span><span id="skippedCountText">-</span></div>
             <div class="stat-row"><span>Total waktu</span><span id="totalTimeText">-</span></div>
+            <div class="stat-row"><span>Akurasi</span><span id="accuracyText">-</span></div>
+            <div class="stat-row"><span>Speed</span><span id="speedText">-</span></div>
+            <div class="stat-row"><span>Skor akhir</span><span id="scorePctText">-</span></div>
           </div>
 
           <div class="category-box">
@@ -1178,13 +986,6 @@
       down: "Bawah",
     };
 
-    const directionArrows = {
-      left: "←",
-      up: "↑",
-      right: "→",
-      down: "↓",
-    };
-
     let level = 0;
     let questionIndex = 0;
     let timeLeft = 0;
@@ -1196,14 +997,12 @@
     let currentQuestionCorrect = true;
     let isTransitioning = false;
     let levelEnded = false;
-
-    let currentAnswers = [];
-    let currentQuestionNo = 0;
+    let questionStartMs = 0;
+    let currentQuestionLog = null;
 
     let correctPerLevel = [0, 0, 0];
-    let completedQuestionsPerLevel = [0, 0, 0];
     let levelTimeSpent = [0, 0, 0];
-    let questionLogs = [];
+    let levelQuestionLogs = [[], [], []];
     let leaderboard = [];
 
     const fishRow = document.getElementById("fishRow");
@@ -1213,29 +1012,39 @@
     const questionCounter = document.getElementById("questionCounter");
     const clickCounter = document.getElementById("clickCounter");
 
-    function startGame() {
-      const playerName = document.getElementById("playerName").value.trim();
-      const playerEmail = document.getElementById("playerEmail").value.trim();
-      const startNote = document.getElementById("startNote");
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
 
-      if (!playerName || !playerEmail) {
-        startNote.textContent = "Isi nama dan email terlebih dahulu sebelum mulai.";
-        startNote.style.color = "#ffd0d0";
-        startNote.style.fontWeight = "800";
+    function updatePlayState() {
+      const name = document.getElementById("playerName").value.trim();
+      const email = document.getElementById("playerEmail").value.trim();
+      document.getElementById("playBtn").disabled = !(name && email);
+    }
+
+    document.getElementById("playerName").addEventListener("input", updatePlayState);
+    document.getElementById("playerEmail").addEventListener("input", updatePlayState);
+
+    function startGame() {
+      const name = document.getElementById("playerName").value.trim();
+      const email = document.getElementById("playerEmail").value.trim();
+
+      if (!name) {
+        alert("Nama belum diisi.");
         return;
       }
 
-      startNote.textContent = "Arah yang benar mengikuti paruh bebek.";
-      startNote.style.color = "rgba(245, 247, 255, .66)";
-      startNote.style.fontWeight = "400";
+      if (!email || !isValidEmail(email)) {
+        alert("Email belum valid.");
+        return;
+      }
 
       document.getElementById("cover").classList.add("hidden");
       document.getElementById("game").classList.remove("hidden");
 
       correctPerLevel = [0, 0, 0];
-      completedQuestionsPerLevel = [0, 0, 0];
       levelTimeSpent = [0, 0, 0];
-      questionLogs = [];
+      levelQuestionLogs = [[], [], []];
       levelEnded = false;
 
       loadLeaderboard();
@@ -1257,8 +1066,8 @@
       currentTargets = [];
       currentQuestionCorrect = true;
       isTransitioning = false;
-      currentAnswers = [];
-      currentQuestionNo = 0;
+      questionStartMs = 0;
+      currentQuestionLog = null;
 
       const cfg = levelConfig[level];
       timeLeft = cfg.time;
@@ -1283,6 +1092,16 @@
       }, 1000);
     }
 
+    function finishCurrentQuestionIfNeeded(skipped = false) {
+      if (!currentQuestionLog) return;
+
+      currentQuestionLog.totalResponseMs = Date.now() - currentQuestionLog.startMs;
+      currentQuestionLog.completed = !skipped;
+      currentQuestionLog.skipped = skipped;
+      levelQuestionLogs[level].push(currentQuestionLog);
+      currentQuestionLog = null;
+    }
+
     function finishLevel() {
       if (levelEnded) return;
       levelEnded = true;
@@ -1290,9 +1109,34 @@
 
       clearInterval(timerId);
 
+      if (currentQuestionLog && !currentQuestionLog.completed) {
+        finishCurrentQuestionIfNeeded(true);
+      }
+
+      const cfg = levelConfig[level];
+      const existing = new Set(levelQuestionLogs[level].map(q => q.questionNo));
+
+      for (let q = questionIndex + 1; q <= cfg.questions; q++) {
+        if (!existing.has(q)) {
+          levelQuestionLogs[level].push({
+            level: level + 1,
+            questionNo: q,
+            targets: [],
+            clicks: [],
+            startMs: levelStartMs,
+            totalResponseMs: 0,
+            correct: false,
+            skipped: true,
+            completed: false
+          });
+        }
+      }
+
+      levelQuestionLogs[level].sort((a, b) => a.questionNo - b.questionNo);
+
       const elapsed = Math.max(
         0,
-        Math.min(levelConfig[level].time, Math.ceil((Date.now() - levelStartMs) / 1000))
+        Math.min(cfg.time, Math.ceil((Date.now() - levelStartMs) / 1000))
       );
       levelTimeSpent[level] = elapsed;
 
@@ -1331,16 +1175,28 @@
       currentClickIndex = 0;
       currentQuestionCorrect = true;
       isTransitioning = false;
-      currentAnswers = [];
-      currentQuestionNo = questionIndex + 1;
+
+      questionIndex++;
+      questionStartMs = Date.now();
+
+      currentQuestionLog = {
+        level: level + 1,
+        questionNo: questionIndex,
+        targets: [...currentTargets],
+        clicks: [],
+        startMs: questionStartMs,
+        totalResponseMs: 0,
+        correct: true,
+        skipped: false,
+        completed: false
+      };
 
       fishRow.innerHTML = "";
       currentTargets.forEach((dir) => fishRow.appendChild(renderDuck(dir)));
 
       renderClickTray();
 
-      questionIndex++;
-      questionCounter.textContent = `${currentQuestionNo} / ${cfg.questions}`;
+      questionCounter.textContent = `${questionIndex} / ${cfg.questions}`;
       clickCounter.textContent = `0 / ${cfg.requiredClicks}`;
     }
 
@@ -1377,40 +1233,29 @@
       setTimeout(() => btn.classList.remove("pressed"), 180);
     }
 
-    function recordCurrentQuestion(finalPressedDirection) {
-      completedQuestionsPerLevel[level]++;
-
-      questionLogs.push({
-        level: level + 1,
-        questionNo: currentQuestionNo,
-        requiredClicks: levelConfig[level].requiredClicks,
-        expected: [...currentTargets],
-        answers: [...currentAnswers],
-        correct: currentQuestionCorrect,
-        finalPressedDirection,
-      });
-
-      if (currentQuestionCorrect) {
-        correctPerLevel[level]++;
-      }
-    }
-
     function pressDirection(direction) {
       const cfg = levelConfig[level];
-      if (!cfg || currentTargets.length === 0 || isTransitioning || levelEnded) return;
+      if (!cfg || currentTargets.length === 0 || isTransitioning || levelEnded || !currentQuestionLog) return;
 
       updateButtonStates(direction);
 
       const expected = currentTargets[currentClickIndex];
       const isCorrect = direction === expected;
+      const responseMs = Date.now() - currentQuestionLog.startMs;
 
       const progressState = new Array(cfg.requiredClicks).fill(null);
       for (let i = 0; i < currentClickIndex; i++) {
-        progressState[i] = { pressed: currentAnswers[i], correct: true };
+        progressState[i] = { pressed: currentTargets[i], correct: true };
       }
       progressState[currentClickIndex] = { pressed: direction, correct: isCorrect };
 
-      currentAnswers.push(direction);
+      currentQuestionLog.clicks.push({
+        clickNo: currentClickIndex + 1,
+        pressed: direction,
+        expected,
+        correct: isCorrect,
+        responseMs
+      });
 
       if (!isCorrect) currentQuestionCorrect = false;
 
@@ -1420,7 +1265,16 @@
 
       if (currentClickIndex >= cfg.requiredClicks) {
         isTransitioning = true;
-        recordCurrentQuestion(direction);
+
+        currentQuestionLog.totalResponseMs = Date.now() - currentQuestionLog.startMs;
+        currentQuestionLog.correct = currentQuestionCorrect;
+        currentQuestionLog.completed = true;
+        levelQuestionLogs[level].push(currentQuestionLog);
+        currentQuestionLog = null;
+
+        if (currentQuestionCorrect) {
+          correctPerLevel[level]++;
+        }
 
         setTimeout(() => {
           if (levelEnded) return;
@@ -1448,108 +1302,136 @@
       const totalQuestions = levelConfig.reduce((sum, cfg) => sum + cfg.questions, 0);
       const totalAllowedTime = levelConfig.reduce((sum, cfg) => sum + cfg.time, 0);
       const totalTimeUsed = levelTimeSpent.reduce((a, b) => a + b, 0);
-      const totalCorrect = correctPerLevel.reduce((a, b) => a + b, 0);
-      const totalCompleted = completedQuestionsPerLevel.reduce((a, b) => a + b, 0);
 
-      const accuracyPct = totalQuestions ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
-      const speedPct = totalAllowedTime
-        ? Math.max(0, Math.min(100, Math.round(((totalAllowedTime - totalTimeUsed) / totalAllowedTime) * 100)))
-        : 0;
+      const allLogs = levelQuestionLogs.flat();
+      const answeredLogs = allLogs.filter(q => !q.skipped && q.completed);
+      const totalCorrect = answeredLogs.filter(q => q.correct).length;
+      const totalWrong = answeredLogs.filter(q => !q.correct).length;
+      const totalSkipped = allLogs.filter(q => q.skipped).length;
 
-      const finalScore = Math.round((accuracyPct + speedPct) / 2);
-
-      const levelDetails = levelConfig.map((cfg, i) => {
-        const completed = completedQuestionsPerLevel[i];
-        const wrong = Math.max(0, completed - correctPerLevel[i]);
-        const unanswered = Math.max(0, cfg.questions - completed);
-        const reactionTime = levelTimeSpent[i];
-        const avgReaction = completed > 0 ? (reactionTime / completed) : 0;
-
-        return {
-          level: i + 1,
-          reactionTime,
-          avgReaction,
-          correct: correctPerLevel[i],
-          wrong,
-          unanswered,
-          completed,
-          total: cfg.questions
-        };
+      const levelScores = levelConfig.map((cfg, i) => {
+        const accuracyRatio = cfg.questions ? (correctPerLevel[i] / cfg.questions) : 0;
+        const speedRatio = Math.max(0, 1 - (levelTimeSpent[i] / cfg.time));
+        const score = cfg.maxScore * (0.7 * accuracyRatio + 0.3 * speedRatio);
+        return { score, accuracyRatio, speedRatio };
       });
+
+      const rawFinal = levelScores[0].score + levelScores[1].score + levelScores[2].score;
+      const finalScore = Math.max(0, Math.min(100, Math.round(rawFinal)));
+
+      const accuracyComponent = (
+        levelScores[0].score * 0.7 +
+        levelScores[1].score * 0.7 +
+        levelScores[2].score * 0.7
+      );
+
+      const speedComponent = (
+        levelScores[0].score * 0.3 +
+        levelScores[1].score * 0.3 +
+        levelScores[2].score * 0.3
+      );
 
       return {
         totalQuestions,
         totalAllowedTime,
         totalTimeUsed,
         totalCorrect,
-        totalCompleted,
-        accuracyPct,
-        speedPct,
+        totalWrong,
+        totalSkipped,
+        levelScores,
         finalScore,
-        levelDetails
+        accuracyTextValue: Math.round(accuracyComponent),
+        speedTextValue: Math.round(speedComponent),
       };
     }
 
-    function buildLevelSummary(levelDetails) {
-      const grid = document.getElementById("levelSummaryGrid");
-
-      grid.innerHTML = levelDetails.map((item) => `
-        <div class="level-summary-card">
-          <div class="level-summary-head">
-            <div class="level-summary-title">Level ${item.level}</div>
-            <div class="level-summary-time">${item.reactionTime} dtk</div>
-          </div>
-          <div class="level-summary-body">
-            <div>Durasi reaksi: ${item.reactionTime} detik</div>
-            <div>Rata-rata reaksi/soal: ${item.avgReaction.toFixed(2)} detik</div>
-            <div>Benar: ${item.correct} / ${item.total}</div>
-            <div>Salah: ${item.wrong}</div>
-            <div>Tidak terekam: ${item.unanswered}</div>
-          </div>
-        </div>
-      `).join("");
+    function formatMs(ms) {
+      const sec = ms / 1000;
+      return `${sec.toFixed(sec < 10 ? 2 : 1)} dtk`;
     }
 
-    function buildResponseSummary() {
+    function compressNumbers(numbers) {
+      const list = [...new Set(numbers)].sort((a, b) => a - b);
+      if (!list.length) return "-";
+
+      const ranges = [];
+      let start = list[0];
+      let prev = list[0];
+
+      for (let i = 1; i < list.length; i++) {
+        const n = list[i];
+        if (n === prev + 1) {
+          prev = n;
+          continue;
+        }
+        ranges.push(start === prev ? `${start}` : `${start}-${prev}`);
+        start = prev = n;
+      }
+
+      ranges.push(start === prev ? `${start}` : `${start}-${prev}`);
+      return ranges.join(", ");
+    }
+
+    function formatTargetSequence(targets) {
+      if (!targets || !targets.length) return "-";
+      return targets.map(d => directionLabels[d]).join(" → ");
+    }
+
+    function renderResponseLog() {
       const box = document.getElementById("responseLog");
-      const wrongListPill = document.getElementById("wrongListPill");
-      const answerCountPill = document.getElementById("answerCountPill");
-      const wrongCountPill = document.getElementById("wrongCountPill");
+      const allLevels = levelQuestionLogs.map((logs, idx) => {
+        const answered = logs.filter(q => q.completed && !q.skipped);
+        const correct = answered.filter(q => q.correct);
+        const wrong = answered.filter(q => !q.correct);
+        const skipped = logs.filter(q => q.skipped);
 
-      const totalCompleted = completedQuestionsPerLevel.reduce((a, b) => a + b, 0);
-      answerCountPill.textContent = `${totalCompleted} jawaban terekam`;
+        const correctNos = correct.map(q => q.questionNo);
+        const wrongNos = wrong.map(q => q.questionNo);
+        const skippedNos = skipped.map(q => q.questionNo);
 
-      const wrongLogs = questionLogs.filter(item => !item.correct);
-      wrongCountPill.textContent = `${wrongLogs.length} salah`;
+        const items = logs.map(q => {
+          if (q.skipped) {
+            const clickInfo = q.clicks.length
+              ? `Sebagian klik: ${q.clicks.map(c => `${c.clickNo}. ${directionLabels[c.pressed]} @ ${formatMs(c.responseMs)}`).join(" · ")}`
+              : "Tidak sempat dijawab.";
 
-      if (!wrongLogs.length) {
-        wrongListPill.textContent = "Salah di: -";
-      } else {
-        const wrongLabels = wrongLogs.map(item => `L${item.level} #${item.questionNo}`).join(", ");
-        wrongListPill.textContent = `Salah di: ${wrongLabels}`;
-      }
+            const targetText = q.targets && q.targets.length ? `Target: ${formatTargetSequence(q.targets)}` : "";
+            return `
+              <div class="response-item skip">
+                <strong>#${q.questionNo}</strong> — Dilewati
+                <div class="response-sub">${targetText}${targetText ? " · " : ""}${clickInfo}</div>
+              </div>
+            `;
+          }
 
-      if (!wrongLogs.length) {
-        box.innerHTML = `<div class="response-item"><div class="response-head"><span>Semua jawaban yang terekam benar</span></div></div>`;
-        return;
-      }
+          const clickText = q.clicks.map(c =>
+            `${c.clickNo}. ${directionLabels[c.pressed]} ${c.correct ? "✓" : "✕"} @ ${formatMs(c.responseMs)}`
+          ).join(" · ");
 
-      box.innerHTML = wrongLogs.map((item) => {
-        const expectedText = item.expected.map(d => directionArrows[d]).join(" ");
-        const answerText = item.answers.map(d => directionArrows[d]).join(" ");
-        return `
-          <div class="response-item">
-            <div class="response-head">
-              <span>L${item.level} #${item.questionNo}</span>
-              <span class="response-status bad">Salah</span>
+          return `
+            <div class="response-item ${q.correct ? "ok" : "bad"}">
+              <strong>#${q.questionNo}</strong> — ${q.correct ? "Benar" : "Salah"} · ${formatMs(q.totalResponseMs)}
+              <div class="response-sub">Target: ${formatTargetSequence(q.targets)}${clickText ? " · Klik: " + clickText : ""}</div>
             </div>
-            <div class="response-detail">
-              Target: ${expectedText}<br>
-              Jawaban: ${answerText}
+          `;
+        }).join("");
+
+        return `
+          <div class="response-level">
+            <h4>Level ${idx + 1}</h4>
+            <div class="response-summary">
+              <span class="response-chip">Benar: ${compressNumbers(correctNos)}</span>
+              <span class="response-chip">Salah: ${compressNumbers(wrongNos)}</span>
+              <span class="response-chip">Dilewati: ${compressNumbers(skippedNos)}</span>
+            </div>
+            <div class="response-list">
+              ${items || '<div class="response-item">Belum ada data.</div>'}
             </div>
           </div>
         `;
       }).join("");
+
+      box.innerHTML = allLevels;
     }
 
     function endGame() {
@@ -1560,26 +1442,40 @@
 
       const s = calculateScores();
 
-      document.getElementById("finalScore").innerHTML = `Skor akhir: <span class="num">${s.finalScore}</span> / 100`;
-      document.getElementById("finalSubtitle").textContent =
-        `Akurasi ${s.accuracyPct}/100 · Kecepatan ${s.speedPct}/100 · total benar ${s.totalCorrect}/${s.totalQuestions}`;
+      const lvl1 = s.levelScores[0].score;
+      const lvl2 = s.levelScores[1].score;
+      const lvl3 = s.levelScores[2].score;
 
-      document.getElementById("accuracyText").textContent = `${s.accuracyPct} / 100`;
-      document.getElementById("speedText").textContent = `${s.speedPct} / 100`;
-      document.getElementById("scorePctText").textContent = `${s.finalScore} / 100`;
+      document.getElementById("finalScore").innerHTML = `Score: <span class="num">${s.finalScore}</span> / 100`;
+      document.getElementById("finalSubtitle").textContent =
+        `Benar ${s.totalCorrect}/${s.totalQuestions} · Salah ${s.totalWrong} · Lewati ${s.totalSkipped} · Total waktu ${s.totalTimeUsed} detik`;
+
+      document.getElementById("statL1").textContent =
+        `${correctPerLevel[0]} / ${levelConfig[0].questions} benar · ${levelTimeSpent[0]} dtk · ${lvl1.toFixed(1)}/30 poin`;
+
+      document.getElementById("statL2").textContent =
+        `${correctPerLevel[1]} / ${levelConfig[1].questions} benar · ${levelTimeSpent[1]} dtk · ${lvl2.toFixed(1)}/30 poin`;
+
+      document.getElementById("statL3").textContent =
+        `${correctPerLevel[2]} / ${levelConfig[2].questions} benar · ${levelTimeSpent[2]} dtk · ${lvl3.toFixed(1)}/40 poin`;
+
       document.getElementById("totalCorrectText").textContent = `${s.totalCorrect}/${s.totalQuestions} benar`;
+      document.getElementById("wrongCountText").textContent = `${s.totalWrong}`;
+      document.getElementById("skippedCountText").textContent = `${s.totalSkipped}`;
       document.getElementById("totalTimeText").textContent = `${s.totalTimeUsed} dtk`;
+      document.getElementById("accuracyText").textContent = `${s.accuracyTextValue} / 70`;
+      document.getElementById("speedText").textContent = `${s.speedTextValue} / 30`;
+      document.getElementById("scorePctText").textContent = `${s.finalScore} / 100`;
 
       const category = getCategory(s.finalScore);
       document.getElementById("categoryTitle").textContent = category.title;
       document.getElementById("categoryDesc").textContent = category.desc;
       document.getElementById("categoryTitle").className = `category-title ${category.className}`;
 
-      buildLevelSummary(s.levelDetails);
-      buildResponseSummary();
       saveLeaderboard(s.finalScore, s.totalCorrect, s.totalQuestions, s.totalTimeUsed);
       loadLeaderboard();
       renderLeaderboard();
+      renderResponseLog();
     }
 
     function getCategory(finalScore) {
@@ -1616,14 +1512,11 @@
     function saveLeaderboard(finalScore, totalCorrect, totalQuestions, totalTimeUsed) {
       const playerName = document.getElementById("playerName").value.trim() || "Player";
       const playerEmail = document.getElementById("playerEmail").value.trim() || "-";
-      const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v8") || "[]");
+      const data = JSON.parse(localStorage.getItem("mbd_leaderboard_v6") || "[]");
       const attemptNo = getNextAttemptNumber();
 
-      const totalAllowedTime = levelConfig.reduce((sum, cfg) => sum + cfg.time, 0);
       const accuracyPct = totalQuestions ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
-      const speedPct = totalAllowedTime
-        ? Math.max(0, Math.min(100, Math.round(((totalAllowedTime - totalTimeUsed) / totalAllowedTime) * 100)))
-        : 0;
+      const speedPct = Math.max(0, Math.min(100, Math.round((1 - (totalTimeUsed / 110)) * 100)));
 
       data.push({
         name: playerName,
@@ -1639,11 +1532,11 @@
       });
 
       data.sort((a, b) => b.score - a.score || b.accuracyPct - a.accuracyPct || a.totalTimeUsed - b.totalTimeUsed);
-      localStorage.setItem("mbd_leaderboard_v8", JSON.stringify(data.slice(0, 10)));
+      localStorage.setItem("mbd_leaderboard_v6", JSON.stringify(data.slice(0, 10)));
     }
 
     function loadLeaderboard() {
-      leaderboard = JSON.parse(localStorage.getItem("mbd_leaderboard_v8") || "[]");
+      leaderboard = JSON.parse(localStorage.getItem("mbd_leaderboard_v6") || "[]");
       renderLeaderboard();
     }
 
@@ -1666,7 +1559,7 @@
           <div class="leader-name">
             ${row.name}
             <div style="font-size:.86rem;color:rgba(255,255,255,.68);font-weight:600;margin-top:2px;">
-              ${row.email} · Percobaan #${row.attemptNo} · Benar ${row.totalCorrect}/${row.totalQuestions} · ${row.totalTimeUsed} dtk
+              ${row.email || "-"} · Percobaan #${row.attemptNo} · Benar ${row.totalCorrect}/${row.totalQuestions} · ${row.totalTimeUsed} dtk
             </div>
           </div>
           <div class="leader-score">${row.score}</div>
@@ -1676,7 +1569,7 @@
 
     async function shareScore() {
       const s = calculateScores();
-      const text = `Match by Direction - Skor akhir ${s.finalScore}/100. Akurasi ${s.accuracyPct}/100, kecepatan ${s.speedPct}/100, benar ${s.totalCorrect}/${s.totalQuestions}, waktu ${s.totalTimeUsed} detik.`;
+      const text = `Match by Direction - Score ${s.finalScore}/100. Benar ${s.totalCorrect}/${s.totalQuestions}, salah ${s.totalWrong}, lewati ${s.totalSkipped}, waktu ${s.totalTimeUsed} detik.`;
 
       if (navigator.share) {
         try {
@@ -1697,6 +1590,8 @@
     }
 
     loadLeaderboard();
+    renderResponseLog();
+    updatePlayState();
   </script>
 </body>
 </html>
